@@ -4,13 +4,25 @@ import com.computer.champ.DSTR.graphics.element.Element;
 
 public class Triangle extends Element {
     static float coords[] = {   // in counterclockwise order:
-            0.0f,  0.622008459f, 0.0f, // top
-            -0.5f, -0.311004243f, 0.0f, // bottom left
-            0.5f, -0.311004243f, 0.0f  // bottom right
+            0.0f, 0.25f, 0.0f,    // top
+            -0.25f, -0.25f, 0.0f, // left
+            0.25f, -0.25f, 0.0f,   // right
+
+            0.0f, 0.25f, 0.0f,// top
+            0.25f, -0.25f, 0.0f,// right
+            0.0f, 0.0f, -0.5f,// back
+
+            0.0f, 0.25f, 0.0f,// top
+            0.0f, 0.0f, -0.5f,// back
+            -0.25f, -0.25f, 0.0f,// left
+
+            -0.25f, -0.25f, 0.0f,// left
+            0.0f, 0.0f, -0.5f,// back
+            0.25f, -0.25f, 0.0f// right
     };
 
     static float colour[] = {
-            0.0f,  0.622008459f, 0.0f, 1.0f
+            0.2f,  0.35f, 0.6f, 1.0f
     };
 
     public Triangle() {

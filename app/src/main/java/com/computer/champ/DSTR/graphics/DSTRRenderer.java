@@ -3,6 +3,7 @@ package com.computer.champ.DSTR.graphics;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.os.SystemClock;
 
 import com.computer.champ.DSTR.graphics.element.Element;
 
@@ -10,6 +11,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class DSTRRenderer implements GLSurfaceView.Renderer {
+
+    private Triangle tri;
 
     private int glProgram;
     private DSTRBufferManager bufferManager;
@@ -27,7 +30,8 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         bufferManager = new DSTRBufferManager();
 
         // initialize a triangle
-        bufferManager.add(new Triangle());
+        tri = new Triangle();
+        bufferManager.add(tri);
 
         // load shaders
         int vertexShader = DSTRShaderManager.loadVertexShader();
@@ -41,13 +45,41 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         GLES20.glLinkProgram(glProgram);
     }
 
+    private float[] mRotationMatrix = new float[16];
     public void onDrawFrame(GL10 unused) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-        // Set the camera position (View matrix)
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
-        // Calculate the projection and view transformation
+        float fov = 45.0f;
+        float tanMath = fov * (float)Math.PI / 360.0f;
+        float top = (float) (Math.tan(tanMath) * 0.1);
+        float bottom = -top;
+        float left = (15.0f / 9.0f) * bottom;
+        float right = (15.0f / 9.0f) * top;
+
+        Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, 0.1f, 1000.0f);
+//        Matrix.perspectiveM(mProjectionMatrix, 0, 45.0f, 15.0f / 9.0f, 0.1f, 1000.0f);
+
+        Matrix.setLookAtM(
+                mViewMatrix,     // resulting viewing frustrum
+                0,               // not used
+                0, 0, -2,        // eye
+                0f, 0f, 0f,      // focus
+                0f, 1.0f, 0.0f); // top
+
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        // test rotation
+        long time = SystemClock.uptimeMillis() % 4000L;
+        float angle = 0.090f * ((int) time);
+
+        Matrix.setRotateM(
+                mRotationMatrix,
+                0,       // not used
+                angle,   // amount rotated
+                0,
+                1.0f,    // axis of rotation
+                0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         render();
     }
