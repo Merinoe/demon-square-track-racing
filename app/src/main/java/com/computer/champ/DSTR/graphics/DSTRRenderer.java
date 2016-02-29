@@ -1,7 +1,9 @@
-package com.computer.champ.DSTR.Graphics;
+package com.computer.champ.DSTR.graphics;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+
+import com.computer.champ.DSTR.graphics.element.Element;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -43,9 +45,6 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, width, height);
     }
 
-    private float[] colour = {0.0f, 1.0f, 0.0f, 1.0f };
-    private int vertexStride = 12;
-
     public void render() {
         // Add program to OpenGL ES environment
         GLES20.glUseProgram(glProgram);
@@ -53,16 +52,22 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         // load shader attributes and uniforms
         DSTRShaderManager.loadHandles(glProgram);
 
-        // POSITION
-        GLES20.glEnableVertexAttribArray(DSTRShaderManager.getPositionHandle());
-        GLES20.glVertexAttribPointer(DSTRShaderManager.getPositionHandle(), 3,
-                GLES20.GL_FLOAT, false,
-                vertexStride, bufferManager.getVertexBuffer());
+        // draw each element
+        for (Element e : bufferManager.getElements()) {
+            // position data
+            GLES20.glEnableVertexAttribArray(DSTRShaderManager.getPositionHandle());
+            GLES20.glVertexAttribPointer(DSTRShaderManager.getPositionHandle(),
+                    3,
+                    GLES20.GL_FLOAT,
+                    false,
+                    0,
+                    e.getVertexList());
 
-        // COLOUR
-        GLES20.glUniform4fv(DSTRShaderManager.getColourHandle(), 1, colour, 0);
+            // colour data
+            GLES20.glUniform4fv(DSTRShaderManager.getColourHandle(), 1, e.getColour(), 0);
 
-        // DRAW
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, bufferManager.getNumVerts());
+            // draw shape
+            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, e.getVertexList().capacity() / 3);
+        }
     }
 }

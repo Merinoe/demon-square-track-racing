@@ -1,26 +1,27 @@
-package com.computer.champ.DSTR.Graphics.Element;
+package com.computer.champ.DSTR.graphics.element;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Element {
 
     protected float[] position;
+    protected float[] colour;
     protected List<Float> vertexList;
-    protected float colour[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-    public Element() {
-        vertexList = new ArrayList<Float>();
-        position = new float[3];
-        position[0] = 0.0f; // x
-        position[1] = 0.0f; // y
-        position[2] = 0.0f; // z
-    }
 
     public Element(float pos[], float[] verts, float col[]) {
-        vertexList = new ArrayList<Float>();
+        vertexList = new ArrayList<>();
         for (Float f : verts) { vertexList.add(f); }
-        colour = col;
+
+        colour = new float[4];
+        colour[0] = col[0];
+        colour[1] = col[1];
+        colour[2] = col[2];
+        colour[3] = col[3];
+
         position = new float[3];
         position[0] = pos[0]; // x
         position[1] = pos[1]; // y
@@ -33,8 +34,18 @@ public class Element {
         return position;
     }
 
-    public Float[] getVertexList() {
-        return vertexList.toArray(new Float[vertexList.size()]);
+    public FloatBuffer getVertexList() {
+        FloatBuffer list;
+        ByteBuffer vb = ByteBuffer.allocateDirect(vertexList.size() * 4);
+        vb.order(ByteOrder.nativeOrder());
+        list = vb.asFloatBuffer();
+
+        for (Float f : vertexList) {
+            list.put(f);
+        }
+
+        list.position(0);
+        return list;
     }
 
     public float[] getColour() {

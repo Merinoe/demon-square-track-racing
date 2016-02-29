@@ -1,13 +1,13 @@
-package com.computer.champ.DSTR.Graphics;
+package com.computer.champ.DSTR.graphics;
 
 import android.opengl.GLES20;
 
 public class DSTRShaderManager {
 
     private static final String vertexShader =
-        "attribute vec4 vPosition;" +
+        "attribute vec3 vPosition;" +
         "void main() {" +
-        "    gl_Position = vPosition;" +
+        "    gl_Position = vec4( vPosition, 1.0 );" +
         "}";
 
     private static final String fragmentShader =

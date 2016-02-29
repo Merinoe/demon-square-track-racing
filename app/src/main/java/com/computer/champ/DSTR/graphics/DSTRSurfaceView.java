@@ -1,4 +1,4 @@
-package com.computer.champ.DSTR.Graphics;
+package com.computer.champ.DSTR.graphics;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

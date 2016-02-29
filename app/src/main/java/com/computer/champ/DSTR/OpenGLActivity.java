@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
-import com.computer.champ.DSTR.Graphics.DSTRSurfaceView;
+import com.computer.champ.DSTR.graphics.DSTRSurfaceView;
 
 public class OpenGLActivity extends Activity {
     private GLSurfaceView glView;
