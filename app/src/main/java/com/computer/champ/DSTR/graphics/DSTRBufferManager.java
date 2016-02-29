@@ -22,7 +22,7 @@ public class DSTRBufferManager {
     public int getNumVerts() {
         int total = 0;
         for (Element e : elements) {
-            total += e.getVertexList().capacity();
+            total += e.getVertexData().capacity();
         }
         return total;
     }

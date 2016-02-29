@@ -10,11 +10,13 @@ public class Element {
 
     protected float[] position;
     protected float[] colour;
-    protected List<Float> vertexList;
+    protected List<Float> data;
 
-    public Element(float pos[], float[] verts, float col[]) {
-        vertexList = new ArrayList<>();
-        for (Float f : verts) { vertexList.add(f); }
+    public Element(float pos[], float[] data, float col[]) {
+        this.data = new ArrayList<>();
+        for (Float f : data) {
+            this.data.add(f);
+        }
 
         colour = new float[4];
         colour[0] = col[0];
@@ -34,13 +36,13 @@ public class Element {
         return position;
     }
 
-    public FloatBuffer getVertexList() {
+    public FloatBuffer getVertexData() {
         FloatBuffer list;
-        ByteBuffer vb = ByteBuffer.allocateDirect(vertexList.size() * 4);
+        ByteBuffer vb = ByteBuffer.allocateDirect(data.size() * 4);
         vb.order(ByteOrder.nativeOrder());
         list = vb.asFloatBuffer();
 
-        for (Float f : vertexList) {
+        for (Float f : data) {
             list.put(f);
         }
 
