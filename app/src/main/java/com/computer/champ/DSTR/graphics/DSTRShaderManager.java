@@ -5,24 +5,31 @@ import android.opengl.GLES20;
 public class DSTRShaderManager {
 
     private static final String vertexShader =
+        "uniform mat4 vMVP;" +
         "attribute vec3 vPosition;" +
         "void main() {" +
-        "    gl_Position = vec4( vPosition, 1.0 );" +
+        "    gl_Position = vMVP * vec4( vPosition, 1.0 );" +
         "}";
 
     private static final String fragmentShader =
         "precision mediump float;" +
-        "uniform vec4 vColour;" +
+        "uniform vec4 fColour;" +
         "void main() {" +
-        "    gl_FragColor = vColour;" +
+        "    gl_FragColor = fColour;" +
         "}";
 
+    private static int mvpHandle;
     private static int positionHandle;
     private static int colourHandle;
 
     public static void loadHandles(int program) {
+        mvpHandle = GLES20.glGetUniformLocation(program, "vMVP");
         positionHandle = GLES20.glGetAttribLocation(program, "vPosition");
-        colourHandle = GLES20.glGetUniformLocation(program, "vColour");
+        colourHandle = GLES20.glGetUniformLocation(program, "fColour");
+    }
+
+    public static int getMvpHandle() {
+        return mvpHandle;
     }
 
     public static int getPositionHandle() {
