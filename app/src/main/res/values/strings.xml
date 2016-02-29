@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">ex2.2</string>
+    <string name="app_name">DSTR</string>
     <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="button_send">Goto DSTR</string>
     <string name="share">Share</string>
     <string name="action_settings">Settings</string>
     <string name="action_favorite">Favorite</string>

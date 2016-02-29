@@ -2,42 +2,50 @@ package com.computer.champ.DSTR.graphics;
 
 import android.opengl.GLES20;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DSTRShaderManager {
 
     private static final String vertexShader =
         "uniform mat4 vMVP;" +
         "attribute vec3 vPosition;" +
+        "attribute vec3 vNormal;" +
+        "uniform vec3 vCamera;" +
+        "varying float fCamera;" +
+//        "varying vec3 fNormal;" +
         "void main() {" +
-        "    gl_Position = vMVP * vec4( vPosition, 1.0 );" +
+        "    vec4 pos = vMVP * vec4( vPosition, 1.0 );" +
+        "    fCamera = length( vec4( vCamera, 1.0 ) - pos );" +
+//        "    fNormal = normalize( gl_NormalMatrix * vNormal );" +
+        "    gl_Position = pos;" +
         "}";
 
     private static final String fragmentShader =
-        "precision mediump float;" +
+        "precision highp float;" +
         "uniform vec4 fColour;" +
+        "uniform float fCamera;" +
+//        "uniform vec3 fNormal;" +
         "void main() {" +
-        "    gl_FragColor = fColour;" +
+//        "    float directionalLight = max( dot( normalize(fNormal), vec3(0.5, 0.5, 0) ), 0.0 );" +
+        "    gl_FragColor = fColour;" + // * directionalLight;" +
         "}";
 
-    private static int mvpHandle;
-    private static int positionHandle;
-    private static int colourHandle;
+    private static Map<String, Integer> handleMap = new HashMap<>();
 
     public static void loadHandles(int program) {
-        mvpHandle = GLES20.glGetUniformLocation(program, "vMVP");
-        positionHandle = GLES20.glGetAttribLocation(program, "vPosition");
-        colourHandle = GLES20.glGetUniformLocation(program, "fColour");
+        // vertex shader
+        handleMap.put("vMVP", GLES20.glGetUniformLocation(program, "vMVP"));
+        handleMap.put("vPosition", GLES20.glGetAttribLocation(program, "vPosition"));
+        handleMap.put("vNormal", GLES20.glGetAttribLocation(program, "vNormal"));
+        handleMap.put("vCamera", GLES20.glGetUniformLocation(program, "vCamera"));
+
+        // fragment shader
+        handleMap.put("fColour", GLES20.glGetUniformLocation(program, "fColour"));
     }
 
-    public static int getMvpHandle() {
-        return mvpHandle;
-    }
-
-    public static int getPositionHandle() {
-        return positionHandle;
-    }
-
-    public static int getColourHandle() {
-        return colourHandle;
+    public static int getHandle(String name) {
+        return handleMap.get(name);
     }
 
     public static int loadVertexShader() {

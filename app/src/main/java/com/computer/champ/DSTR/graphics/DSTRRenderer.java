@@ -7,12 +7,16 @@ import android.os.SystemClock;
 
 import com.computer.champ.DSTR.graphics.element.Element;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class DSTRRenderer implements GLSurfaceView.Renderer {
 
-    private Triangle tri;
+    private Square sq, sq2;
 
     private int glProgram;
     private DSTRBufferManager bufferManager;
@@ -29,9 +33,8 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
 
         bufferManager = new DSTRBufferManager();
 
-        // initialize a triangle
-        tri = new Triangle();
-        bufferManager.add(tri);
+        sq = new Square();
+        bufferManager.add(sq);
 
         // load shaders
         int vertexShader = DSTRShaderManager.loadVertexShader();
@@ -49,20 +52,10 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 unused) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        float fov = 45.0f;
-        float tanMath = fov * (float)Math.PI / 360.0f;
-        float top = (float) (Math.tan(tanMath) * 0.1);
-        float bottom = -top;
-        float left = (15.0f / 9.0f) * bottom;
-        float right = (15.0f / 9.0f) * top;
-
-        Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, 0.1f, 1000.0f);
-//        Matrix.perspectiveM(mProjectionMatrix, 0, 45.0f, 15.0f / 9.0f, 0.1f, 1000.0f);
-
         Matrix.setLookAtM(
                 mViewMatrix,     // resulting viewing frustrum
                 0,               // not used
-                0, 0, -2,        // eye
+                0, 0, -4,        // eye
                 0f, 0f, 0f,      // focus
                 0f, 1.0f, 0.0f); // top
 
@@ -87,11 +80,30 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceChanged(GL10 unused, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
 
-        float ratio = (float) width / height;
+        float fov = 45.0f;
+        float tanMath = fov * (float)Math.PI / 360.0f;
+        float top = (float) (Math.tan(tanMath) * 0.1);
+        float bottom = -top;
+        float left = 0;
+        float right = 0;
+        if (width < height) {
+            left = (9.0f / 15.0f) * bottom;
+            right = (9.0f / 15.0f) * top;
+        } else {
+            left = (15.0f / 9.0f) * bottom;
+            right = (15.0f / 9.0f) * top;
+        }
 
-        // this projection matrix is applied to object coordinates
-        // in the onDrawFrame() method
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+        Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, 0.1f, 1000.0f);
+    }
+
+    public static FloatBuffer makeFloatBuffer(float[] arr) {
+        ByteBuffer bb = ByteBuffer.allocateDirect(arr.length * 4);
+        bb.order(ByteOrder.nativeOrder());
+        FloatBuffer fb = bb.asFloatBuffer();
+        fb.put(arr);
+        fb.position(0);
+        return fb;
     }
 
     public void render() {
@@ -101,31 +113,53 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         // load shader attributes and uniforms
         DSTRShaderManager.loadHandles(glProgram);
 
+        // set general uniforms
+        // viewing projections
+        GLES20.glUniformMatrix4fv(
+                DSTRShaderManager.getHandle("vMVP"),
+                1,
+                false,
+                mMVPMatrix,
+                0);
+
+        float[] camera = { 0.0f, 0.0f, -4.0f };
+        GLES20.glUniform3fv(DSTRShaderManager.getHandle("vCamera"), 1, camera, 0);
+
         // draw each element
         for (Element e : bufferManager.getElements()) {
-            // viewing projections
-            GLES20.glUniformMatrix4fv(
-                    DSTRShaderManager.getMvpHandle(),
-                    1,
-                    false,
-                    mMVPMatrix,
-                    0);
+            FloatBuffer vertexData = e.getVertexList();
+
+            int positionHandle = DSTRShaderManager.getHandle("vPosition");
+            int normalHandle = DSTRShaderManager.getHandle("vNormal");
+            int colourHandle = DSTRShaderManager.getHandle("fColour");
 
             // position data
-            GLES20.glEnableVertexAttribArray(DSTRShaderManager.getPositionHandle());
+            vertexData.position(0);
+            GLES20.glEnableVertexAttribArray(positionHandle);
             GLES20.glVertexAttribPointer(
-                    DSTRShaderManager.getPositionHandle(),
+                    positionHandle,
                     3,
                     GLES20.GL_FLOAT,
                     false,
-                    0,
-                    e.getVertexList());
+                    6 * 4,
+                    vertexData);
+
+            // normal data
+            vertexData.position(12);
+            GLES20.glEnableVertexAttribArray(normalHandle);
+            GLES20.glVertexAttribPointer(
+                    normalHandle,
+                    3,
+                    GLES20.GL_FLOAT,
+                    false,
+                    6 * 4,
+                    vertexData);
 
             // colour data
-            GLES20.glUniform4fv(DSTRShaderManager.getColourHandle(), 1, e.getColour(), 0);
+            GLES20.glUniform4fv(colourHandle, 1, e.getColour(), 0);
 
             // draw shape
-            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, e.getVertexList().capacity() / 3);
+            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, e.getVertexList().capacity() / 6);
         }
     }
 }
