@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.computer.champ.DSTR">
+    package="com.computer.team8.DSTR">
 
     <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.computer.champ.DSTR.MainActivity"
+            android:name="com.computer.team8.DSTR.MainActivity"
             android:label="opengl"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.computer.champ.DSTR.OpenGLActivity"
+            android:name="com.computer.team8.DSTR.OpenGLActivity"
             android:label="@string/title_activity_opengl"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

@@ -1,6 +1,6 @@
-package com.computer.champ.DSTR.graphics;
+package com.computer.team8.DSTR.graphics;
 
-import com.computer.champ.DSTR.graphics.element.Element;
+import com.computer.team8.DSTR.graphics.element.Element;
 
 public class Square extends Element {
 

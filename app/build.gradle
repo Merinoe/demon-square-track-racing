@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.computer.champ.ex21"
+        applicationId "com.computer.DSTR"
         minSdkVersion 13
         targetSdkVersion 23
         versionCode 1

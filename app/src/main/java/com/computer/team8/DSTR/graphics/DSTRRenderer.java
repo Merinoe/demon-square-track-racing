@@ -1,11 +1,11 @@
-package com.computer.champ.DSTR.graphics;
+package com.computer.team8.DSTR.graphics;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
-import com.computer.champ.DSTR.graphics.element.Element;
+import com.computer.team8.DSTR.graphics.element.Element;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

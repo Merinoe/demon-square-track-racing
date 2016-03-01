@@ -1,4 +1,4 @@
-package com.computer.champ.DSTR;
+package com.computer.team8.DSTR;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

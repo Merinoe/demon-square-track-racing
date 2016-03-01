@@ -1,4 +1,4 @@
-package com.computer.champ.DSTR.graphics.element;
+package com.computer.team8.DSTR.graphics.element;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
