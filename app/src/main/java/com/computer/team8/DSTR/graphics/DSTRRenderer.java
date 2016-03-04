@@ -5,7 +5,10 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
+import com.computer.team8.DSTR.graphics.camera.Camera;
 import com.computer.team8.DSTR.graphics.element.Element;
+import com.computer.team8.DSTR.graphics.element.Square;
+import com.computer.team8.DSTR.graphics.types.Vec3;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -16,7 +19,9 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class DSTRRenderer implements GLSurfaceView.Renderer {
 
+    // elements
     private Square sq, sq2;
+    private Camera cam;
 
     private int glProgram;
     private DSTRBufferManager bufferManager;
@@ -31,9 +36,13 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
-        bufferManager = new DSTRBufferManager();
-
+        // init elements
+        cam = new Camera(new Vec3(0, 0, -4),
+                         new Vec3(0, 0, 0),
+                         new Vec3(0, 1, 0));
         sq = new Square();
+
+        bufferManager = new DSTRBufferManager();
         bufferManager.add(sq);
 
         // load shaders
@@ -58,33 +67,11 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         GLES20.glFrontFace(GLES20.GL_CCW);
     }
 
-    private float[] mRotationMatrix = new float[16];
     public void onDrawFrame(GL10 unused) {
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-        // view matrix
-        Matrix.setLookAtM(
-                mViewMatrix,       // resulting model/view
-                0,                 // not used
-                0.0f, 0.0f, -4.0f, // eye
-                0.0f, 0.0f, 0.0f,  // focus
-                0.0f, 1.0f, 0.0f); // top
-
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-
-        // test rotation
-        long time = SystemClock.uptimeMillis() % 4000L;
-        float angle = 0.090f * ((int) time);
-
-        Matrix.setRotateM(
-                mRotationMatrix,
-                0,       // not used
-                angle,   // amount rotated
-                0,
-                1.0f,    // axis of rotation
-                0);
-        Matrix.multiplyMM(mMVPMatrix, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+        // update camera matrices
+        cam.update();
 
         // draw all Elements
         render();
@@ -92,22 +79,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
-
-        float fov = 45.0f;
-        float tanMath = fov * (float)Math.PI / 360.0f;
-        float top = (float) (Math.tan(tanMath) * 0.1);
-        float bottom = -top;
-        float left = 0;
-        float right = 0;
-        if (width < height) {
-            left = (9.0f / 15.0f) * bottom;
-            right = (9.0f / 15.0f) * top;
-        } else {
-            left = (15.0f / 9.0f) * bottom;
-            right = (15.0f / 9.0f) * top;
-        }
-
-        Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, 0.1f, 100.0f);
+        cam.updateFOV(width, height);
     }
 
     public static FloatBuffer makeFloatBuffer(float[] arr) {
@@ -132,17 +104,14 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
                 DSTRShaderManager.getHandle("vMVP"),
                 1,
                 false,
-                mMVPMatrix,
+                cam.getMVP(),
                 0);
         GLES20.glUniformMatrix4fv(
                 DSTRShaderManager.getHandle("vModelView"),
                 1,
                 false,
-                mViewMatrix,
+                cam.getView(),
                 0);
-
-//        float[] camera = { 0.0f, 0.0f, -4.0f };
-//        GLES20.glUniform3fv(DSTRShaderManager.getHandle("vCamera"), 1, camera, 0);
 
         // draw each element
         for (Element e : bufferManager.getElements()) {
@@ -153,8 +122,6 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
             int positionHandle = DSTRShaderManager.getHandle("vPosition");
             int normalHandle = DSTRShaderManager.getHandle("vNormal");
             int colourHandle = DSTRShaderManager.getHandle("fColour");
-
-//            System.out.println("P" + positionHandle + " " + "N" + normalHandle + " " + "C" + colourHandle);
 
             // position data
             vertexData.position(0);
@@ -179,7 +146,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
                     vertexData);
 
             // colour data
-            GLES20.glUniform4fv(colourHandle, 1, e.getColour(), 0);
+            GLES20.glUniform4fv(colourHandle, 1, e.getColourData(), 0);
 
             // draw shape
             GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, e.getVertexData().capacity() / 6);

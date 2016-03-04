@@ -1,5 +1,8 @@
 package com.computer.team8.DSTR.graphics.element;
 
+import com.computer.team8.DSTR.graphics.types.Vec3;
+import com.computer.team8.DSTR.graphics.types.Vec4;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -8,31 +11,23 @@ import java.util.List;
 
 public class Element {
 
-    protected float[] position;
-    protected float[] colour;
+    protected Vec3 position;
+    protected Vec4 colour;
     protected List<Float> data;
 
-    public Element(float pos[], float[] data, float col[]) {
+    public Element(Vec3 pos, float[] data, Vec4 col) {
         this.data = new ArrayList<>();
         for (Float f : data) {
             this.data.add(f);
         }
 
-        colour = new float[4];
-        colour[0] = col[0];
-        colour[1] = col[1];
-        colour[2] = col[2];
-        colour[3] = col[3];
-
-        position = new float[3];
-        position[0] = pos[0]; // x
-        position[1] = pos[1]; // y
-        position[2] = pos[2]; // z
+        position = new Vec3(pos);
+        colour = new Vec4(col);
     }
 
     /** GET ***/
 
-    public float[] getPosition() {
+    public Vec3 getPosition() {
         return position;
     }
 
@@ -50,22 +45,27 @@ public class Element {
         return list;
     }
 
-    public float[] getColour() {
+    public Vec4 getColour() {
         return colour;
+    }
+
+    public float[] getColourData() {
+        float[] c = { colour.getX(), colour.getY(), colour.getZ(), colour.getW() };
+        return c;
     }
 
     /*** SET **/
 
-    public void setPosition(float x, float y, float z) {
-        position[0] = x;
-        position[1] = y;
-        position[2] = z;
+    public void setPosition(Vec3 v) {
+        position.setX(v.getX());
+        position.setY(v.getY());
+        position.setZ(v.getZ());
     }
 
-    public void setPosition(float[] pos) {
-        position[0] = pos[0];
-        position[1] = pos[1];
-        position[2] = pos[2];
+    public void setPosition(float x, float y, float z) {
+        position.setX(x);
+        position.setY(y);
+        position.setZ(z);
     }
 
 }

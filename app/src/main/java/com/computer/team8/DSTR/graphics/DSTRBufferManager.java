@@ -18,20 +18,4 @@ public class DSTRBufferManager {
     public ArrayList<Element> getElements() {
         return elements;
     }
-
-    public int getNumVerts() {
-        int total = 0;
-        for (Element e : elements) {
-            total += e.getVertexData().capacity();
-        }
-        return total;
-    }
-
-    public int getNumColours() {
-        int total = 0;
-        for (Element e : elements) {
-            total += e.getColour().length;
-        }
-        return total;
-    }
 }
