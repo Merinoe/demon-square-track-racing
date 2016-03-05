@@ -29,23 +29,43 @@ public class DSTRSurfaceView extends GLSurfaceView {
         float x = e.getX();
         float y = e.getY();
 
+        float rotateScalingFactor = 3;
+        float zoomScalingFactor = 100;
+
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                System.out.println("Down-> x: " + x + ", y: " + y);
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 Camera cam = DSTRRenderer.getCamera();
 
-                float dx = x - oldX;
-                float dy = y - oldY;
+                // rotate
+                if (e.getPointerCount() == 1) {
+                    float dx = x - oldX;
+                    float dy = y - oldY;
 
-                cam.rotate(-dx / 3, new Vec3(0.0f, 1.0f, 0.0f));
-                cam.rotate(-dy / 3, new Vec3(1.0f, 0.0f, 0.0f));
+                    cam.rotate(-dx / rotateScalingFactor, new Vec3(0.0f, 1.0f, 0.0f));
+                    cam.rotate(-dy / rotateScalingFactor, new Vec3(1.0f, 0.0f, 0.0f));
 
-                oldX = x;
-                oldY = y;
+                    oldX = x;
+                    oldY = y;
 
+                // zoom
+                } else if (e.getPointerCount() == 2) {  // two fingers for a zoom
+                    float dy = y - oldY;
+
+                    if (dy > cam.MAX_ZOOM_SPEED) {
+                        dy = cam.MAX_ZOOM_SPEED;
+                    } else if (dy < -cam.MAX_ZOOM_SPEED) {
+                        dy = -cam.MAX_ZOOM_SPEED;
+                    }
+
+                    cam.zoom(-dy / zoomScalingFactor);
+
+                    oldY = y;
+                }
                 break;
+
             default:
         }
 

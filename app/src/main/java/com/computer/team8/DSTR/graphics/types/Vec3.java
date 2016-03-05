@@ -37,4 +37,15 @@ public class Vec3 {
     public void setX(float x) { this.x = x; }
     public void setY(float y) { this.y = y; }
     public void setZ(float z) { this.z = z; }
+
+    /* operations */
+    public void multiply(float amount) {
+        x *= amount;
+        y *= amount;
+        z *= amount;
+    }
+
+    public float magnitude() {
+        return (float) Math.sqrt( Math.pow(2, x) + Math.pow(2, y) + Math.pow(2, z) );
+    }
 }

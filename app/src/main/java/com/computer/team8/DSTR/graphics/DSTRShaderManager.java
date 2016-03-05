@@ -12,10 +12,12 @@ public class DSTRShaderManager {
         "uniform mat4 vModelView;" +
         "attribute vec3 vPosition;" +
         "attribute vec3 vNormal;" +
+        "uniform mat4 vOrientation;" +
+        "uniform vec3 vModelPosition;" +
         "varying vec3 fNormal;" +
         "void main() {" +
-        "    vec4 pos = vMVP * vec4( vPosition, 1.0 );" +
-        "    fNormal = vec3( vModelView * vec4( vNormal, 0.0 ) );" +
+        "    vec4 pos = vMVP * vOrientation * ( vec4( vPosition, 1.0 ) + vModelPosition );" +
+        "    fNormal = vec3( vModelView * vOrientation * vec4( vNormal, 1.0 ) );" +
         "    gl_Position = pos;" +
         "}";
 
@@ -25,7 +27,7 @@ public class DSTRShaderManager {
         "varying vec3 fNormal;" +
         "void main() {" +
         "    float ambientIntensity = 0.1;" +
-        "    float directionalIntensity = 0.5 * max( dot( normalize(fNormal), vec3(-1.0, -0.2, 0.4) ), 0.0 );" +
+        "    float directionalIntensity = 0.5 * max( dot( normalize(fNormal), -normalize(vec3(-1.0, -0.2, 0.4) )), 0.0 );" +
         "    gl_FragColor = (fColour * ambientIntensity) + (fColour * directionalIntensity);" +
         "}";
 
@@ -36,7 +38,9 @@ public class DSTRShaderManager {
         handleMap.put("vMVP", GLES20.glGetUniformLocation(program, "vMVP"));
         handleMap.put("vModelView", GLES20.glGetUniformLocation(program, "vModelView"));
         handleMap.put("vPosition", GLES20.glGetAttribLocation(program, "vPosition"));
+        handleMap.put("vModelPosition", GLES20.glGetUniformLocation(program, "vModelPosition"));
         handleMap.put("vNormal", GLES20.glGetAttribLocation(program, "vNormal"));
+        handleMap.put("vOrientation", GLES20.glGetUniformLocation(program, "vOrientation"));
 
         // fragment shader
         handleMap.put("fColour", GLES20.glGetUniformLocation(program, "fColour"));

@@ -1,6 +1,5 @@
 package com.computer.team8.DSTR.graphics.element;
 
-import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 import com.computer.team8.DSTR.graphics.types.Vec4;
 
@@ -101,7 +100,7 @@ public class Square extends Element {
     static Vec4 colour = new Vec4(0.75f, 0.0f, 0.0f, 1.0f);
 
     public Square() {
-        super(new Vec3(0.0f, 0.0f, 0.0f), vertexData, colour);
+        super(new Vec3(0, 0, 0), vertexData, colour);
     }
 
     public Square(float x, float y, float z) {

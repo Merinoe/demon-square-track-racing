@@ -13,7 +13,11 @@ public class Camera {
     private float[] proj = new float[16];
     private float[] view = new float[16];
 
-    private float[] mRotationMatrix = new float[16];
+    // general use
+    private float[] rotation = new float[16];
+
+    // constants
+    public final float MAX_ZOOM_SPEED = 5.0f;
 
     public Camera(Vec3 eye, Vec3 focus, Vec3 top) {
         this.eye = eye;
@@ -52,16 +56,21 @@ public class Camera {
 
     public void rotate(float angle, Vec3 v) {
         Matrix.setRotateM(
-            mRotationMatrix,
-            0,       // not used
-            angle,   // amount rotated
-            v.x,
-            v.y,    // axis of rotation
-            v.z);
+                rotation,
+                0,       // not used
+                angle,   // amount rotated
+                v.x,
+                v.y,    // axis of rotation
+                v.z);
         float[] result = new float[4];
-        Matrix.multiplyMV(result, 0, mRotationMatrix, 0, eye.getData(), 0);
+        Matrix.multiplyMV(result, 0, rotation, 0, eye.getData(), 0);
         setEye(new Vec3(result[0], result[1], result[2]));
     }
+
+    public void zoom(float amount) {
+        eye.multiply(1.0f - amount);
+    }
+
 
     /* set */
     public void setEye(Vec3 v) { eye = v; }

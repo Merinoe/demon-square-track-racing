@@ -23,7 +23,8 @@
         <activity
             android:name="com.computer.team8.DSTR.OpenGLActivity"
             android:label="@string/title_activity_opengl"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
     </application>
 
 </manifest>

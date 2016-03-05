@@ -39,4 +39,12 @@ public class Vec4 {
     public void setY(float y) { this.y = y; }
     public void setZ(float z) { this.z = z; }
     public void setW(float w) { this.w = w; }
+
+    /* operations */
+    public void multiply(float amount) {
+        x *= amount;
+        y *= amount;
+        z *= amount;
+        w *= amount;
+    }
 }
