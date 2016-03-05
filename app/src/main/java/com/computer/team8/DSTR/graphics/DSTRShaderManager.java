@@ -24,7 +24,7 @@ public class DSTRShaderManager {
         "uniform vec4 fColour;" +
         "varying vec3 fNormal;" +
         "void main() {" +
-        "    float ambientIntensity = 0.2;" +
+        "    float ambientIntensity = 0.1;" +
         "    float directionalIntensity = 0.5 * max( dot( normalize(fNormal), vec3(-1.0, -0.2, 0.4) ), 0.0 );" +
         "    gl_FragColor = (fColour * ambientIntensity) + (fColour * directionalIntensity);" +
         "}";

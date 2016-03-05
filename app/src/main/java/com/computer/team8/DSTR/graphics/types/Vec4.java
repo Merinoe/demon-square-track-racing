@@ -15,6 +15,7 @@ public class Vec4 {
     }
 
     public Vec4 get() { return this; }
+    public float[] getData() { return new float[]{x, y, z, w}; }
     public float getX() { return this.x; }
     public float getY() { return this.y; }
     public float getZ() { return this.z; }

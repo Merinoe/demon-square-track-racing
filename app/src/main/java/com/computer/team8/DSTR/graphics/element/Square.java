@@ -85,16 +85,16 @@ public class Square extends Element {
             // bottom
             0.5f, -0.5f, 0.5f,  // bottom-right-front
             0.0f, -1.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, // bottom-right-back
-            0.0f, -1.0f, 0.0f,
             -0.5f, -0.5f, -0.5f,// bottom-left-back
+            0.0f, -1.0f, 0.0f,
+            0.5f, -0.5f, -0.5f, // bottom-right-back
             0.0f, -1.0f, 0.0f,
 
             0.5f, -0.5f, 0.5f,  // bottom-right-front
             0.0f, -1.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,// bottom-left-back
-            0.0f, -1.0f, 0.0f,
             -0.5f, -0.5f, 0.5f, // bottom-left-front
+            0.0f, -1.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,// bottom-left-back
             0.0f, -1.0f, 0.0f
     };
 

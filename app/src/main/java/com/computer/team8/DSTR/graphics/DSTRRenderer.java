@@ -21,7 +21,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
 
     // elements
     private Square sq, sq2;
-    private Camera cam;
+    private static Camera cam;
 
     private int glProgram;
     private DSTRBufferManager bufferManager;
@@ -34,12 +34,12 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
-        GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         // init elements
-        cam = new Camera(new Vec3(0, 0, -4),
-                         new Vec3(0, 0, 0),
-                         new Vec3(0, 1, 0));
+        cam = new Camera(new Vec3(0, 0, -4), // eye
+                         new Vec3(0, 0, 0),  // focus
+                         new Vec3(0, 1, 0)); // top
         sq = new Square();
 
         bufferManager = new DSTRBufferManager();
@@ -89,6 +89,10 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
         fb.put(arr);
         fb.position(0);
         return fb;
+    }
+
+    public static Camera getCamera() {
+        return cam;
     }
 
     public void render() {

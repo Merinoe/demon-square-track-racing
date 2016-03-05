@@ -15,6 +15,9 @@ public class Vec3 {
     }
 
     public Vec3 get() { return this; }
+    public float[] getData() {
+        return new float[] {x, y, z, 1.0f};
+    }
     public float getX() { return this.x; }
     public float getY() { return this.y; }
     public float getZ() { return this.z; }

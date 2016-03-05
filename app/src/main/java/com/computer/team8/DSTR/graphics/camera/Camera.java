@@ -1,7 +1,6 @@
 package com.computer.team8.DSTR.graphics.camera;
 
 import android.opengl.Matrix;
-import android.os.SystemClock;
 
 import com.computer.team8.DSTR.graphics.types.Vec3;
 
@@ -29,21 +28,7 @@ public class Camera {
                 eye.x, eye.y, eye.z,
                 focus.x, focus.y, focus.z,
                 top.x, top.y, top.z);
-
         Matrix.multiplyMM(mvp, 0, proj, 0, view, 0);
-
-        // test rotation
-        long time = SystemClock.uptimeMillis() % 4000L;
-        float angle = 0.090f * ((int) time);
-
-        Matrix.setRotateM(
-                mRotationMatrix,
-                0,       // not used
-                angle,   // amount rotated
-                0,
-                1.0f,    // axis of rotation
-                0);
-        Matrix.multiplyMM(mvp, 0, mvp, 0, mRotationMatrix, 0);
     }
 
     public void updateFOV(int width, int height) {
@@ -51,8 +36,8 @@ public class Camera {
         float tanMath = fov * (float)Math.PI / 360.0f;
         float top = (float) (Math.tan(tanMath) * 0.1);
         float bottom = -top;
-        float left = 0;
-        float right = 0;
+        float left;
+        float right;
 
         if (width < height) {
             left = (9.0f / 15.0f) * bottom;
@@ -65,20 +50,29 @@ public class Camera {
         Matrix.frustumM(proj, 0, left, right, bottom, top, 0.1f, 100.0f);
     }
 
+    public void rotate(float angle, Vec3 v) {
+        Matrix.setRotateM(
+            mRotationMatrix,
+            0,       // not used
+            angle,   // amount rotated
+            v.x,
+            v.y,    // axis of rotation
+            v.z);
+        float[] result = new float[4];
+        Matrix.multiplyMV(result, 0, mRotationMatrix, 0, eye.getData(), 0);
+        setEye(new Vec3(result[0], result[1], result[2]));
+    }
+
     /* set */
-    public void setEye(Vec3 v) {
-        eye = v;
-    }
-
-    public void setFocus(Vec3 v) {
-        focus = v;
-    }
-
-    public void setTop(Vec3 v) {
-        top = v;
-    }
+    public void setEye(Vec3 v) { eye = v; }
+    public void setFocus(Vec3 v) { focus = v; }
+    public void setTop(Vec3 v) { top = v; }
 
     /* get */
+    public Vec3 getEye() { return eye; }
+    public Vec3 getFocus() { return focus; }
+    public Vec3 getTop() { return top; }
+
     public float[] getMVP() {
         return mvp;
     }
