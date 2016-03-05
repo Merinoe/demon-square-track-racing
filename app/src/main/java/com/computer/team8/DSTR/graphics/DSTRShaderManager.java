@@ -8,10 +8,10 @@ import java.util.Map;
 public class DSTRShaderManager {
 
     private static final String vertexShader =
-        "uniform mat4 vMVP;" +
-        "uniform mat4 vModelView;" +
         "attribute vec3 vPosition;" +
         "attribute vec3 vNormal;" +
+        "uniform mat4 vMVP;" +
+        "uniform mat4 vModelView;" +
         "uniform mat4 vOrientation;" +
         "uniform vec3 vModelPosition;" +
         "varying vec3 fNormal;" +
@@ -24,11 +24,13 @@ public class DSTRShaderManager {
     private static final String fragmentShader =
         "precision highp float;" +
         "uniform vec4 fColour;" +
+        "uniform vec3 fDirectionalLight;" +
+        "uniform float fDirectionalIntensity;" +
+        "uniform float fAmbientIntensity;" +
         "varying vec3 fNormal;" +
         "void main() {" +
-        "    float ambientIntensity = 0.1;" +
-        "    float directionalIntensity = 0.5 * max( dot( normalize(fNormal), -normalize(vec3(-1.0, -0.2, 0.4) )), 0.0 );" +
-        "    gl_FragColor = (fColour * ambientIntensity) + (fColour * directionalIntensity);" +
+        "    float dirInt = fDirectionalIntensity * max( dot( normalize(fNormal), -normalize(fDirectionalLight) ), 0.0 );" +
+        "    gl_FragColor = (fColour * fAmbientIntensity) + (fColour * dirInt);" +
         "}";
 
     private static Map<String, Integer> handleMap = new HashMap<>();
@@ -44,6 +46,10 @@ public class DSTRShaderManager {
 
         // fragment shader
         handleMap.put("fColour", GLES20.glGetUniformLocation(program, "fColour"));
+        handleMap.put("fDirectionalLight", GLES20.glGetUniformLocation(program, "fDirectionalLight"));
+        handleMap.put("fDirectionalIntensity", GLES20.glGetUniformLocation(program, "fDirectionalIntensity"));
+        handleMap.put("fAmbientIntensity", GLES20.glGetUniformLocation(program, "fAmbientIntensity"));
+
     }
 
     public static int getHandle(String name) {

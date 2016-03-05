@@ -5,10 +5,10 @@ public class Vec3 {
     public float y;
     public float z;
 
+    public Vec3() { this.set(0, 0, 0); }
     public Vec3(float x, float y, float z) {
         this.set(x, y, z);
     }
-
     public Vec3(Vec3 v) {
         this.set(v);
 
@@ -39,6 +39,7 @@ public class Vec3 {
     public void setZ(float z) { this.z = z; }
 
     /* operations */
+
     public void multiply(float amount) {
         x *= amount;
         y *= amount;

@@ -2,23 +2,22 @@ package com.computer.team8.DSTR.graphics;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.opengl.Matrix;
-import android.os.SystemClock;
-import android.view.View;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
 import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.element.Square;
+import com.computer.team8.DSTR.graphics.light.DirectionalLight;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class DSTRRenderer implements GLSurfaceView.Renderer {
+
+    // scene
+    private DirectionalLight dirLight;
 
     // elements
     private Square sq, sq2;
@@ -28,6 +27,9 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
     private DSTRBufferManager bufferManager;
 
     public DSTRRenderer() {
+        // init scene
+        dirLight = new DirectionalLight();
+
         // init elements
         cam = new Camera(new Vec3(0, 1, -4), // eye
                 new Vec3(0, 0, 0),  // focus
@@ -109,6 +111,19 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
                 false,
                 cam.getView(),
                 0);
+
+        // directional light data
+        GLES20.glUniform3fv(
+                DSTRShaderManager.getHandle("fDirectionalLight"),
+                1,
+                dirLight.getOrientationData(),
+                0);
+        GLES20.glUniform1f(
+                DSTRShaderManager.getHandle("fDirectionalIntensity"),
+                dirLight.getDirectionalIntensity());
+        GLES20.glUniform1f(
+                DSTRShaderManager.getHandle("fAmbientIntensity"),
+                dirLight.getAmbientIntensity());
 
         // draw each element
         for (Element e : bufferManager.getElements()) {
