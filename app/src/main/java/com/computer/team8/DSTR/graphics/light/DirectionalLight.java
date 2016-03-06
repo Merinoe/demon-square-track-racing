@@ -8,9 +8,9 @@ public class DirectionalLight {
     private float ambientIntensity;
 
     public DirectionalLight() {
-        orientation = new Vec3(-1.0f, -0.2f, 0.4f);
-        directionalIntensity = 0.7f;
-        ambientIntensity = 0.05f;
+        orientation = new Vec3(0, -0.35f, 1);
+        directionalIntensity = 0.75f;
+        ambientIntensity = 0.1f;
     }
 
     /* get */

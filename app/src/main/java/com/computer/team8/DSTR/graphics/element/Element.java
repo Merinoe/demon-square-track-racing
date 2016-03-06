@@ -51,6 +51,9 @@ public class Element {
     }
 
     public void updateBuffer() {
+        if (processedData != null) {
+            processedData.clear();
+        }
         ByteBuffer vb = ByteBuffer.allocateDirect(data.size() * 4);
         vb.order(ByteOrder.nativeOrder());
         processedData = vb.asFloatBuffer();
@@ -74,7 +77,7 @@ public class Element {
     }
 
     public float[] getBottom() {
-        float bot = (position.y * scale.y) - (scale.y / 2);
+        float bot = position.y + (scale.y / 2);
         float[] b = { position.x, bot, position.z };
         return b;
     }
@@ -129,7 +132,7 @@ public class Element {
 
     public void setBottom(float x, float y, float z) {
         position.x = x;
-        position.y = y + (scale.y / 2);
+        position.y = y + (scale.y / 2.0f);
         position.z = z;
     }
 

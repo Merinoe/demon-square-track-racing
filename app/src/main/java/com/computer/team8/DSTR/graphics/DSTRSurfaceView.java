@@ -39,25 +39,25 @@ public class DSTRSurfaceView extends GLSurfaceView {
             case MotionEvent.ACTION_MOVE:
                 Camera cam = DSTRRenderer.getCamera();
 
-                // rotate
+                // rotateHorizontally
                 if (e.getPointerCount() == 1) {
                     float dx = x - oldX;
                     float dy = y - oldY;
 
-                    if (dx > cam.MAX_ROTATE_SPEED) {
-                        dx = cam.MAX_ROTATE_SPEED;
-                    } else if (dx < -cam.MAX_ROTATE_SPEED) {
-                        dx = -cam.MAX_ROTATE_SPEED;
+                    if (dx > cam.MAX_ROTATE_H_SPEED) {
+                        dx = cam.MAX_ROTATE_H_SPEED;
+                    } else if (dx < -cam.MAX_ROTATE_H_SPEED) {
+                        dx = -cam.MAX_ROTATE_H_SPEED;
                     }
 
-                    if (dy > cam.MAX_ROTATE_SPEED) {
-                        dy = cam.MAX_ROTATE_SPEED;
-                    } else if (dy < -cam.MAX_ROTATE_SPEED) {
-                        dy = -cam.MAX_ROTATE_SPEED;
+                    if (dy > cam.MAX_ROTATE_V_SPEED) {
+                        dy = cam.MAX_ROTATE_V_SPEED;
+                    } else if (dy < -cam.MAX_ROTATE_V_SPEED) {
+                        dy = -cam.MAX_ROTATE_V_SPEED;
                     }
 
-                    cam.rotate(-dx / rotateScalingFactor, new Vec3(0.0f, 1.0f, 0.0f));
-                    cam.rotate(-dy / rotateScalingFactor, new Vec3(1.0f, 0.0f, 0.0f));
+                    cam.rotateHorizontally(-dx / rotateScalingFactor);
+                    cam.rotateVertically(-dy / rotateScalingFactor);
 
                     oldX = x;
                     oldY = y;

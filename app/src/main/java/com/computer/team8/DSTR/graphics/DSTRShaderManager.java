@@ -17,13 +17,13 @@ public class DSTRShaderManager {
         "uniform vec3 vScale;" +
         "varying vec3 fNormal;" +
         "void main() {" +
-        "    vec4 pos = vMVP * vOrientation * ( vec4( vScale * vPosition, 1.0 ) + vModelPosition );" +
-        "    fNormal = vec3( vModelView * vOrientation * vec4( vNormal, 1.0 ) );" +
+        "    vec4 pos = vMVP * (vOrientation * vec4( vScale * vPosition, 1.0 ) + vec4( vModelPosition, 1.0 ));" +
+        "    fNormal = vec3( vOrientation * vec4( vNormal, 1.0 ) );" +
         "    gl_Position = pos;" +
         "}";
 
     private static final String fragmentShader =
-        "precision lowp float;" +
+        "precision mediump float;" +
         "uniform vec4 fColour;" +
         "uniform vec3 fDirectionalLight;" +
         "uniform float fDirectionalIntensity;" +
