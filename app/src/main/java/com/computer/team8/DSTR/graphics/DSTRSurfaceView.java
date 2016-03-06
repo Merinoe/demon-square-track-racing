@@ -44,6 +44,18 @@ public class DSTRSurfaceView extends GLSurfaceView {
                     float dx = x - oldX;
                     float dy = y - oldY;
 
+                    if (dx > cam.MAX_ROTATE_SPEED) {
+                        dx = cam.MAX_ROTATE_SPEED;
+                    } else if (dx < -cam.MAX_ROTATE_SPEED) {
+                        dx = -cam.MAX_ROTATE_SPEED;
+                    }
+
+                    if (dy > cam.MAX_ROTATE_SPEED) {
+                        dy = cam.MAX_ROTATE_SPEED;
+                    } else if (dy < -cam.MAX_ROTATE_SPEED) {
+                        dy = -cam.MAX_ROTATE_SPEED;
+                    }
+
                     cam.rotate(-dx / rotateScalingFactor, new Vec3(0.0f, 1.0f, 0.0f));
                     cam.rotate(-dy / rotateScalingFactor, new Vec3(1.0f, 0.0f, 0.0f));
 
@@ -67,6 +79,8 @@ public class DSTRSurfaceView extends GLSurfaceView {
                 break;
 
             default:
+                oldX = 0;
+                oldY = 0;
         }
 
         return true;

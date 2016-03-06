@@ -67,9 +67,16 @@ public class Element {
     public Vec3 getPosition() {
         return position;
     }
+
     public float[] getPositionData() {
         float[] p = { position.x, position.y, position.z };
         return p;
+    }
+
+    public float[] getBottom() {
+        float bot = (position.y * scale.y) - (scale.y / 2);
+        float[] b = { position.x, bot, position.z };
+        return b;
     }
 
     public FloatBuffer getVertexData() {
@@ -94,6 +101,18 @@ public class Element {
         return s;
     }
 
+    public float getWidth() {
+        return scale.x;
+    }
+
+    public float getHeight() {
+        return scale.y;
+    }
+
+    public float getDepth() {
+        return scale.z;
+    }
+
     /*** SET **/
 
     public void setPosition(Vec3 v) {
@@ -108,6 +127,12 @@ public class Element {
         position.z = z;
     }
 
+    public void setBottom(float x, float y, float z) {
+        position.x = x;
+        position.y = y + (scale.y / 2);
+        position.z = z;
+    }
+
     public void setOrientation(float[] matrix) {
         this.orientation = matrix;
     }
@@ -116,26 +141,21 @@ public class Element {
         scale.x = amount;
         scale.y = amount;
         scale.z = amount;
-        updateBuffer();
     }
 
     public void setScale(float x, float y, float z) {
         scale.x = x;
         scale.y = y;
         scale.z = z;
-        updateBuffer();
     }
 
     public void setXscale(float x) {
         scale.x = x;
-        updateBuffer();
     }
     public void setYscale(float y) {
         scale.y = y;
-        updateBuffer();
     }
     public void setZscale(float z) {
         scale.z = z;
-        updateBuffer();
     }
 }

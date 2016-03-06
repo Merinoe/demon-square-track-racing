@@ -13,11 +13,14 @@ public class DSTRBufferManager {
     public DSTRBufferManager() {
         elements = new ArrayList<>();
         colours = new ArrayList<>();
-        colours.add(new Vec4(1.0f, 0.0f, 0.0f, 1.0f));
-        colours.add(new Vec4(0.0f, 1.0f, 0.0f, 1.0f));
-        colours.add(new Vec4(0.0f, 0.0f, 1.0f, 1.0f));
-        colours.add(new Vec4(0.4f, 0.4f, 0.4f, 1.0f));
-        colours.add(new Vec4(0.5f, 0.5f, 0.5f, 1.0f));
+        colours.add(new Vec4(1.0f, 0.0f, 0.0f, 1.0f)); // pure red
+        colours.add(new Vec4(1.0f, 0.5f, 0.0f, 1.0f)); // blorange
+        colours.add(new Vec4(0.0f, 1.0f, 0.0f, 1.0f)); // pure green
+        colours.add(new Vec4(0.4f, 1.0f, 0.4f, 1.0f)); // chill grass
+        colours.add(new Vec4(0.0f, 0.0f, 1.0f, 1.0f)); // pure blue
+        colours.add(new Vec4(0.6f, 0.6f, 1.0f, 1.0f)); // lilac
+        colours.add(new Vec4(0.4f, 0.4f, 0.4f, 1.0f)); // grey 4
+        colours.add(new Vec4(0.5f, 0.5f, 0.5f, 1.0f)); // grey 5
     }
 
     public void add(Element elem) {
@@ -31,12 +34,30 @@ public class DSTRBufferManager {
 
     public void createLevel() {
         int colour = (int) (Math.random() * colours.size());
-        Square sq = new Square(0, -0.5f, 0, colours.get(1));
-        sq.setScale(10, 0.25f, 10);
+        Square sq = new Square(colours.get(3));
+        sq.setScale(25, 0.2f, 25);
+        sq.setBottom(0, -0.1f, 0);
         this.add(sq);
 
-        sq = new Square(3, -1, 3, colours.get(2));
-//        sq.setScale(100.0f);
+        sq = new Square(colours.get(5));
+        sq.setScale(10.0f);
+        sq.setBottom(15, 0, 12);
+        this.add(sq);
+
+        // oranges
+        sq = new Square(colours.get(1));
+        sq.setScale(10.0f);
+        sq.setBottom(55, 0, 12);
+        this.add(sq);
+
+        sq = new Square(colours.get(1));
+        sq.setScale(25.0f);
+        sq.setBottom(50, 0, 34);
+        this.add(sq);
+
+        sq = new Square(colours.get(1));
+        sq.setScale(33.0f);
+        sq.setBottom(-20, 0, -60);
         this.add(sq);
     }
 }

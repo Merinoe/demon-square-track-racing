@@ -107,6 +107,10 @@ public class Square extends Element {
         super(new Vec3(x, y, z), vertexData, colour);
     }
 
+    public Square(Vec4 col) {
+        super(new Vec3(0, 0, 0), vertexData, col);
+    }
+
     public Square(float x, float y, float z, Vec4 col) {
         super(new Vec3(x, y, z), vertexData, col);
     }

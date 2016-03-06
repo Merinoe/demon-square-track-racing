@@ -5,7 +5,6 @@ import android.opengl.GLSurfaceView;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
 import com.computer.team8.DSTR.graphics.element.Element;
-import com.computer.team8.DSTR.graphics.element.Square;
 import com.computer.team8.DSTR.graphics.light.DirectionalLight;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 
@@ -20,7 +19,6 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
     private DirectionalLight dirLight;
 
     // elements
-    private Square sq, sq2;
     private static Camera cam;
 
     private int glProgram;
@@ -35,20 +33,13 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
                 new Vec3(0, 0, 0),  // focus
                 new Vec3(0, 1, 0)); // top
 
-        sq = new Square();
-        sq.setPosition(1, 0, 0);
-        sq2 = new Square();
-        sq2.setPosition(-1, 0, 0);
-
         bufferManager = new DSTRBufferManager();
         bufferManager.createLevel();
-        bufferManager.add(sq);
-        bufferManager.add(sq2);
     }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
-        GLES20.glClearColor(0.2f, 0.2f, 0.75f, 0.5f);
+        GLES20.glClearColor(0.0f, 0.0f, 0.1f, 1.0f);
 
         // load shaders
         int vertexShader = DSTRShaderManager.loadVertexShader();

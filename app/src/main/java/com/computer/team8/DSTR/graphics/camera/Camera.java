@@ -18,6 +18,7 @@ public class Camera {
 
     // constants
     public final float MAX_ZOOM_SPEED = 5.0f;
+    public final float MAX_ROTATE_SPEED = 3.0f;
 
     public Camera(Vec3 eye, Vec3 focus, Vec3 top) {
         this.eye = eye;
@@ -51,7 +52,7 @@ public class Camera {
             right = (15.0f / 9.0f) * top;
         }
 
-        Matrix.frustumM(proj, 0, left, right, bottom, top, 0.1f, 100.0f);
+        Matrix.frustumM(proj, 0, left, right, bottom, top, 0.1f, 1000.0f);
     }
 
     public void rotate(float angle, Vec3 v) {
