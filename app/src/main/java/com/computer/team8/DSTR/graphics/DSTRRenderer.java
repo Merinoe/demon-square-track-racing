@@ -36,11 +36,12 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
                 new Vec3(0, 1, 0)); // top
 
         sq = new Square();
-        sq.setPosition(3, 0, 0);
+        sq.setPosition(1, 0, 0);
         sq2 = new Square();
-        sq2.setPosition(-3, 0, 0);
+        sq2.setPosition(-1, 0, 0);
 
         bufferManager = new DSTRBufferManager();
+        bufferManager.createLevel();
         bufferManager.add(sq);
         bufferManager.add(sq2);
     }
@@ -131,10 +132,14 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
 
             int stride = (3 + 3) * 4; // (POSITION_DATA + NORMAL_DATA) * BYTES_IN_FLOAT
 
+            // vertex shader variable handles
+            int orientHandle = DSTRShaderManager.getHandle("vOrientation");
             int positionHandle = DSTRShaderManager.getHandle("vPosition");
             int modelPosHandle = DSTRShaderManager.getHandle("vModelPosition");
+            int scaleHandle = DSTRShaderManager.getHandle("vScale");
             int normalHandle = DSTRShaderManager.getHandle("vNormal");
-            int orientHandle = DSTRShaderManager.getHandle("vOrientation");
+
+            // fragment shader variable handles
             int colourHandle = DSTRShaderManager.getHandle("fColour");
 
             // position data
@@ -158,6 +163,9 @@ public class DSTRRenderer implements GLSurfaceView.Renderer {
                     false,
                     stride,
                     vertexData);
+
+            // scale data
+            GLES20.glUniform3fv(scaleHandle, 1, e.getScaleData(), 0);
 
             // model position data
             GLES20.glUniform3fv(modelPosHandle, 1, e.getPositionData(), 0);

@@ -5,7 +5,7 @@ public class Vec3 {
     public float y;
     public float z;
 
-    public Vec3() { this.set(0, 0, 0); }
+    public Vec3() { this.set(1, 1, 1); }
     public Vec3(float x, float y, float z) {
         this.set(x, y, z);
     }
