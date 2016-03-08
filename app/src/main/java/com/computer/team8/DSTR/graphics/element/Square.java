@@ -23,18 +23,18 @@ public class Square extends Element {
 
             // right
             0.5f, 0.5f, -0.5f,  // top-right-back
-            1.0f, 0.0f, 0.0f,
+            -1.0f, 0.0f, 0.0f,
             0.5f, 0.5f, 0.5f,   // top-right-front
-            1.0f, 0.0f, 0.0f,
+            -1.0f, 0.0f, 0.0f,
             0.5f, -0.5f, 0.5f,  // bottom-right-front
-            1.0f, 0.0f, 0.0f,
+            -1.0f, 0.0f, 0.0f,
 
             0.5f, 0.5f, -0.5f,  // top-right-back
-            1.0f, 0.0f, 0.0f,
+            -1.0f, 0.0f, 0.0f,
             0.5f, -0.5f, 0.5f,  // bottom-right-front
-            1.0f, 0.0f, 0.0f,
+            -1.0f, 0.0f, 0.0f,
             0.5f, -0.5f, -0.5f, // bottom-right-back
-            1.0f, 0.0f, 0.0f,
+            -1.0f, 0.0f, 0.0f,
 
             // back
             -0.5f, -0.5f, -0.5f,// bottom-left-back
@@ -53,48 +53,48 @@ public class Square extends Element {
 
             // left
             -0.5f, 0.5f, -0.5f, // top-left-back
-            -1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
             -0.5f, -0.5f, -0.5f,// bottom-left-back
-            -1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
             -0.5f, -0.5f, 0.5f, // bottom-left-front
-            -1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
 
             -0.5f, 0.5f, 0.5f,  // top-left-front
-            -1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
             -0.5f, 0.5f, -0.5f, // top-left-back
-            -1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
             -0.5f, -0.5f, 0.5f, // bottom-left-front
-            -1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
 
             // top
             -0.5f, 0.5f, -0.5f, // top-left-back
-            0.0f, 1.0f, 0.0f,
+            0.0f, -1.0f, 0.0f,
             -0.5f, 0.5f, 0.5f,  // top-left-front
-            0.0f, 1.0f, 0.0f,
+            0.0f, -1.0f, 0.0f,
             0.5f, 0.5f, 0.5f,   // top-right-front
-            0.0f, 1.0f, 0.0f,
+            0.0f, -1.0f, 0.0f,
 
             0.5f, 0.5f, 0.5f,   // top-right-front
-            0.0f, 1.0f, 0.0f,
+            0.0f, -1.0f, 0.0f,
             0.5f, 0.5f, -0.5f,  // top-right-back
-            0.0f, 1.0f, 0.0f,
+            0.0f, -1.0f, 0.0f,
             -0.5f, 0.5f, -0.5f, // top-left-back
-            0.0f, 1.0f, 0.0f,
+            0.0f, -1.0f, 0.0f,
 
             // bottom
             0.5f, -0.5f, 0.5f,  // bottom-right-front
-            0.0f, -1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
             -0.5f, -0.5f, -0.5f,// bottom-left-back
-            0.0f, -1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
             0.5f, -0.5f, -0.5f, // bottom-right-back
-            0.0f, -1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
 
             0.5f, -0.5f, 0.5f,  // bottom-right-front
-            0.0f, -1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
             -0.5f, -0.5f, 0.5f, // bottom-left-front
-            0.0f, -1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
             -0.5f, -0.5f, -0.5f,// bottom-left-back
-            0.0f, -1.0f, 0.0f
+            0.0f, 1.0f, 0.0f
     };
 
     static Vec4 colour = new Vec4(0.75f, 0.0f, 0.0f, 1.0f);

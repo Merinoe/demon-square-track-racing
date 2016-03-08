@@ -30,7 +30,7 @@ public class DSTRShaderManager {
         "uniform float fAmbientIntensity;" +
         "varying vec3 fNormal;" +
         "void main() {" +
-        "    float dirInt = fDirectionalIntensity * max( dot( normalize(fNormal), -normalize(fDirectionalLight) ), 0.0 );" +
+        "    float dirInt = fDirectionalIntensity * max( dot( normalize(fNormal), normalize(-fDirectionalLight) ), 0.0 );" +
         "    gl_FragColor = (fColour * fAmbientIntensity) + (fColour * dirInt);" +
         "}";
 

@@ -16,6 +16,7 @@ public class Element {
     protected Vec3 position;
     protected Vec4 colour;
     protected Vec3 scale;
+    protected Vec3 lateral; // used for accurate veritcal rotations
     protected float[] orientation = new float[16];
     protected List<Float> data;
     protected FloatBuffer processedData;
@@ -30,6 +31,7 @@ public class Element {
             this.data.add(f);
         }
 
+        lateral = new Vec3();
         position = pos;
         colour = col;
         scale = new Vec3(1.0f, 1.0f, 1.0f);
@@ -160,5 +162,59 @@ public class Element {
     }
     public void setZscale(float z) {
         scale.z = z;
+    }
+
+    public void roll(float angle) {
+        Vec3 temp = new Vec3(1, 0, 0);
+        float[] result = new float[4];
+        Matrix.multiplyMV(result, 0, orientation, 0, temp.getData(), 0);
+
+        Matrix.setRotateM(
+                rotation,
+                0,            // not used
+                angle,        // amount rotated
+                result[0],
+                result[1],    // axis of rotation
+                result[2]);
+        Matrix.multiplyMM(orientation, 0, rotation, 0, orientation, 0);
+    }
+
+    public void updateLateral() {
+        Vec3 temp = new Vec3(1, 0, 0);
+
+        Matrix.setRotateM(
+                rotation,
+                0,       // not used
+                90.0f,   // amount rotated
+                0,
+                1,    // axis of rotation
+                0);
+
+        Matrix.multiplyMV(result, 0, rotation, 0, temp.getData(), 0);
+        lateral.set(result[0], result[1], result[2]);
+    }
+
+    public void rotateHorizontally(float angle) {
+        Matrix.setRotateM(
+                rotation,
+                0,       // not used
+                angle,   // amount rotated
+                0,
+                1,    // axis of rotation
+                0);
+        Matrix.multiplyMM(orientation, 0, rotation, 0, orientation, 0);
+        updateLateral();
+    }
+
+    public void rotateVertically(float angle) {
+        Matrix.setRotateM(
+                rotation,
+                0,       // not used
+                angle,   // amount rotated
+                lateral.x,
+                lateral.y,    // axis of rotation
+                lateral.z);
+        Matrix.multiplyMV(orientation, 0, rotation, 0, orientation, 0);
+        updateLateral();
     }
 }

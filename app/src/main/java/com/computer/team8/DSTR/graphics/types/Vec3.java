@@ -49,4 +49,15 @@ public class Vec3 {
     public float magnitude() {
         return (float) Math.sqrt( Math.pow(2, x) + Math.pow(2, y) + Math.pow(2, z) );
     }
+
+    public Vec3 normalize() {
+        Vec3 retVec = new Vec3();
+        float mag = this.magnitude();
+
+        retVec.x = x / mag;
+        retVec.y = y / mag;
+        retVec.z = z / mag;
+
+        return retVec;
+    }
 }

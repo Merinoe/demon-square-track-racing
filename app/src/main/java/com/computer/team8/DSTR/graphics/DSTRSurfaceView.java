@@ -1,34 +1,41 @@
 package com.computer.team8.DSTR.graphics;
 
 import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
+import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 
-public class DSTRSurfaceView extends GLSurfaceView implements SensorEventListener {
+public class DSTRSurfaceView extends GLSurfaceView {
     private final DSTRRenderer glRenderer;
-    private SensorManager sensorMan;
-    private Sensor sensor;
+    private static Vec3 cameraPosition;
 
-    public DSTRSurfaceView(Context context, SensorManager man, Sensor sensor) {
+    public DSTRSurfaceView(Context context) {
         super(context);
-
-        sensorMan = man;
-        this.sensor = sensor;
 
         // Create an OpenGL ES 2.0 context
         setEGLContextClientVersion(2);
 
-        glRenderer = new DSTRRenderer(sensor);
+        glRenderer = new DSTRRenderer();
 
         // Set the Renderer for drawing on the GLSurfaceView
         setRenderer(glRenderer);
+    }
+
+    public static void saveGameState() {
+        cameraPosition = DSTRRenderer.getCamera().eye;
+    }
+
+    public static void reloadGameState() {
+        DSTRRenderer.getCamera().setEye(cameraPosition);
+    }
+
+    public static void onRotation(float rot) {
+        Element e = DSTRBufferManager.get(4);
+        e.roll(rot * 10);
+//        e.rotateHorizontally(rot * 10);
     }
 
     float oldX, oldY;
@@ -92,27 +99,5 @@ public class DSTRSurfaceView extends GLSurfaceView implements SensorEventListene
         }
 
         return true;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        sensorMan.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        sensorMan.unregisterListener(this);
-    }
-
-    @Override
-    public final void onSensorChanged(SensorEvent event) {
-        System.out.println(event.values[0]);
-    }
-
-    @Override
-    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
-        System.out.println("ACCURACY");
     }
 }
