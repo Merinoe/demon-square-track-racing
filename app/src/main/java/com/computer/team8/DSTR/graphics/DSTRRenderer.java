@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
+import com.computer.team8.DSTR.graphics.element.Demon;
 import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.light.DirectionalLight;
 import com.computer.team8.DSTR.graphics.track.BuiltInTrack;
@@ -23,6 +24,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
     // elements
     private static Camera cam;
+    private Demon demon;
 
     private int glProgram;
     private DSTRBufferManager bufferManager;
@@ -36,9 +38,12 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         cam = new Camera(new Vec3(0, 1, -4), // eye
                 new Vec3(0, 0, 0),  // focus
                 new Vec3(0, 1, 0)); // top
+        demon = new Demon(0, 0, 0);
+        demon.rotateHorizontally(180);
 
         bufferManager = new DSTRBufferManager();
         bufferManager.createLevel();
+        bufferManager.add(demon);
     }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {

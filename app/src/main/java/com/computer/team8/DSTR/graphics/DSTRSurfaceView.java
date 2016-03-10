@@ -5,6 +5,7 @@ import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
+import com.computer.team8.DSTR.graphics.element.Demon;
 import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 
@@ -33,8 +34,8 @@ public class DSTRSurfaceView extends GLSurfaceView {
     }
 
     public static void onRotation(float rot) {
-        Element e = DSTRBufferManager.get(4);
-        e.roll(rot * 10);
+        Element e = DSTRBufferManager.get(new Demon(0, 0, 0));
+        e.roll(rot * 5);
     }
 
     float oldX, oldY;

@@ -4,17 +4,13 @@ import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.element.Square;
 import com.computer.team8.DSTR.graphics.service.ColourManager;
 import com.computer.team8.DSTR.graphics.track.BuiltInTrack;
-import com.computer.team8.DSTR.graphics.track.Track;
-
 import java.util.ArrayList;
 
 public class DSTRBufferManager {
     private static ArrayList<Element> elements;
-    private static Track track;
 
     public DSTRBufferManager() {
         elements = new ArrayList<>();
-        track = new BuiltInTrack();
     }
 
     public void add(Element elem) {
@@ -24,6 +20,15 @@ public class DSTRBufferManager {
 
     public static Element get(int index) {
         return elements.get(index);
+    }
+    public static Element get(Element e) {
+        for (Element te : elements) {
+            if (te.getClass().equals(e.getClass())) {
+                return te;
+            }
+        }
+
+        return null;
     }
 
     public ArrayList<Element> getElements() {
@@ -47,11 +52,6 @@ public class DSTRBufferManager {
         sq = new Square(ColourManager.getColour("chill grass"));
         sq.setScale(10, 1, 10);
         sq.setBottom(15, 1, 12);
-        this.add(sq);
-
-        sq = new Square(ColourManager.getColour("grey 5"));
-        sq.setScale(1, 4, 1);
-        sq.setBottom(5, 0, 0);
         this.add(sq);
 
         sq = new Square(ColourManager.getColour("grey 5"));
