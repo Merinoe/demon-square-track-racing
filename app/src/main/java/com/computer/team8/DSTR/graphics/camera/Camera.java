@@ -154,7 +154,7 @@ public class Camera {
     }
 
     public void zoom(float amount) {
-        eye.multiply(1.0f - amount);
+        eye = eye.multiply(1.0f - amount);
     }
 
 

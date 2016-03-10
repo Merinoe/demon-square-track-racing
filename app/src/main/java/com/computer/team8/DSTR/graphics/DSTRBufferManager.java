@@ -3,17 +3,18 @@ package com.computer.team8.DSTR.graphics;
 import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.element.Square;
 import com.computer.team8.DSTR.graphics.service.ColourManager;
-import com.computer.team8.DSTR.graphics.types.Vec4;
+import com.computer.team8.DSTR.graphics.track.BuiltInTrack;
+import com.computer.team8.DSTR.graphics.track.Track;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class DSTRBufferManager {
     private static ArrayList<Element> elements;
-    private HashMap<String, Vec4> colours;
+    private static Track track;
 
     public DSTRBufferManager() {
         elements = new ArrayList<>();
+        track = new BuiltInTrack();
     }
 
     public void add(Element elem) {
@@ -34,10 +35,18 @@ public class DSTRBufferManager {
         sq.setScale(50, 1, 50);
         sq.setBottom(0, -2, 0);
         this.add(sq);
-
         sq = new Square(ColourManager.getColour("chill grass"));
         sq.setScale(50, 1, 50);
         sq.setBottom(0, -1, 0);
+        this.add(sq);
+
+        sq = new Square(ColourManager.getColour("dirt"));
+        sq.setScale(10, 1, 10);
+        sq.setBottom(15, 0, 12);
+        this.add(sq);
+        sq = new Square(ColourManager.getColour("chill grass"));
+        sq.setScale(10, 1, 10);
+        sq.setBottom(15, 1, 12);
         this.add(sq);
 
         sq = new Square(ColourManager.getColour("grey 5"));

@@ -40,14 +40,24 @@ public class Vec3 {
 
     /* operations */
 
-    public void multiply(float amount) {
-        x *= amount;
-        y *= amount;
-        z *= amount;
+    public Vec3 subtract(Vec3 v) {
+        Vec3 temp = new Vec3();
+        temp.x = this.x - v.x;
+        temp.y = this.y - v.y;
+        temp.z = this.z - v.z;
+        return temp;
+    }
+
+    public Vec3 multiply(float amount) {
+        Vec3 temp = new Vec3();
+        temp.x = this.x * amount;
+        temp.y = this.y * amount;
+        temp.z = this.z * amount;
+        return temp;
     }
 
     public float magnitude() {
-        return (float) Math.sqrt( Math.pow(2, x) + Math.pow(2, y) + Math.pow(2, z) );
+        return (float) Math.sqrt( Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) );
     }
 
     public Vec3 normalize() {

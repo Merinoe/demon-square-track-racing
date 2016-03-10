@@ -29,7 +29,12 @@ public class ColourManager {
     }
 
     public static Vec4 getColour(String name) {
-        return colours.get(name);
+        if (colours.get(name) != null) {
+            return colours.get(name);
+        } else {
+            System.out.println("Non-existent colour requested: " + name);
+            return colours.get("pure red");
+        }
     }
 
     public static float[] getColourData(String name) {

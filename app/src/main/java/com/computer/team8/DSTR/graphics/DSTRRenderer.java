@@ -2,10 +2,13 @@ package com.computer.team8.DSTR.graphics;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
 import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.light.DirectionalLight;
+import com.computer.team8.DSTR.graphics.track.BuiltInTrack;
+import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 
 import java.nio.FloatBuffer;
@@ -17,6 +20,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
     // scene
     private DirectionalLight dirLight;
+    private Track track;
 
     // elements
     private static Camera cam;
@@ -27,6 +31,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
     public DSTRRenderer() {
         // init scene
         dirLight = new DirectionalLight();
+        track = new BuiltInTrack();
 
         // init elements
         cam = new Camera(new Vec3(0, 1, -4), // eye
@@ -117,21 +122,21 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
                 DSTRShaderManager.getHandle("fAmbientIntensity"),
                 dirLight.getAmbientIntensity());
 
+        int stride = (3 + 3) * 4; // (POSITION_DATA + NORMAL_DATA) * BYTES_IN_FLOAT
+
+        // vertex shader variable handles
+        int orientHandle = DSTRShaderManager.getHandle("vOrientation");
+        int positionHandle = DSTRShaderManager.getHandle("vPosition");
+        int modelPosHandle = DSTRShaderManager.getHandle("vModelPosition");
+        int scaleHandle = DSTRShaderManager.getHandle("vScale");
+        int normalHandle = DSTRShaderManager.getHandle("vNormal");
+
+        // fragment shader variable handles
+        int colourHandle = DSTRShaderManager.getHandle("fColour");
+
         // draw each element
         for (Element e : bufferManager.getElements()) {
             FloatBuffer vertexData = e.getVertexData();
-
-            int stride = (3 + 3) * 4; // (POSITION_DATA + NORMAL_DATA) * BYTES_IN_FLOAT
-
-            // vertex shader variable handles
-            int orientHandle = DSTRShaderManager.getHandle("vOrientation");
-            int positionHandle = DSTRShaderManager.getHandle("vPosition");
-            int modelPosHandle = DSTRShaderManager.getHandle("vModelPosition");
-            int scaleHandle = DSTRShaderManager.getHandle("vScale");
-            int normalHandle = DSTRShaderManager.getHandle("vNormal");
-
-            // fragment shader variable handles
-            int colourHandle = DSTRShaderManager.getHandle("fColour");
 
             // position data
             vertexData.position(0);
@@ -174,5 +179,51 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
             GLES20.glDisableVertexAttribArray(positionHandle);
             GLES20.glDisableVertexAttribArray(normalHandle);
         }
+
+
+        FloatBuffer data = track.getTrackBuffer();
+
+        // position data
+        data.position(0);
+        GLES20.glEnableVertexAttribArray(positionHandle);
+        GLES20.glVertexAttribPointer(
+                positionHandle,
+                3,
+                GLES20.GL_FLOAT,
+                false,
+                0,
+                data);
+
+        // normal data
+        data.position(0);
+        GLES20.glEnableVertexAttribArray(normalHandle);
+        GLES20.glVertexAttribPointer(
+                normalHandle,
+                3,
+                GLES20.GL_FLOAT,
+                false,
+                0,
+                data);
+
+        // scale data
+        float[] scale = { 1.0f, 1.0f, 1.0f };
+        GLES20.glUniform3fv(scaleHandle, 1, scale, 0);
+
+        // model position data
+        float[] pos = { 0, 0, 0 };
+        GLES20.glUniform3fv(modelPosHandle, 1, pos, 0);
+
+        // orientation data
+        float[] ori = new float[16];
+        Matrix.setIdentityM(ori, 0);
+        GLES20.glUniformMatrix4fv(orientHandle, 1, false, ori, 0);
+
+        // colour data
+        float[] col = { 1, 0, 0, 1 };
+        GLES20.glUniform4fv(colourHandle, 1, col, 0);
+
+        // draw shape
+        GLES20.glLineWidth(20.0f);
+        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, track.getNumPoints());
     }
 }
