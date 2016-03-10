@@ -16,7 +16,6 @@ public class OpenGLActivity extends Activity {
     private GLSurfaceView glView;
 
     private SensorManager mSensorManager;
-    private Sensor mSensor;
 
     private static boolean hasBooted = false;
 
@@ -39,7 +38,7 @@ public class OpenGLActivity extends Activity {
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
         public void onSensorChanged(SensorEvent se) {
-            DSTRSurfaceView.onRotation(se.values[0]);
+            DSTRSurfaceView.onRotation(se.values[2]);
         }
 
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -51,7 +50,7 @@ public class OpenGLActivity extends Activity {
         super.onResume();
         mSensorManager.registerListener(
                 mSensorListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR),
+                mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
                 SensorManager.SENSOR_DELAY_GAME);
 
         if (OpenGLActivity.hasBooted) {

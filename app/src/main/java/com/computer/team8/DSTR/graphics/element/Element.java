@@ -2,16 +2,14 @@ package com.computer.team8.DSTR.graphics.element;
 
 import android.opengl.Matrix;
 
+import com.computer.team8.DSTR.graphics.base.Drawable;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 import com.computer.team8.DSTR.graphics.types.Vec4;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Element {
+public class Element extends Drawable {
 
     protected Vec3 position;
     protected Vec4 colour;
@@ -19,7 +17,6 @@ public class Element {
     protected Vec3 lateral; // used for accurate veritcal rotations
     protected float[] orientation = new float[16];
     protected List<Float> data;
-    protected FloatBuffer processedData;
 
     // general use
     private float[] result = new float[16];
@@ -37,34 +34,7 @@ public class Element {
         scale = new Vec3(1.0f, 1.0f, 1.0f);
         Matrix.setIdentityM(orientation, 0);
 
-        updateBuffer();
-    }
-
-    public void rotate(Vec3 v, float amount) {
-        Matrix.setRotateM(
-                rotation,
-                0,        // not used
-                amount,   // amount rotated
-                v.x,
-                v.y,      // axis of rotation
-                v.z);
-        Matrix.multiplyMM(result, 0, rotation, 0, orientation, 0);
-        this.setOrientation(result);
-    }
-
-    public void updateBuffer() {
-        if (processedData != null) {
-            processedData.clear();
-        }
-        ByteBuffer vb = ByteBuffer.allocateDirect(data.size() * 4);
-        vb.order(ByteOrder.nativeOrder());
-        processedData = vb.asFloatBuffer();
-
-        for (Float f : data) {
-            processedData.put(f);
-        }
-
-        processedData.position(0);
+        updateBuffer(this.data);
     }
 
     /** GET ***/
@@ -82,10 +52,6 @@ public class Element {
         float bot = position.y + (scale.y / 2);
         float[] b = { position.x, bot, position.z };
         return b;
-    }
-
-    public FloatBuffer getVertexData() {
-        return processedData;
     }
 
     public Vec4 getColour() {

@@ -1,37 +1,31 @@
 package com.computer.team8.DSTR.graphics.track;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+import com.computer.team8.DSTR.graphics.base.Drawable;
+
 import java.util.ArrayList;
 
-public class Track {
+public class Track extends Drawable {
+    public static final float TRACK_WIDTH = 25.0f;
+    public static final float[] TRACK_SCALE = { 1, 1, 1 };
+    public static final float[] TRACK_POSITION = { 0, 0, 0 };
+    public static final float[] TRACK_COLOUR = { 1, 0, 0, 1 };
+    public static final float[] TRACK_ORIENTATION = {
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+    };
+
     protected ArrayList<Float> points;
-    protected FloatBuffer processedData;
 
     public Track() {
         points = new ArrayList<>();
-        updateBuffer();
+        updateBuffer(this.points);
     }
 
     public Track(ArrayList<Float> incomingTrack) {
         points = incomingTrack;
-        updateBuffer();
-    }
-
-    public void updateBuffer() {
-        if (processedData != null) {
-            processedData.clear();
-        }
-        ByteBuffer vb = ByteBuffer.allocateDirect(points.size() * 4);
-        vb.order(ByteOrder.nativeOrder());
-        processedData = vb.asFloatBuffer();
-
-        for (Float f : points) {
-            processedData.put(f);
-        }
-
-        processedData.position(0);
+        updateBuffer(this.points);
     }
 
     /* get */
@@ -44,29 +38,9 @@ public class Track {
         return points;
     }
 
-    public float[] getTrackData() {
-        float[] fPoints = new float[points.size()];
-        int i = 0;
-        for (Float f : points) {
-            fPoints[i++] = (f != null ? f : Float.NaN);
-        }
-        return fPoints;
-    }
-
-    public FloatBuffer getTrackBuffer() {
-        return processedData;
-    }
-
     /* set */
 
     public void setTrack(ArrayList<Float> incomingTrack) {
         points = incomingTrack;
-    }
-
-    public void setTrackData(float[] incoming) {
-        int i = 0;
-        for (float f : incoming) {
-            points.add(f);
-        }
     }
 }

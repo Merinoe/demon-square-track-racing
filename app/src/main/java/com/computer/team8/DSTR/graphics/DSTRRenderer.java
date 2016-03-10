@@ -2,7 +2,6 @@ package com.computer.team8.DSTR.graphics;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.opengl.Matrix;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
 import com.computer.team8.DSTR.graphics.element.Element;
@@ -136,7 +135,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
         // draw each element
         for (Element e : bufferManager.getElements()) {
-            FloatBuffer vertexData = e.getVertexData();
+            FloatBuffer vertexData = e.getBuffer();
 
             // position data
             vertexData.position(0);
@@ -173,7 +172,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
             GLES20.glUniform4fv(colourHandle, 1, e.getColourData(), 0);
 
             // draw shape
-            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, e.getVertexData().capacity() / 6);
+            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, e.getBuffer().capacity() / 6);
 
             // reset attributes
             GLES20.glDisableVertexAttribArray(positionHandle);
@@ -181,7 +180,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         }
 
 
-        FloatBuffer data = track.getTrackBuffer();
+        FloatBuffer data = track.getBuffer();
 
         // position data
         data.position(0);
@@ -206,24 +205,19 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
                 data);
 
         // scale data
-        float[] scale = { 1.0f, 1.0f, 1.0f };
-        GLES20.glUniform3fv(scaleHandle, 1, scale, 0);
+        GLES20.glUniform3fv(scaleHandle, 1, Track.TRACK_SCALE, 0);
 
         // model position data
-        float[] pos = { 0, 0, 0 };
-        GLES20.glUniform3fv(modelPosHandle, 1, pos, 0);
+        GLES20.glUniform3fv(modelPosHandle, 1, Track.TRACK_POSITION, 0);
 
         // orientation data
-        float[] ori = new float[16];
-        Matrix.setIdentityM(ori, 0);
-        GLES20.glUniformMatrix4fv(orientHandle, 1, false, ori, 0);
+        GLES20.glUniformMatrix4fv(orientHandle, 1, false, Track.TRACK_ORIENTATION, 0);
 
         // colour data
-        float[] col = { 1, 0, 0, 1 };
-        GLES20.glUniform4fv(colourHandle, 1, col, 0);
+        GLES20.glUniform4fv(colourHandle, 1, Track.TRACK_COLOUR, 0);
 
         // draw shape
-        GLES20.glLineWidth(20.0f);
-        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, track.getNumPoints());
+        GLES20.glLineWidth(Track.TRACK_WIDTH);
+        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, track.getNumPoints() - 1);
     }
 }
