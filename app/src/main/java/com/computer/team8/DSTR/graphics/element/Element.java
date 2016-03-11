@@ -44,14 +44,14 @@ public class Element extends Drawable {
     }
 
     public float[] getPositionData() {
-        float[] p = { position.x, position.y, position.z };
+        float[] p = { position.x, position.y, position.z, 1 };
         return p;
     }
 
-    public float[] getBottom() {
-        float bot = position.y + (scale.y / 2);
-        float[] b = { position.x, bot, position.z };
-        return b;
+    public Vec3 getBottom() {
+        Vec3 temp = new Vec3();
+        temp.set(position.x, position.y - (scale.y / 2), position.z);
+        return temp;
     }
 
     public Vec4 getColour() {
@@ -65,6 +65,14 @@ public class Element extends Drawable {
 
     public float[] getOrientation() {
         return orientation;
+    }
+
+    public Vec3 getOrientationVector() {
+        Vec3 temp = new Vec3(0, 0, 1);
+        float[] result = new float[4];
+        Matrix.multiplyMV(result, 0, orientation, 0, temp.getData(), 0);
+        temp.set(result[0], result[1], result[2]);
+        return temp;
     }
 
     public float[] getScaleData() {
@@ -87,9 +95,7 @@ public class Element extends Drawable {
     /*** SET **/
 
     public void setPosition(Vec3 v) {
-        position.x = v.x;
-        position.y = v.y;
-        position.z = v.z;
+        position = v;
     }
 
     public void setPosition(float x, float y, float z) {
@@ -102,6 +108,12 @@ public class Element extends Drawable {
         position.x = x;
         position.y = y + (scale.y / 2.0f);
         position.z = z;
+    }
+
+    public void setBottom(Vec3 v) {
+        position.x = v.x;
+        position.y = v.y + (scale.y / 2.0f);
+        position.z = v.z;
     }
 
     public void setOrientation(float[] matrix) {

@@ -70,4 +70,8 @@ public class Vec3 {
 
         return retVec;
     }
+
+    public float dot(Vec3 v) {
+        return (this.x * v.x) + (this.y * v.y) + (this.z * v.z);
+    }
 }
