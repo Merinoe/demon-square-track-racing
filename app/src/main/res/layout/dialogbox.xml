@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog"><![CDATA[
+
+
+
+
+
+
+
+
+
+
+
+
+
+    />
+
+
+
+
+
+
+
+
+
+
+    ]]>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogOk"
+        android:src="@drawable/okbutton"
+        android:background="@android:color/transparent"
+        android:onClick="ok"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_marginTop="204dp"
+        android:layout_gravity="right|bottom" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogMessage"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:padding="30dp" />
+</FrameLayout>

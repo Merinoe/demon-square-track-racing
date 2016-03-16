@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.merinoe.projectui.CharacterCreation"
+    android:background="#000000">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo"
+        android:background="@drawable/demonsquaremed"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/buttonOk"
+        android:layout_toRightOf="@+id/buttonRed"
+        android:layout_toEndOf="@+id/buttonRed" />
+
+    <Button
+        android:id="@+id/buttonBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/greenbutton_small"
+        android:text="Body"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:onClick="changeBody"
+        android:layout_below="@+id/buttonOk"
+        android:layout_alignLeft="@+id/buttonHorns"
+        android:layout_alignStart="@+id/buttonHorns"
+        android:layout_marginTop="45dp" />
+
+    <Button
+        android:id="@+id/buttonHorns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/greenbutton_small"
+        android:text="Horn"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:layout_below="@+id/buttonBody"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="changeHorns" />
+
+    <Button
+        android:id="@+id/buttonEyes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/greenbutton_small"
+        android:text="Eyes"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:layout_below="@+id/buttonHorns"
+        android:layout_alignRight="@+id/buttonHorns"
+        android:layout_alignEnd="@+id/buttonHorns"
+        android:onClick="changeEyes" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonWhite"
+        android:src="@drawable/colorsmallest"
+        android:background="@android:color/transparent"
+        android:layout_above="@+id/buttonYellow"
+        android:layout_alignLeft="@+id/buttonEyes"
+        android:layout_alignStart="@+id/buttonEyes"
+        android:onClick="selectWhite" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonRed"
+        android:src="@drawable/colorsmallest"
+        android:background="@android:color/transparent"
+        android:tint="#c50909"
+        android:tintMode="multiply"
+        android:layout_alignTop="@+id/buttonWhite"
+        android:layout_centerHorizontal="true"
+        android:onClick="selectRed" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonGreen"
+        android:src="@drawable/colorsmallest"
+        android:background="@android:color/transparent"
+        android:tint="#06e420"
+        android:tintMode="multiply"
+        android:layout_alignTop="@+id/buttonRed"
+        android:layout_alignRight="@+id/logo"
+        android:layout_alignEnd="@+id/logo"
+        android:onClick="selectGreen" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAqua"
+        android:src="@drawable/colorsmallest"
+        android:background="@android:color/transparent"
+        android:tint="#00ffee"
+        android:tintMode="multiply"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="selectAqua" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonBlue"
+        android:src="@drawable/colorsmallest"
+        android:background="@android:color/transparent"
+        android:tint="#0a16fb"
+        android:tintMode="multiply"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="selectBlue" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonYellow"
+        android:src="@drawable/colorsmallest"
+        android:background="@android:color/transparent"
+        android:tint="#ffea00"
+        android:tintMode="multiply"
+        android:layout_alignTop="@+id/buttonAqua"
+        android:layout_alignLeft="@+id/buttonWhite"
+        android:layout_alignStart="@+id/buttonWhite"
+        android:onClick="selectYellow" />
+
+    <Button
+        android:id="@+id/buttonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/greenbutton_small"
+        android:text="Name"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:layout_below="@+id/buttonEyes"
+        android:layout_alignLeft="@+id/buttonEyes"
+        android:layout_alignStart="@+id/buttonEyes"
+        android:onClick="changeName" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonOk"
+        android:src="@drawable/okbutton"
+        android:background="@android:color/transparent"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/buttonBody"
+        android:layout_alignEnd="@+id/buttonBody"
+        android:onClick = "toMain"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtName"
+        android:background="@drawable/nameplate"
+        android:layout_above="@+id/buttonRed"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffff"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:layout_marginTop="2dp"
+        android:typeface="serif"
+        android:padding="10dp" />
+
+</RelativeLayout>

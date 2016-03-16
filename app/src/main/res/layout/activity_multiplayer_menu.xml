@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#000000">
+
+    <Button
+        android:id="@+id/buttonConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/purplebutton"
+        android:text="Connect"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:layout_gravity="center"
+        android:layout_marginTop="156dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="executeConnect" />
+
+    <Button
+        android:id="@+id/buttonRankings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/purplebutton"
+        android:text="Rankings"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:layout_gravity="center"
+        android:layout_below="@+id/buttonConnect"
+        android:layout_alignLeft="@+id/buttonConnect"
+        android:layout_alignStart="@+id/buttonConnect"
+        android:layout_marginTop="44dp"
+        android:onClick="toRankings" />
+
+    <Button
+        android:id="@+id/buttonMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/purplebutton"
+        android:text="Main Menu"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:layout_gravity="center"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/buttonRankings"
+        android:layout_alignLeft="@+id/buttonRankings"
+        android:layout_alignStart="@+id/buttonRankings"
+        android:onClick="toMain" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/logo"
+        android:src="@drawable/racelogo"
+        android:layout_alignBottom="@+id/buttonConnect"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="73dp" />
+
+</RelativeLayout>

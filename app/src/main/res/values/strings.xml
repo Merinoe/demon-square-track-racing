@@ -1,12 +1,4 @@
 <resources>
-    <string name="app_name">DSTR</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="button_send">Goto DSTR</string>
-    <string name="share">Share</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_favorite">Favorite</string>
-    <string name="action_search">Search it</string>
-    <string name="action_response">huehuehue you know it</string>
-    <string name="title_activity_display_message">My Message</string>
-    <string name="title_activity_opengl">DSTR</string>
+    <string name="app_name"></string>
+    <string name="defaultName">"Anonymous"</string>
 </resources>

@@ -1,46 +1,74 @@
 package com.computer.team8.DSTR;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import com.computer.team8.DSTR.CharacterCreation;
+import com.computer.team8.DSTR.MultiplayerMenu;
+import com.computer.team8.DSTR.OpenGLActivity;
+import com.computer.team8.DSTR.R;
+import com.computer.team8.DSTR.projectui.BackgroundMusic;
 
 public class MainActivity extends AppCompatActivity {
+
+    BackgroundMusic bgm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setTitle("Demon Square Track Racing");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startGame(view);
-            }
-        });
+bgm = new BackgroundMusic(this);
+        bgm.addFile(R.raw.title, "title");
+        bgm.play("title");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void toMakeChar(View view)
+    {
+        Intent intent = new Intent(this, CharacterCreation.class);
+        startActivity(intent);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return true;
+
+    public void toCreateTrack(View view)
+    {
+        Log.i("MY_MESSAGE", "Create Track");
     }
 
-    public void startGame(View view) {
+    public void toPlay(View view)
+    {
         Intent intent = new Intent(this, OpenGLActivity.class);
         startActivity(intent);
+    }
+
+    public void toMulti(View view)
+    {
+        Intent intent = new Intent(this, MultiplayerMenu.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onPause()
+    {
+        bgm.stop();
+        super.onPause();
+    }
+
+
+    @Override
+    public void onResume()
+    {
+        bgm.play("title");
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        bgm.destroy();
+        super.onDestroy();
     }
 }

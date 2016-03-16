@@ -229,6 +229,6 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
         // draw shape
         GLES20.glLineWidth(Track.TRACK_WIDTH);
-        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, track.getNumPoints() - 1);
+        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, track.getNumPoints());
     }
 }
