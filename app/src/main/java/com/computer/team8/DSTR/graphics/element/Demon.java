@@ -12,7 +12,7 @@ public class Demon extends Square {
     private ArrayList<Float> trackPoints;
 
     private int STRIDE = 3;
-    private int DEMON_TURN_SPEED = 3;
+    private int DEMON_TURN_SPEED = 4;
     private float DEMON_VELOCITY = 0.05f;
 
     public Demon(float x, float y, float z) {
@@ -60,10 +60,10 @@ public class Demon extends Square {
             // turn to face the orientation of the next track segment
             Vec3 ori = this.getOrientationVector();
             float dot = next.dot(ori);
-            System.out.println("Dot: " + dot);
-            if (dot >= -1.0f) {
+
+            if (dot >= -0.5f) {
                 this.rotateHorizontally(DEMON_TURN_SPEED);
-            } else if (dot <= 1.0f) {
+            } else if (dot <= 0.5f) {
                 this.rotateHorizontally(-DEMON_TURN_SPEED);
             }
         } else {

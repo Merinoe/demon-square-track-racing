@@ -2,6 +2,7 @@ package com.computer.team8.DSTR.graphics.camera;
 
 import android.opengl.Matrix;
 
+import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 
 public class Camera {
@@ -9,6 +10,9 @@ public class Camera {
     public Vec3 focus;
     public Vec3 top;
     public Vec3 lateral; // used for accurate veritcal rotations
+
+    private Element origin = new Element();
+    private Element subject;
 
     private float velX, velY;
 
@@ -31,10 +35,24 @@ public class Camera {
         this.focus = focus;
         this.top = top;
         this.lateral = new Vec3();
+        this.subject = this.origin;
         updateLateral();
     }
 
+    public void setSubject(Element e) {
+        subject = e;
+    }
+
     public void update() {
+        this.focus = subject.getPosition().multiply(0.5f);
+        Vec3 negOri = subject.getOrientationVector().multiply(-1.0f);
+        Vec3 pos = subject.getPosition();
+        this.eye.set(
+                pos.x + negOri.x,
+                pos.y + negOri.y,
+                pos.z + negOri.z
+        );
+
         if (velX > 0) {
             if (velX < 0.075f) {
                 velX = 0.0f;

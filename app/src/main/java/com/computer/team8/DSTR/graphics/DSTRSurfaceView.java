@@ -35,7 +35,8 @@ public class DSTRSurfaceView extends GLSurfaceView {
 
     public static void onRotation(float rot) {
         Element e = DSTRBufferManager.get(new Demon(0, 0, 0));
-        e.roll(rot * 5);
+        if (e == null) throw new AssertionError();
+        e.roll(rot * 2.0f);
     }
 
     float oldX, oldY;

@@ -35,11 +35,12 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         track = new BuiltInTrack();
 
         // init elements
-        cam = new Camera(new Vec3(0, 1, -4), // eye
+        cam = new Camera(new Vec3(-2, 10, 0), // eye
                 new Vec3(0, 0, 0),  // focus
                 new Vec3(0, 1, 0)); // top
         demon = new Demon(0, 0, 0);
         demon.setTrack(track);
+        cam.setSubject(demon);
 
         bufferManager = new DSTRBufferManager();
         bufferManager.createLevel();

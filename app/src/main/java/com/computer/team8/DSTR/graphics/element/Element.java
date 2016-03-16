@@ -22,6 +22,10 @@ public class Element extends Drawable {
     private float[] result = new float[16];
     private float[] rotation = new float[16];
 
+    public Element() {
+        position = new Vec3(0, 0, 0);
+    }
+
     public Element(Vec3 pos, float[] data, Vec4 col) {
         this.data = new ArrayList<>();
         for (Float f : data) {
