@@ -1,5 +1,6 @@
 package com.computer.team8.DSTR;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 
 import com.computer.team8.DSTR.projectui.*;
 
-public class CharacterCreation extends AppCompatActivity {
+public class CharacterCreation extends Activity {
 
     BackgroundMusic bgm;
     Context activityContext;

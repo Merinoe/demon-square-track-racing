@@ -1,5 +1,6 @@
 package com.computer.team8.DSTR;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.view.View;
 
 import com.computer.team8.DSTR.projectui.*;
 
-public class MultiplayerMenu extends AppCompatActivity {
+public class MultiplayerMenu extends Activity {
 
     BackgroundMusic bgm;
 

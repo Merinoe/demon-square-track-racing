@@ -1,5 +1,6 @@
 package com.computer.team8.DSTR;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import com.computer.team8.DSTR.OpenGLActivity;
 import com.computer.team8.DSTR.R;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     BackgroundMusic bgm;
 
