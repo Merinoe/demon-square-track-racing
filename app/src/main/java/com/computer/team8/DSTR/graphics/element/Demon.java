@@ -13,12 +13,14 @@ public class Demon extends Square {
 
     private int STRIDE = 3;
     private int DEMON_TURN_SPEED = 4;
-    private float DEMON_VELOCITY = 0.05f;
+    private float DEMON_VELOCITY = 0.25f;
 
     public Demon(float x, float y, float z) {
         super(new Vec4(1, 0, 0, 1));
         this.setScale(0.5f, 1, 1);
         this.setBottom(x, y, z);
+
+        turnSpeed = DEMON_TURN_SPEED;
 
         nextPoint = 1;
     }
@@ -28,6 +30,12 @@ public class Demon extends Square {
     }
 
     public boolean rideTrack() {
+        if (velocity > DEMON_VELOCITY) {
+            velocity = DEMON_VELOCITY;
+        } else if (velocity < 0.01f) {
+            velocity = 0.01f;
+        }
+
         if ((nextPoint * STRIDE) <= trackPoints.size() - 3) {
             Vec3 next = new Vec3(
                     trackPoints.get(nextPoint * STRIDE),
@@ -44,27 +52,30 @@ public class Demon extends Square {
             // move the demon along the track
             Vec3 pos = this.getBottom();
             Vec3 dir = next.subtract(pos);
-            if (dir.magnitude() > 0.1f) {
-                dir = dir.normalize().multiply(DEMON_VELOCITY);
+            if (dir.magnitude() > 0.5f) {
+                dir = dir.normalize().multiply(velocity);
                 this.setBottom(
                         pos.x + dir.x,
                         pos.y + dir.y,
                         pos.z + dir.z
                 );
             } else {
+                System.out.println("NEXT");
                 ++nextPoint;
             }
 
             next = next.subtract(prev);
 
+            this.feelSlope(next.y);
+
             // turn to face the orientation of the next track segment
             Vec3 ori = this.getOrientationVector();
             float dot = next.dot(ori);
 
-            if (dot >= -0.5f) {
-                this.rotateHorizontally(DEMON_TURN_SPEED);
-            } else if (dot <= 0.5f) {
-                this.rotateHorizontally(-DEMON_TURN_SPEED);
+            if (dot <= -1) {
+                this.rotateHorizontally(turnSpeed);
+            } else if (dot >= 1) {
+                this.rotateHorizontally(-turnSpeed);
             }
         } else {
             return true;

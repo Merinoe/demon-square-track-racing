@@ -45,13 +45,23 @@ public class Camera {
 
     public void update() {
         this.focus = subject.getPosition().multiply(0.5f);
-        Vec3 negOri = subject.getOrientationVector().multiply(-1.0f);
-        Vec3 pos = subject.getPosition();
-        this.eye.set(
-                pos.x + negOri.x,
-                pos.y + negOri.y,
-                pos.z + negOri.z
-        );
+
+        Vec3 neg = this.subject.getOrientationVector().multiply(-3);
+
+        Matrix.setRotateM(
+                rotation,
+                0,       // not used
+                90.0f,   // amount rotated
+                0,
+                1,    // axis of rotation
+                0);
+
+        Matrix.multiplyMV(result, 0, rotation, 0, neg.getData(), 0);
+        neg.set(result[0], result[1], result[2]);
+
+        this.eye.x = this.focus.x + neg.x;
+        this.eye.y = this.focus.y + 1;
+        this.eye.z = this.focus.z + neg.z;
 
         if (velX > 0) {
             if (velX < 0.075f) {

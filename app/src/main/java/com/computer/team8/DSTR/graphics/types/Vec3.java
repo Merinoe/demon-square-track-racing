@@ -40,6 +40,14 @@ public class Vec3 {
 
     /* operations */
 
+    public Vec3 add(Vec3 v) {
+        Vec3 temp = new Vec3();
+        temp.x = this.x + v.x;
+        temp.y = this.y + v.y;
+        temp.z = this.z + v.z;
+        return temp;
+    }
+
     public Vec3 subtract(Vec3 v) {
         Vec3 temp = new Vec3();
         temp.x = this.x - v.x;

@@ -15,6 +15,8 @@ public class Element extends Drawable {
     protected Vec4 colour;
     protected Vec3 scale;
     protected Vec3 lateral; // used for accurate veritcal rotations
+    protected float velocity;
+    protected float turnSpeed;
     protected float[] orientation = new float[16];
     protected List<Float> data;
 
@@ -36,6 +38,8 @@ public class Element extends Drawable {
         position = pos;
         colour = col;
         scale = new Vec3(1.0f, 1.0f, 1.0f);
+        velocity = 0;
+        turnSpeed = 0;
         Matrix.setIdentityM(orientation, 0);
 
         updateBuffer(this.data);
@@ -198,5 +202,13 @@ public class Element extends Drawable {
                 lateral.z);
         Matrix.multiplyMV(orientation, 0, rotation, 0, orientation, 0);
         updateLateral();
+    }
+
+    public void feelSlope(float nextElevation) {
+        if (nextElevation > this.position.y) {
+            this.velocity -= 0.0025f;
+        } else if (nextElevation < this.position.y) {
+            this.velocity += 0.0025f;
+        }
     }
 }
