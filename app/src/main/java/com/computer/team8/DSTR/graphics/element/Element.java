@@ -14,9 +14,11 @@ public class Element extends Drawable {
     protected Vec3 position;
     protected Vec4 colour;
     protected Vec3 scale;
-    protected Vec3 lateral; // used for accurate veritcal rotations
+    protected Vec3 lateral; // used for accurate vertical rotations
     protected float velocity;
     protected float turnSpeed;
+    protected float rollSpeed;
+    protected float rollAngle;
     protected float[] orientation = new float[16];
     protected List<Float> data;
 
@@ -40,6 +42,8 @@ public class Element extends Drawable {
         scale = new Vec3(1.0f, 1.0f, 1.0f);
         velocity = 0;
         turnSpeed = 0;
+        rollSpeed = 0;
+        rollAngle = 0;
         Matrix.setIdentityM(orientation, 0);
 
         updateBuffer(this.data);
@@ -104,6 +108,8 @@ public class Element extends Drawable {
 
     public float getVelociyRatio() { return velocity / 1.0f; }
 
+    public float getRollAngle() { return rollAngle; }
+
     /*** SET **/
 
     public void setPosition(Vec3 v) {
@@ -155,27 +161,7 @@ public class Element extends Drawable {
     }
     public void setVelocity(float v) { velocity = v; }
 
-    public void roll(float angle) {
-        Vec3 temp = new Vec3(1, 0, 0);
-        float[] result = new float[4];
-        Matrix.multiplyMV(result, 0, orientation, 0, temp.getData(), 0);
-
-        temp.set(result[0], result[1], result[2]);
-        temp = temp.normalize();
-
-        Matrix.setRotateM(
-                rotation,
-                0,            // not used
-                angle,        // amount rotated
-                temp.x,
-                temp.y,    // axis of rotation
-                temp.z);
-        Matrix.multiplyMM(orientation, 0, rotation, 0, orientation, 0);
-    }
-
     public void updateLateral() {
-        Vec3 temp = new Vec3(1, 0, 0);
-
         Matrix.setRotateM(
                 rotation,
                 0,       // not used
@@ -184,8 +170,30 @@ public class Element extends Drawable {
                 1,    // axis of rotation
                 0);
 
-        Matrix.multiplyMV(result, 0, rotation, 0, temp.getData(), 0);
+        Matrix.multiplyMV(result, 0, rotation, 0, new Vec3(1, 0, 0).getData(), 0);
         lateral.set(result[0], result[1], result[2]);
+    }
+
+    public void roll(float angle) {
+        Vec3 axis = new Vec3(1, 0, 0);
+        float[] result = new float[4];
+        Matrix.multiplyMV(result, 0, orientation, 0, axis.getData(), 0);
+
+        axis.set(result[0], result[1], result[2]);
+        axis = axis.normalize();
+
+        // update roll fields
+        rollSpeed -= angle / 10f;
+        rollAngle += rollSpeed;
+
+        Matrix.setRotateM(
+                rotation,
+                0,         // not used
+                rollSpeed, // amount rotated
+                axis.x,
+                axis.y,    // axis of rotation
+                axis.z);
+        Matrix.multiplyMM(orientation, 0, rotation, 0, orientation, 0);
     }
 
     public void rotateHorizontally(float angle) {
@@ -194,7 +202,7 @@ public class Element extends Drawable {
                 0,       // not used
                 angle,   // amount rotated
                 0,
-                1,    // axis of rotation
+                1,       // axis of rotation
                 0);
         Matrix.multiplyMM(orientation, 0, rotation, 0, orientation, 0);
         updateLateral();
@@ -203,20 +211,20 @@ public class Element extends Drawable {
     public void rotateVertically(float angle) {
         Matrix.setRotateM(
                 rotation,
-                0,       // not used
-                angle,   // amount rotated
+                0,         // not used
+                angle,     // amount rotated
                 lateral.x,
-                lateral.y,    // axis of rotation
+                lateral.y, // axis of rotation
                 lateral.z);
         Matrix.multiplyMV(orientation, 0, rotation, 0, orientation, 0);
         updateLateral();
     }
 
     public void feelSlope(float nextElevation) {
-        if (nextElevation > this.getPosition().y) {
-            this.velocity -= 0.001f;
-        } else if (nextElevation < this.getPosition().y) {
-            this.velocity += 0.002f;
+        if (nextElevation > getPosition().y) {
+            velocity -= 0.001f;
+        } else if (nextElevation < getPosition().y) {
+            velocity += 0.002f;
         }
     }
 }

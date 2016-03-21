@@ -18,6 +18,9 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class DSTRRenderer implements GLSurfaceView.Renderer{
 
+    // game state
+    private static boolean RACING;
+
     // scene
     private DirectionalLight dirLight;
     private Track track;
@@ -42,10 +45,14 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         demon.setTrack(track);
         cam.setSubject(demon);
 
+        RACING = true;
+
         bufferManager = new DSTRBufferManager();
         bufferManager.createLevel();
         bufferManager.add(demon);
     }
+
+    public static boolean isRacing() { return RACING; }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
@@ -80,8 +87,11 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         cam.update();
 
         // update demon's position and orientation on track
-        if (demon.rideTrack()) {
+        if (RACING && demon.rideTrack()) {
+            RACING = false;
             cam.setSubject(null);
+        } else if (demon.hasFailed()) {
+            demon.getPosition().y -= 0.2f;
         }
 
         // draw all Elements

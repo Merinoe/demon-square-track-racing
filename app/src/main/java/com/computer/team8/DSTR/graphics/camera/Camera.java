@@ -45,13 +45,12 @@ public class Camera {
 
     public void update() {
         // chase camera. Will chase any Element object
-        if (this.subject != null) {
-            focus = subject.getPosition().multiply(0.5f);
+        if (subject != null) {
+            Vec3 focusPoint = subject.getPosition();
+            focus = focusPoint.multiply(0.5f);
+
             Vec3 neg = subject.getOrientationVector()
-                                   .multiply(
-                                   Math.min(
-                                           -20 * subject.getVelociyRatio(),
-                                           -3));
+                              .multiply(Math.min(-20 * subject.getVelociyRatio(), -3));
 
             Matrix.setRotateM(
                     rotation,
@@ -77,7 +76,7 @@ public class Camera {
                     velX -= 0.075f;
                 }
 
-                this.rotateHorizontally(velX);
+                rotateHorizontally(velX);
 
             } else if (velX < 0) {
                 if (velX > -0.075f) {
@@ -86,7 +85,7 @@ public class Camera {
                     velX += 0.075f;
                 }
 
-                this.rotateHorizontally(velX);
+                rotateHorizontally(velX);
             }
 
             if (velY > 0) {
@@ -96,7 +95,7 @@ public class Camera {
                     velY -= 0.075f;
                 }
 
-                this.rotateVertically(velY);
+                rotateVertically(velY);
 
             } else if (velY < 0) {
                 if (velY > -0.075f) {
@@ -105,7 +104,7 @@ public class Camera {
                     velY += 0.075f;
                 }
 
-                this.rotateVertically(velY);
+                rotateVertically(velY);
             }
 
         }

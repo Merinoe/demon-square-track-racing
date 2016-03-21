@@ -34,9 +34,11 @@ public class DSTRSurfaceView extends GLSurfaceView {
     }
 
     public static void onRotation(float rot) {
-        Element e = DSTRBufferManager.get(Demon.class);
-        assert e != null;
-        e.roll(rot * -2.0f);
+        if (DSTRRenderer.isRacing()) {
+            Element e = DSTRBufferManager.get(Demon.class);
+            assert e != null;
+            e.roll(rot);
+        }
     }
 
     float oldX, oldY;
