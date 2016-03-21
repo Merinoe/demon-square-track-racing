@@ -100,6 +100,10 @@ public class Element extends Drawable {
         return scale.z;
     }
 
+    public float getVelocity() { return velocity; }
+
+    public float getVelociyRatio() { return velocity / 1.0f; }
+
     /*** SET **/
 
     public void setPosition(Vec3 v) {
@@ -149,19 +153,23 @@ public class Element extends Drawable {
     public void setZscale(float z) {
         scale.z = z;
     }
+    public void setVelocity(float v) { velocity = v; }
 
     public void roll(float angle) {
         Vec3 temp = new Vec3(1, 0, 0);
         float[] result = new float[4];
         Matrix.multiplyMV(result, 0, orientation, 0, temp.getData(), 0);
 
+        temp.set(result[0], result[1], result[2]);
+        temp = temp.normalize();
+
         Matrix.setRotateM(
                 rotation,
                 0,            // not used
                 angle,        // amount rotated
-                result[0],
-                result[1],    // axis of rotation
-                result[2]);
+                temp.x,
+                temp.y,    // axis of rotation
+                temp.z);
         Matrix.multiplyMM(orientation, 0, rotation, 0, orientation, 0);
     }
 
@@ -205,10 +213,10 @@ public class Element extends Drawable {
     }
 
     public void feelSlope(float nextElevation) {
-        if (nextElevation > this.position.y) {
-            this.velocity -= 0.0025f;
-        } else if (nextElevation < this.position.y) {
-            this.velocity += 0.0025f;
+        if (nextElevation > this.getPosition().y) {
+            this.velocity -= 0.001f;
+        } else if (nextElevation < this.getPosition().y) {
+            this.velocity += 0.002f;
         }
     }
 }

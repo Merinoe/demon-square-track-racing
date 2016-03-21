@@ -80,7 +80,9 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         cam.update();
 
         // update demon's position and orientation on track
-        demon.rideTrack();
+        if (demon.rideTrack()) {
+            cam.setSubject(null);
+        }
 
         // draw all Elements
         render();

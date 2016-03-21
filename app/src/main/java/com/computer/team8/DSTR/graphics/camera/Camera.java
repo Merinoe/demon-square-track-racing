@@ -35,7 +35,7 @@ public class Camera {
         this.focus = focus;
         this.top = top;
         this.lateral = new Vec3();
-        this.subject = this.origin;
+        this.subject = null;
         updateLateral();
     }
 
@@ -44,61 +44,70 @@ public class Camera {
     }
 
     public void update() {
-        this.focus = subject.getPosition().multiply(0.5f);
+        // chase camera. Will chase any Element object
+        if (this.subject != null) {
+            focus = subject.getPosition().multiply(0.5f);
+            Vec3 neg = subject.getOrientationVector()
+                                   .multiply(
+                                   Math.min(
+                                           -20 * subject.getVelociyRatio(),
+                                           -3));
 
-        Vec3 neg = this.subject.getOrientationVector().multiply(-3);
+            Matrix.setRotateM(
+                    rotation,
+                    0,       // not used
+                    90.0f,   // amount rotated
+                    0,
+                    1,    // axis of rotation
+                    0);
 
-        Matrix.setRotateM(
-                rotation,
-                0,       // not used
-                90.0f,   // amount rotated
-                0,
-                1,    // axis of rotation
-                0);
+            Matrix.multiplyMV(result, 0, rotation, 0, neg.getData(), 0);
+            neg.set(result[0], result[1], result[2]);
 
-        Matrix.multiplyMV(result, 0, rotation, 0, neg.getData(), 0);
-        neg.set(result[0], result[1], result[2]);
+            eye.x = focus.x + neg.x;
+            eye.y = focus.y + 1;
+            eye.z = focus.z + neg.z;
 
-        this.eye.x = this.focus.x + neg.x;
-        this.eye.y = this.focus.y + 1;
-        this.eye.z = this.focus.z + neg.z;
+        // free camera
+        } else {
+            if (velX > 0) {
+                if (velX < 0.075f) {
+                    velX = 0.0f;
+                } else {
+                    velX -= 0.075f;
+                }
 
-        if (velX > 0) {
-            if (velX < 0.075f) {
-                velX = 0.0f;
-            } else {
-                velX -= 0.075f;
+                this.rotateHorizontally(velX);
+
+            } else if (velX < 0) {
+                if (velX > -0.075f) {
+                    velX = 0.0f;
+                } else {
+                    velX += 0.075f;
+                }
+
+                this.rotateHorizontally(velX);
             }
 
-            this.rotateHorizontally(velX);
+            if (velY > 0) {
+                if (velY < 0.075f) {
+                    velY = 0.0f;
+                } else {
+                    velY -= 0.075f;
+                }
 
-        } else if (velX < 0) {
-            if (velX > -0.075f) {
-                velX = 0.0f;
-            } else {
-                velX += 0.075f;
+                this.rotateVertically(velY);
+
+            } else if (velY < 0) {
+                if (velY > -0.075f) {
+                    velY = 0.0f;
+                } else {
+                    velY += 0.075f;
+                }
+
+                this.rotateVertically(velY);
             }
 
-            this.rotateHorizontally(velX);
-        }
-
-        if (velY > 0) {
-            if (velY < 0.075f) {
-                velY = 0.0f;
-            } else {
-                velY -= 0.075f;
-            }
-
-            this.rotateVertically(velY);
-
-        } else if (velY < 0) {
-            if (velY > -0.075f) {
-                velY = 0.0f;
-            } else {
-                velY += 0.075f;
-            }
-
-            this.rotateVertically(velY);
         }
 
         Matrix.setLookAtM(

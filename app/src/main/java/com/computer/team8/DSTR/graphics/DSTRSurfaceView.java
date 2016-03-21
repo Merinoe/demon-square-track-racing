@@ -16,8 +16,8 @@ public class DSTRSurfaceView extends GLSurfaceView {
     public DSTRSurfaceView(Context context) {
         super(context);
 
-        // Create an OpenGL ES 2.0 context
-        setEGLContextClientVersion(2);
+        // Create an OpenGL ES 3.0 context
+        setEGLContextClientVersion(3);
 
         glRenderer = new DSTRRenderer();
 
@@ -34,7 +34,7 @@ public class DSTRSurfaceView extends GLSurfaceView {
     }
 
     public static void onRotation(float rot) {
-        Element e = DSTRBufferManager.get(new Demon(0, 0, 0));
+        Element e = DSTRBufferManager.get(Demon.class);
         assert e != null;
         e.roll(rot * -2.0f);
     }

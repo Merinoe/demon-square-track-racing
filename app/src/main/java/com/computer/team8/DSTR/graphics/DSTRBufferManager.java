@@ -20,9 +20,9 @@ public class DSTRBufferManager {
     public static Element get(int index) {
         return elements.get(index);
     }
-    public static Element get(Element e) {
+    public static Element get(Class<?> c) {
         for (Element te : elements) {
-            if (te.getClass().equals(e.getClass())) {
+            if (te.getClass().equals(c)) {
                 return te;
             }
         }
