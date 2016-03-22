@@ -8,7 +8,7 @@ public class Track extends Drawable {
     public static final float TRACK_WIDTH = 25.0f;
     public static final float[] TRACK_SCALE = { 1, 1, 1 };
     public static final float[] TRACK_POSITION = { 0, 0, 0 };
-    public static final float[] TRACK_COLOUR = { 0.6f, 0.6f, 0.6f, 1 };
+    public static final float[] TRACK_COLOUR = { 0, 0, 1, 1 };
     public static final float[] TRACK_ORIENTATION = {
             1, 0, 0, 0,
             0, 1, 0, 0,

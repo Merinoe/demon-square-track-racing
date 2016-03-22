@@ -48,8 +48,8 @@ public class Demon extends Square {
 
         if (velocity > DEMON_VELOCITY) {
             velocity = DEMON_VELOCITY;
-        } else if (velocity < 0.02f) {
-            velocity = 0.02f;
+        } else if (velocity < 0.03f) {
+            velocity = 0.03f;
         }
 
         if (trackPoints != null) {
@@ -69,11 +69,11 @@ public class Demon extends Square {
                 // move the demon along the track
                 Vec3 pos = this.getBottom();
                 Vec3 dir = next.subtract(pos);
-                if (dir.magnitude() > 0.2f) {
+                if (dir.magnitude() > 0.15f) {
                     dir = dir.normalize().multiply(velocity);
                     setBottom(
                             pos.x + dir.x,
-                            pos.y + dir.y,
+                            pos.y + dir.y + 0.01f,
                             pos.z + dir.z
                     );
                 } else {
@@ -92,10 +92,10 @@ public class Demon extends Square {
                 float dot = next.normalize().dot(ori);
                 if (dot <= -0.08f) {
                     rotateHorizontally(turnSpeed);
-                    roll(-velocity * 3f);
+                    roll(-velocity * 5f);
                 } else if (dot >= 0.08f) {
                     rotateHorizontally(-turnSpeed);
-                    roll(velocity * 3f);
+                    roll(velocity * 5f);
                 }
 
                 return false;
