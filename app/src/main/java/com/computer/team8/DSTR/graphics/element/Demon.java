@@ -50,7 +50,7 @@ public class Demon extends Square {
     }
 
     public boolean failFall() {
-        Vec3 pos = getBottom();
+        // reset from fall back on to track
         if (DEMON_FALL_DIST > DEMON_FALL_LIMIT) {
             setBottom(DEMON_FAIL_POINT);
 
@@ -61,13 +61,9 @@ public class Demon extends Square {
             resetRoll();
 
             return true;
-        } else {
-            Vec3 next = new Vec3(
-                    trackPoints.get(nextPoint * STRIDE),
-                    trackPoints.get((nextPoint * STRIDE) + 1),
-                    trackPoints.get((nextPoint * STRIDE) + 2)
-            );
 
+        // fall because you suck
+        } else {
             Vec3 dir = getOrientationVector().normalize().multiply(velocity);
             setBottom(
                     getBottom().x + dir.x,
