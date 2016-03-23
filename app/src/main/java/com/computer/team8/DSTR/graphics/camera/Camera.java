@@ -29,6 +29,8 @@ public class Camera {
     public final float MAX_ZOOM_SPEED = 4.5f;
     public final float MAX_ROTATE_H_SPEED = 8.5f;
     public final float MAX_ROTATE_V_SPEED = 3.5f;
+    public final float MAX_ZOOM_DISTANCE = -25;
+    public final float MIN_ZOOM_DISTANCE = -5;
 
     public Camera(Vec3 eye, Vec3 focus, Vec3 top) {
         this.eye = eye;
@@ -49,8 +51,12 @@ public class Camera {
             Vec3 focusPoint = subject.getPosition();
             focus = focusPoint.multiply(0.5f);
 
-            Vec3 neg = subject.getOrientationVector()
-                              .multiply(Math.min(-20 * subject.getVelociyRatio(), -3));
+            Vec3 neg = subject.getOrientationVector().multiply(
+                    Math.min(
+                            MAX_ZOOM_DISTANCE * subject.getVelociyRatio(),
+                            MIN_ZOOM_DISTANCE
+                    )
+            );
 
             Matrix.setRotateM(
                     rotation,

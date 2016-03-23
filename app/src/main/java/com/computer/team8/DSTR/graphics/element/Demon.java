@@ -12,13 +12,15 @@ public class Demon extends Square {
     private ArrayList<Float> trackPoints;
 
     private final int STRIDE = 3;
-    private int DEMON_TURN_SPEED = 8;
-    private float DEMON_VELOCITY = 0.3f;
-    private float DEMON_ROLL_LIMIT = 60.0f;
+    private int DEMON_TURN_SPEED = 6;
+    private float DEMON_TURN_BUFFER = 0.08f;
+    private float DEMON_UPPER_VELOCITY = 0.3f;
+    private float DEMON_LOWER_VELOCITY = 0.03f;
+    private float DEMON_ROLL_LIMIT = 50.0f;
 
     // failure dynamics
     private boolean DEMON_FAIL = false;
-    private float DEMON_FAIL_POINT = 0.0f;
+    private Vec3 DEMON_FAIL_POINT;
     private float DEMON_FALL_DIST = 0.0f;
     private float DEMON_FALL_LIMIT = 20.0f;
     private float DEMON_FALL_SPEED = 0.2f;
@@ -43,10 +45,6 @@ public class Demon extends Square {
         nextPoint = 1;
     }
 
-    public float getVelocityRatio() {
-        return this.velocity / DEMON_VELOCITY;
-    }
-
     public boolean hasFailed() {
         return DEMON_FAIL;
     }
@@ -54,15 +52,29 @@ public class Demon extends Square {
     public boolean failFall() {
         Vec3 pos = getBottom();
         if (DEMON_FALL_DIST > DEMON_FALL_LIMIT) {
-            setBottom(pos.x, DEMON_FAIL_POINT, pos.z);
+            setBottom(DEMON_FAIL_POINT);
+
+            velocity = 0;
             DEMON_FAIL = false;
             DEMON_FALL_DIST = 0.0f;
 
-            roll(rollAngle / 5);
+            resetRoll();
 
             return true;
         } else {
-            setBottom(pos.x, pos.y - DEMON_FALL_SPEED, pos.z);
+            Vec3 next = new Vec3(
+                    trackPoints.get(nextPoint * STRIDE),
+                    trackPoints.get((nextPoint * STRIDE) + 1),
+                    trackPoints.get((nextPoint * STRIDE) + 2)
+            );
+
+            Vec3 dir = getOrientationVector().normalize().multiply(velocity);
+            setBottom(
+                    getBottom().x + dir.x,
+                    getBottom().y - DEMON_FALL_SPEED,
+                    getBottom().z + dir.z
+            );
+
             DEMON_FALL_DIST += DEMON_FALL_SPEED;
             rollSpeed = 0;
             return false;
@@ -76,26 +88,25 @@ public class Demon extends Square {
 
     public boolean rideTrack() {
         if (hasFailed()) {
-            velocity = 0;
+            rollSpeed = 0;
             return false;
         }
         if (getRollAngle() > DEMON_ROLL_LIMIT ||
             getRollAngle() < -DEMON_ROLL_LIMIT) {
-            velocity = 0;
             rollSpeed = 0;
             DEMON_FAIL = true;
-            DEMON_FAIL_POINT = this.getBottom().y;
+            DEMON_FAIL_POINT = this.getBottom();
             return false;
         }
 
-        if (velocity > DEMON_VELOCITY) {
-            velocity = DEMON_VELOCITY;
-        } else if (velocity < 0.03f) {
-            velocity = 0.03f;
+        if (velocity > DEMON_UPPER_VELOCITY) {
+            velocity = DEMON_UPPER_VELOCITY;
+        } else if (velocity < DEMON_LOWER_VELOCITY) {
+            velocity = DEMON_LOWER_VELOCITY;
         }
 
         if (trackPoints != null) {
-            if ((nextPoint * STRIDE) <= trackPoints.size() - 3) {
+            if ((nextPoint * STRIDE) <= trackPoints.size() - STRIDE) {
                 Vec3 next = new Vec3(
                         trackPoints.get(nextPoint * STRIDE),
                         trackPoints.get((nextPoint * STRIDE) + 1),
@@ -132,17 +143,25 @@ public class Demon extends Square {
                 ori.y = 0;
 
                 float dot = next.normalize().dot(ori);
-                if (dot <= -0.08f) {
+                if (dot <= -DEMON_TURN_BUFFER) {
                     rotateHorizontally(turnSpeed);
-                    roll(-velocity * 5f);
-                } else if (dot >= 0.08f) {
+                    roll(-velocity * 4f);
+                } else if (dot >= DEMON_TURN_BUFFER) {
                     rotateHorizontally(-turnSpeed);
-                    roll(velocity * 5f);
+                    roll(velocity * 4f);
                 }
 
                 return false;
             } else {
-                return true;
+                nextPoint = 1;
+                ++Track.lapCounter;
+
+                if (Track.lapCounter >= Track.laps) {
+                    Track.lapCounter = 0;
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
 

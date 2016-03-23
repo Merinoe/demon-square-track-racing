@@ -174,6 +174,27 @@ public class Element extends Drawable {
         lateral.set(result[0], result[1], result[2]);
     }
 
+    public void resetRoll() {
+        Vec3 axis = new Vec3(1, 0, 0);
+        float[] result = new float[4];
+        Matrix.multiplyMV(result, 0, orientation, 0, axis.getData(), 0);
+
+        axis.set(result[0], result[1], result[2]);
+        axis = axis.normalize();
+
+        Matrix.setRotateM(
+                rotation,
+                0,         // not used
+                -rollAngle, // amount rotated
+                axis.x,
+                axis.y,    // axis of rotation
+                axis.z);
+        Matrix.multiplyMM(orientation, 0, rotation, 0, orientation, 0);
+
+        rollAngle = 0;
+        rollSpeed = 0;
+    }
+
     public void roll(float angle) {
         Vec3 axis = new Vec3(1, 0, 0);
         float[] result = new float[4];
