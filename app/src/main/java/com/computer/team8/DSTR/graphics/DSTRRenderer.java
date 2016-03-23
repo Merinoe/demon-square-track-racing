@@ -41,7 +41,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         cam = new Camera(new Vec3(0, 0, 0), // eye
                 new Vec3(0, 0, 0),  // focus
                 new Vec3(0, 1, 0)); // top
-        demon = new Demon(0, 0, 0);
+        demon = new Demon();
         demon.setTrack(track);
         cam.setSubject(demon);
 
@@ -91,7 +91,12 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
             RACING = false;
             cam.setSubject(null);
         } else if (demon.hasFailed()) {
-            demon.getPosition().y -= 0.2f;
+            // demon falls until limit
+            if (demon.failFall()) {
+                cam.setSubject(demon);
+            } else {
+                cam.setSubject(null);
+            }
         }
 
         // draw all Elements

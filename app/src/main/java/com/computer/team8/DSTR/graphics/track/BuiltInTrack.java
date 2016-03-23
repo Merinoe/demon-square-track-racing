@@ -41,6 +41,7 @@ public class BuiltInTrack extends Track {
         this.points.add(5.0f);
         this.points.add(-17.0f);
 
+
         this.updateBuffer(this.points);
     }
 }

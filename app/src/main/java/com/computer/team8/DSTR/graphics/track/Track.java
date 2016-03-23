@@ -5,7 +5,7 @@ import com.computer.team8.DSTR.graphics.base.Drawable;
 import java.util.ArrayList;
 
 public class Track extends Drawable {
-    public static final float TRACK_WIDTH = 25.0f;
+    public static final float TRACK_WIDTH = 20.0f;
     public static final float[] TRACK_SCALE = { 1, 1, 1 };
     public static final float[] TRACK_POSITION = { 0, 0, 0 };
     public static final float[] TRACK_COLOUR = { 0, 0, 1, 1 };

@@ -15,7 +15,23 @@ public class Demon extends Square {
     private int DEMON_TURN_SPEED = 8;
     private float DEMON_VELOCITY = 0.3f;
     private float DEMON_ROLL_LIMIT = 60.0f;
+
+    // failure dynamics
     private boolean DEMON_FAIL = false;
+    private float DEMON_FAIL_POINT = 0.0f;
+    private float DEMON_FALL_DIST = 0.0f;
+    private float DEMON_FALL_LIMIT = 20.0f;
+    private float DEMON_FALL_SPEED = 0.2f;
+
+    public Demon() {
+        super(new Vec4(1, 0, 0, 1));
+        this.setScale(0.5f, 1, 1);
+        this.setBottom(0, 0, 0);
+
+        turnSpeed = DEMON_TURN_SPEED;
+
+        nextPoint = 1;
+    }
 
     public Demon(float x, float y, float z) {
         super(new Vec4(1, 0, 0, 1));
@@ -35,15 +51,41 @@ public class Demon extends Square {
         return DEMON_FAIL;
     }
 
+    public boolean failFall() {
+        Vec3 pos = getBottom();
+        if (DEMON_FALL_DIST > DEMON_FALL_LIMIT) {
+            setBottom(pos.x, DEMON_FAIL_POINT, pos.z);
+            DEMON_FAIL = false;
+            DEMON_FALL_DIST = 0.0f;
+
+            roll(rollAngle / 5);
+
+            return true;
+        } else {
+            setBottom(pos.x, pos.y - DEMON_FALL_SPEED, pos.z);
+            DEMON_FALL_DIST += DEMON_FALL_SPEED;
+            rollSpeed = 0;
+            return false;
+        }
+    }
+
     public void setTrack(Track track) {
         trackPoints = track.getTrack();
+        setBottom(trackPoints.get(0), trackPoints.get(1) + 0.01f, trackPoints.get(2));
     }
 
     public boolean rideTrack() {
+        if (hasFailed()) {
+            velocity = 0;
+            return false;
+        }
         if (getRollAngle() > DEMON_ROLL_LIMIT ||
             getRollAngle() < -DEMON_ROLL_LIMIT) {
+            velocity = 0;
+            rollSpeed = 0;
             DEMON_FAIL = true;
-            return true;
+            DEMON_FAIL_POINT = this.getBottom().y;
+            return false;
         }
 
         if (velocity > DEMON_VELOCITY) {
