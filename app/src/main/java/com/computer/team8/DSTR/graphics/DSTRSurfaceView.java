@@ -57,7 +57,7 @@ public class DSTRSurfaceView extends GLSurfaceView {
             case MotionEvent.ACTION_MOVE:
                 Camera cam = DSTRRenderer.getCamera();
 
-                // rotateHorizontally
+                // rotate
                 if (e.getPointerCount() == 1) {
                     float dx = x - oldX;
                     float dy = y - oldY;

@@ -36,7 +36,8 @@ bgm = new BackgroundMusic(this);
 
     public void toCreateTrack(View view)
     {
-        Log.i("MY_MESSAGE", "Create Track");
+        Intent intent = new Intent(this, GoogleMapsActivity.class);
+        startActivity(intent);
     }
 
     public void toPlay(View view)
