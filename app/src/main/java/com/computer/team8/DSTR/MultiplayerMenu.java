@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.computer.team8.DSTR.multiplayer.BluetoothConnection;
 import com.computer.team8.DSTR.projectui.*;
 
 public class MultiplayerMenu extends Activity {
@@ -31,10 +32,42 @@ public class MultiplayerMenu extends Activity {
 
     public void executeConnect(View view)
     {
-        //Display error message if unable to connect via bluetooth.
+        BluetoothConnection.attachContext(this);
 
-        MessageBox dialog = new MessageBox(this, "Warning: Your device is not connected to the main game machine");
-        dialog.show();
+        if(BluetoothConnection.bluetoothResult == BluetoothConnection.Result.UNSUPPORTED)
+        {
+            (new MessageBox(this, "Bluetooth not supported on this device.")).show();
+            return;
+        }
+
+        if(BluetoothConnection.bluetoothResult == BluetoothConnection.Result.BLUETOOTH_DISABLED)
+        {
+            (new MessageBox(this, "Bluetooth is not enabled on this device. Please enable it and try again.")).show();
+            return;
+        }
+
+
+        BluetoothConnection.connect("DTSR");
+
+        if(BluetoothConnection.bluetoothResult == BluetoothConnection.Result.NOT_PAIRED)
+        {
+            (new MessageBox(this, "Device is not connected to DSTR. Please pair to the device and try again.")).show();
+            return;
+        }
+
+        if(BluetoothConnection.isConnected())
+        {
+            (new MessageBox(this, "Connection Established")).show();
+
+            for(int i = 0; i < 100; i++)
+            {
+                for(int j = 0; j < 50; j++) {
+                    //do nothing
+                }
+                BluetoothConnection.WriteToBTDevice("Krul");
+            }
+        }
+
     }
 
     public void toRankings(View view)
