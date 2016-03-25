@@ -1,6 +1,6 @@
 package com.computer.team8.DSTR.graphics;
 
-import android.opengl.GLES30;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
@@ -56,32 +56,32 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
-        GLES30.glClearColor(0.25f, 0.25f, 1.0f, 1.0f);
+        GLES20.glClearColor(0.25f, 0.25f, 1.0f, 1.0f);
 
         // load shaders
         int vertexShader = DSTRShaderManager.loadVertexShader();
         int fragmentShader = DSTRShaderManager.loadFragmentShader();
 
         // create empty OpenGL ES Program
-        glProgram = GLES30.glCreateProgram();
+        glProgram = GLES20.glCreateProgram();
 
-        GLES30.glAttachShader(glProgram, vertexShader);
-        GLES30.glAttachShader(glProgram, fragmentShader);
-        GLES30.glLinkProgram(glProgram);
+        GLES20.glAttachShader(glProgram, vertexShader);
+        GLES20.glAttachShader(glProgram, fragmentShader);
+        GLES20.glLinkProgram(glProgram);
 
         // use culling to remove back faces.
-        GLES30.glEnable(GLES30.GL_CULL_FACE);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
 
         // enable depth testing
-        GLES30.glEnable(GLES30.GL_DEPTH_TEST);
-        GLES30.glDepthFunc(GLES30.GL_LEQUAL);
-        GLES30.glDepthMask(true);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+        GLES20.glDepthFunc(GLES20.GL_LEQUAL);
+        GLES20.glDepthMask(true);
 
-        GLES30.glFrontFace(GLES30.GL_CCW);
+        GLES20.glFrontFace(GLES20.GL_CCW);
     }
 
     public void onDrawFrame(GL10 unused) {
-        GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT | GLES30.GL_DEPTH_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         // update camera matrices
         cam.update();
@@ -104,7 +104,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
-        GLES30.glViewport(0, 0, width, height);
+        GLES20.glViewport(0, 0, width, height);
         cam.updateFOV(width, height);
     }
 
@@ -114,20 +114,20 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
     public void render() {
         // Add program to OpenGL ES environment
-        GLES30.glUseProgram(glProgram);
+        GLES20.glUseProgram(glProgram);
 
         // load shader attributes and uniforms
         DSTRShaderManager.loadHandles(glProgram);
 
         // set general uniforms
         // viewing projections
-        GLES30.glUniformMatrix4fv(
+        GLES20.glUniformMatrix4fv(
                 DSTRShaderManager.getHandle("vMVP"),
                 1,
                 false,
                 cam.getMVP(),
                 0);
-        GLES30.glUniformMatrix4fv(
+        GLES20.glUniformMatrix4fv(
                 DSTRShaderManager.getHandle("vModelView"),
                 1,
                 false,
@@ -135,15 +135,15 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
                 0);
 
         // directional light data
-        GLES30.glUniform3fv(
+        GLES20.glUniform3fv(
                 DSTRShaderManager.getHandle("fDirectionalLight"),
                 1,
                 dirLight.getOrientationData(),
                 0);
-        GLES30.glUniform1f(
+        GLES20.glUniform1f(
                 DSTRShaderManager.getHandle("fDirectionalIntensity"),
                 dirLight.getDirectionalIntensity());
-        GLES30.glUniform1f(
+        GLES20.glUniform1f(
                 DSTRShaderManager.getHandle("fAmbientIntensity"),
                 dirLight.getAmbientIntensity());
 
@@ -165,44 +165,44 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
             // position data
             vertexData.position(0);
-            GLES30.glEnableVertexAttribArray(positionHandle);
-            GLES30.glVertexAttribPointer(
+            GLES20.glEnableVertexAttribArray(positionHandle);
+            GLES20.glVertexAttribPointer(
                     positionHandle,
                     3,
-                    GLES30.GL_FLOAT,
+                    GLES20.GL_FLOAT,
                     false,
                     stride,
                     vertexData);
 
             // normal data
             vertexData.position(3);
-            GLES30.glEnableVertexAttribArray(normalHandle);
-            GLES30.glVertexAttribPointer(
+            GLES20.glEnableVertexAttribArray(normalHandle);
+            GLES20.glVertexAttribPointer(
                     normalHandle,
                     3,
-                    GLES30.GL_FLOAT,
+                    GLES20.GL_FLOAT,
                     false,
                     stride,
                     vertexData);
 
             // scale data
-            GLES30.glUniform3fv(scaleHandle, 1, e.getScaleData(), 0);
+            GLES20.glUniform3fv(scaleHandle, 1, e.getScaleData(), 0);
 
             // model position data
-            GLES30.glUniform3fv(modelPosHandle, 1, e.getPositionData(), 0);
+            GLES20.glUniform3fv(modelPosHandle, 1, e.getPositionData(), 0);
 
             // orientation data
-            GLES30.glUniformMatrix4fv(orientHandle, 1, false, e.getOrientation(), 0);
+            GLES20.glUniformMatrix4fv(orientHandle, 1, false, e.getOrientation(), 0);
 
             // colour data
-            GLES30.glUniform4fv(colourHandle, 1, e.getColourData(), 0);
+            GLES20.glUniform4fv(colourHandle, 1, e.getColourData(), 0);
 
             // draw shape
-            GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, e.getBuffer().capacity() / 6);
+            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, e.getBuffer().capacity() / 6);
 
             // reset attributes
-            GLES30.glDisableVertexAttribArray(positionHandle);
-            GLES30.glDisableVertexAttribArray(normalHandle);
+            GLES20.glDisableVertexAttribArray(positionHandle);
+            GLES20.glDisableVertexAttribArray(normalHandle);
 
             vertexData.clear();
         }
@@ -212,40 +212,40 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
         // position data
         data.position(0);
-        GLES30.glEnableVertexAttribArray(positionHandle);
-        GLES30.glVertexAttribPointer(
+        GLES20.glEnableVertexAttribArray(positionHandle);
+        GLES20.glVertexAttribPointer(
                 positionHandle,
                 3,
-                GLES30.GL_FLOAT,
+                GLES20.GL_FLOAT,
                 false,
                 0,
                 data);
 
         // normal data
         data.position(0);
-        GLES30.glEnableVertexAttribArray(normalHandle);
-        GLES30.glVertexAttribPointer(
+        GLES20.glEnableVertexAttribArray(normalHandle);
+        GLES20.glVertexAttribPointer(
                 normalHandle,
                 3,
-                GLES30.GL_FLOAT,
+                GLES20.GL_FLOAT,
                 false,
                 0,
                 data);
 
         // scale data
-        GLES30.glUniform3fv(scaleHandle, 1, Track.TRACK_SCALE, 0);
+        GLES20.glUniform3fv(scaleHandle, 1, Track.TRACK_SCALE, 0);
 
         // model position data
-        GLES30.glUniform3fv(modelPosHandle, 1, Track.TRACK_POSITION, 0);
+        GLES20.glUniform3fv(modelPosHandle, 1, Track.TRACK_POSITION, 0);
 
         // orientation data
-        GLES30.glUniformMatrix4fv(orientHandle, 1, false, Track.TRACK_ORIENTATION, 0);
+        GLES20.glUniformMatrix4fv(orientHandle, 1, false, Track.TRACK_ORIENTATION, 0);
 
         // colour data
-        GLES30.glUniform4fv(colourHandle, 1, Track.TRACK_COLOUR, 0);
+        GLES20.glUniform4fv(colourHandle, 1, Track.TRACK_COLOUR, 0);
 
         // draw shape
-        GLES30.glLineWidth(Track.TRACK_WIDTH);
-        GLES30.glDrawArrays(GLES30.GL_LINE_STRIP, 0, track.getNumPoints());
+        GLES20.glLineWidth(Track.TRACK_WIDTH);
+        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, track.getNumPoints());
     }
 }
