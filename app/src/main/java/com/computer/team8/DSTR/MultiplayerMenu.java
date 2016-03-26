@@ -2,12 +2,11 @@ package com.computer.team8.DSTR;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.computer.team8.DSTR.multiplayer.BluetoothConnection;
+import com.computer.team8.DSTR.multiplayer.DSTRBluetooh;
 import com.computer.team8.DSTR.projectui.*;
 
 public class MultiplayerMenu extends Activity {
@@ -32,40 +31,28 @@ public class MultiplayerMenu extends Activity {
 
     public void executeConnect(View view)
     {
-        BluetoothConnection.attachContext(this);
+        DSTRBluetooh.attachContext(this);
 
-        if(BluetoothConnection.bluetoothResult == BluetoothConnection.Result.UNSUPPORTED)
-        {
+        if(DSTRBluetooh.bluetoothResult == DSTRBluetooh.Result.UNSUPPORTED) {
             (new MessageBox(this, "Bluetooth not supported on this device.")).show();
             return;
         }
 
-        if(BluetoothConnection.bluetoothResult == BluetoothConnection.Result.BLUETOOTH_DISABLED)
-        {
+        if(DSTRBluetooh.bluetoothResult == DSTRBluetooh.Result.BLUETOOTH_DISABLED) {
             (new MessageBox(this, "Bluetooth is not enabled on this device. Please enable it and try again.")).show();
             return;
         }
 
 
-        BluetoothConnection.connect("DTSR");
+        DSTRBluetooh.connect("DTSR");
 
-        if(BluetoothConnection.bluetoothResult == BluetoothConnection.Result.NOT_PAIRED)
-        {
+        if(DSTRBluetooh.bluetoothResult == DSTRBluetooh.Result.NOT_PAIRED) {
             (new MessageBox(this, "Device is not connected to DSTR. Please pair to the device and try again.")).show();
             return;
         }
 
-        if(BluetoothConnection.isConnected())
-        {
+        if(DSTRBluetooh.isConnected()) {
             (new MessageBox(this, "Connection Established")).show();
-
-            for(int i = 0; i < 100; i++)
-            {
-                for(int j = 0; j < 50; j++) {
-                    //do nothing
-                }
-                BluetoothConnection.WriteToBTDevice("Krul");
-            }
         }
 
     }

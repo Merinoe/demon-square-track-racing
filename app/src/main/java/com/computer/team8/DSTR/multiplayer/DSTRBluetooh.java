@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,10 +14,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
-/*
- * Singleton static Bluetooth Communicator
- */
-public final class BluetoothConnection {
+public final class DSTRBluetooh {
 
     private static int REQUEST_ENABLE_BT = 1;
     private static BluetoothSocket mmSocket = null;
@@ -37,7 +33,7 @@ public final class BluetoothConnection {
     }
 
 
-    public BluetoothConnection(Context c)
+    public DSTRBluetooh(Context c)
     {
         this.context = c;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -67,55 +63,51 @@ public final class BluetoothConnection {
 
     public static void connect(String deviceName)
     {
-        if(Connected)
-        {
-            closeConnection();
+        if(Connected) {
+            close();
         }
 
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
         // If there are paired devices
         if (pairedDevices.size() > 0) {
-            for (BluetoothDevice device : pairedDevices)
-            {
-                if(device.getName().equals(deviceName))
-                {
+            for (BluetoothDevice device : pairedDevices) {
+                if(device.getName().equals(deviceName)) {
                     mDevice = device;
                     break;
                 }
-
             }
         }
 
-        if(mDevice == null)
-        {
+        if(mDevice == null) {
             bluetoothResult = Result.NOT_PAIRED;
 
-        }
-        else
-        {
+        } else {
             bluetoothResult = Result.SUCCESS;
         }
 
-        CreateSerialBluetoothDeviceSocket(mDevice);
-        ConnectToSerialBlueToothDevice();
+        generateBluetoothSocket(mDevice);
+        connectSockets();
     }
 
-    public static void closeConnection() {
+    public static void close() {
         try {
             mmInStream.close();
             mmInStream = null;
         } catch (IOException e) {
+            System.out.println("Bluetooth InStream failed to close");
         }
         try {
             mmOutStream.close();
             mmOutStream = null;
         } catch (IOException e) {
+            System.out.println("Bluetooth OutStream failed to close");
         }
         try {
             mmSocket.close();
             mmSocket = null;
         } catch (IOException e) {
+            System.out.println("Bluetooth Socket failed to close");
         }
 
         Connected = false;
@@ -126,7 +118,7 @@ public final class BluetoothConnection {
         return Connected;
     }
 
-    public static void CreateSerialBluetoothDeviceSocket(BluetoothDevice device)
+    public static void generateBluetoothSocket(BluetoothDevice device)
     {
         mmSocket = null;
 
@@ -143,56 +135,55 @@ public final class BluetoothConnection {
         }
     }
 
-    public static void ConnectToSerialBlueToothDevice() {
+    public static void connectSockets() {
         try {
             // Attempt connection to the device through the socket.
             mmSocket.connect();
             Toast.makeText(context, "Connection Made", Toast.LENGTH_LONG).show();
             Connected = true;
             bluetoothResult = Result.SUCCESS;
-        }
-        catch (IOException connectException) {
+        } catch (IOException connectException) {
             Toast.makeText(context, "Connection Failed", Toast.LENGTH_LONG).show();
             return;
         }
 
         //create the input/output stream and record fact we have made a connection
-        GetInputOutputStreamsForSocket(); // see page 26
+        generateIOSockets(); // see page 26
     }
 
     // gets the input/output stream associated with the current socket
-    private static void GetInputOutputStreamsForSocket() {
+    private static void generateIOSockets() {
         try {
             mmInStream = mmSocket.getInputStream();
             mmOutStream = mmSocket.getOutputStream();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+            System.out.println("Bluetooth Sockets failed to instantiate");
+        }
     }
 
-    //
-// This function write a line of text (in the form of an array of bytes)
-// to the Bluetooth device and then sends the string “\r\n”
-// (required by the bluetooth dongle)
-//
-    public static void WriteToBTDevice (String message) {
-        String s = new String("\r\n") ;
+    // This function write a line of text (in the form of an array of bytes)
+    // to the Bluetooth device and then sends the string “\r\n”
+    // (required by the bluetooth dongle)
+    public static void write(String message) {
         byte[] msgBuffer = message.getBytes();
-        byte[] newline = s.getBytes();
+        String send = "\r\n";
 
         try {
-            mmOutStream.write(msgBuffer) ;
-            mmOutStream.write(newline) ;
-            Log.i("myApp", "Wrote a message");
-        } catch (IOException e) { }
+            mmOutStream.write(msgBuffer, 0, msgBuffer.length) ;
+//            mmOutStream.write(send.getBytes());
+            mmOutStream.flush();
+        } catch (IOException e) {
+            System.out.println("Could not write to Bluetooth");
+        }
     }
 
-    public static String ReadFromBTDevice() {
+    public static String read() {
         byte c;
         String s = new String("");
 
 
         try { // Read from the InputStream using polling and timeout
             for (int i = 0; i < 200; i++) { // try to read for 2 seconds max
-                SystemClock.sleep(10);
                 if (mmInStream.available() > 0) {
                     if ((c = (byte) mmInStream.read()) != '\r') // '\r' terminator
                         s += (char) c; // build up string 1 byte by byte
@@ -201,9 +192,9 @@ public final class BluetoothConnection {
                 }
             }
         } catch (IOException e) {
-            return new String("-- No Response --");
+            return "Unable to Communicate with DE2";
         }
 
-        return new String("-- No Response --");
+        return "";
     }
 }

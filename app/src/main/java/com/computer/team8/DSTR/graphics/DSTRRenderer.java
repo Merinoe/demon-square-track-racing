@@ -10,6 +10,7 @@ import com.computer.team8.DSTR.graphics.light.DirectionalLight;
 import com.computer.team8.DSTR.graphics.track.BuiltInTrack;
 import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.types.Vec3;
+import com.computer.team8.DSTR.multiplayer.DSTRNetworkManager;
 
 import java.nio.FloatBuffer;
 
@@ -20,6 +21,9 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
     // game state
     private static boolean RACING;
+
+    // bluetooth
+    DSTRNetworkManager network;
 
     // scene
     private DirectionalLight dirLight;
@@ -36,6 +40,9 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         // init scene
         dirLight = new DirectionalLight();
         track = new BuiltInTrack();
+
+        // bluetooth
+        network = new DSTRNetworkManager();
 
         // init elements
         cam = new Camera(new Vec3(0, 0, 0), // eye
@@ -56,7 +63,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
-        GLES20.glClearColor(0.25f, 0.25f, 1.0f, 1.0f);
+        GLES20.glClearColor(0.35f, 0.45f, 1.0f, 1.0f);
 
         // load shaders
         int vertexShader = DSTRShaderManager.loadVertexShader();
@@ -98,6 +105,17 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
                 cam.setSubject(null);
             }
         }
+
+        // send/receive data from DE2
+        String parcel = String.format("%.1f", demon.getBottom().x);
+        parcel += ',';
+        parcel += String.format("%.1f", demon.getBottom().y);
+        parcel += ',';
+        parcel += String.format("%.1f", demon.getBottom().z);
+//        parcel += '\n';
+//                + "," + String.format("%2.1f", demon.getBottom().y)
+//                + "," + String.format("%2.1f", demon.getBottom().z)
+        network.sendMessage(parcel);
 
         // draw all Elements
         render();
