@@ -4,6 +4,7 @@ public class BuiltInTrack extends Track {
 
     public BuiltInTrack() {
         super();
+        difficulty = TrackDifficulty.HARD;
 
         this.points.add(-20.0f);
         this.points.add(0.0f);
