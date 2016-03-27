@@ -8,6 +8,7 @@ public class TrackManager {
 
     public static void fetchTracks()
     {
+        tracks = new ArrayList<Track>();
         tracks.add(new TrackEasy());
         tracks.add(new TrackMedium());
         tracks.add(new TrackHard());
