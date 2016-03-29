@@ -1,5 +1,8 @@
 package com.computer.team8.DSTR.graphics.element;
 
+import android.util.Log;
+
+import com.computer.team8.DSTR.graphics.service.ColourManager;
 import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 import com.computer.team8.DSTR.graphics.types.Vec4;
@@ -39,6 +42,17 @@ public class Demon extends Square {
         super(new Vec4(1, 0, 0, 1));
         this.setScale(0.5f, 1, 1);
         this.setBottom(x, y, z);
+
+        turnSpeed = DEMON_TURN_SPEED;
+
+        nextPoint = 1;
+    }
+
+    public Demon(String color) {
+
+        super(ColourManager.getColour(color));
+        this.setScale(0.5f, 1, 1);
+        this.setBottom(0, 0, 0);
 
         turnSpeed = DEMON_TURN_SPEED;
 
