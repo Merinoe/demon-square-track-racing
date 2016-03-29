@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog"
+    android:alpha="50"
+    android:weightSum="1"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Change Color?"
+        android:id="@+id/txtName"
+        android:textColor="#ffffff"
+        android:typeface="serif"
+        android:padding="10dp" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_weight="0.02">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonCancel"
+            android:src="@drawable/cancelbutton"
+            android:background="@android:color/transparent"
+            android:layout_alignBottom="@+id/dialogBox"
+            android:layout_alignRight="@+id/dialogBox"
+            android:layout_alignEnd="@+id/dialogBox"
+            android:onClick="cancel"
+            android:layout_gravity="right|top" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonOk"
+            android:src="@drawable/okbutton"
+            android:background="@android:color/transparent"
+            android:layout_alignBottom="@+id/dialogBox"
+            android:layout_alignLeft="@+id/dialogBox"
+            android:layout_alignStart="@+id/dialogBox"
+            android:onClick="ok"
+            android:layout_gravity="center_horizontal|top" />
+    </FrameLayout>
+
+</LinearLayout>
