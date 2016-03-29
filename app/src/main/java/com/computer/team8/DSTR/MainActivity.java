@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-bgm = new BackgroundMusic(this);
+        bgm = new BackgroundMusic(this);
         bgm.addFile(R.raw.title, "title");
         bgm.play("title");
     }
@@ -42,7 +42,7 @@ bgm = new BackgroundMusic(this);
 
     public void toPlay(View view)
     {
-        Intent intent = new Intent(this, OpenGLActivity.class);
+        Intent intent = new Intent(this, SelectTrack.class);
         startActivity(intent);
     }
 

@@ -11,9 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.computer.team8.DSTR.graphics.DSTRSurfaceView;
+import com.computer.team8.DSTR.graphics.track.Track;
+import com.computer.team8.DSTR.graphics.track.TrackManager;
+import com.computer.team8.DSTR.projectui.BackgroundMusic;
 
 public class OpenGLActivity extends Activity {
     private GLSurfaceView glView;
+    private BackgroundMusic bgm;
+    private Track.TrackDifficulty trackDifficulty;
 
     private SensorManager mSensorManager;
 
@@ -34,6 +39,30 @@ public class OpenGLActivity extends Activity {
         // initialize OpenGL
         glView = new DSTRSurfaceView(this);
         setContentView(glView);
+
+        trackDifficulty = TrackManager.getCurrentTrack().difficulty;
+
+        bgm = new BackgroundMusic(this);
+        bgm.addFile(R.raw.game, "hard");
+        bgm.addFile(R.raw.gameeasy, "easy");
+        bgm.addFile(R.raw.gamemed, "med");
+        playBgm();
+    }
+
+    private void playBgm()
+    {
+        if(trackDifficulty == trackDifficulty.EASY)
+        {
+            bgm.play("easy");
+        }
+        else if(trackDifficulty == trackDifficulty.MEDIUM)
+        {
+            bgm.play("med");
+        }
+        else
+        {
+            bgm.play("hard");
+        }
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
@@ -58,6 +87,8 @@ public class OpenGLActivity extends Activity {
         } else {
             OpenGLActivity.hasBooted = true;
         }
+
+        playBgm();
     }
 
     @Override
@@ -65,5 +96,12 @@ public class OpenGLActivity extends Activity {
         mSensorManager.unregisterListener(mSensorListener);
         super.onPause();
         DSTRSurfaceView.saveGameState();
+        bgm.stop();
+    }
+
+    public void onDestroy()
+    {
+        bgm.destroy();
+        super.onDestroy();
     }
 }

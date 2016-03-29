@@ -9,6 +9,8 @@ import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.light.DirectionalLight;
 import com.computer.team8.DSTR.graphics.track.BuiltInTrack;
 import com.computer.team8.DSTR.graphics.track.Track;
+import com.computer.team8.DSTR.graphics.track.TrackEasy;
+import com.computer.team8.DSTR.graphics.track.TrackManager;
 import com.computer.team8.DSTR.graphics.types.Vec3;
 import com.computer.team8.DSTR.multiplayer.DSTRNetworkManager;
 
@@ -39,7 +41,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
     public DSTRRenderer() {
         // init scene
         dirLight = new DirectionalLight();
-        track = new BuiltInTrack();
+        track = TrackManager.getCurrentTrack();
 
         // bluetooth
         network = new DSTRNetworkManager();

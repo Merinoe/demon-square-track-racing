@@ -37,7 +37,7 @@ public class DSTRSurfaceView extends GLSurfaceView {
         if (DSTRRenderer.isRacing()) {
             Element e = DSTRBufferManager.get(Demon.class);
             assert e != null;
-            e.roll(rot * 1.5f);
+            e.roll(rot * 2f);
         }
     }
 
