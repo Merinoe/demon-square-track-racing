@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.computer.team8.DSTR.projectui.*;
@@ -104,32 +105,207 @@ public class CharacterCreation extends Activity {
 
     public void selectWhite(View view)
     {
+        //Create a dialog box.
         Log.i("MY_MESSAGE", "White");
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.color_dialog);
+
+        //Set cancel button to dismiss.
+        ImageButton cancelButton = (ImageButton) dialog.findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //Set image button to perform rename.
+        ImageButton okButton = (ImageButton) dialog.findViewById(R.id.buttonOk);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.square);
+                image.setImageResource(R.drawable.white_square);
+                String characterColor = "white";
+                Preferences.setColor(activityContext, characterColor);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 
     public void selectBlue(View view)
     {
         Log.i("MY_MESSAGE", "Blue");
+        //Create a dialog box.
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.color_dialog);
+
+        //Set cancel button to dismiss.
+        ImageButton cancelButton = (ImageButton) dialog.findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //Set image button to perform rename.
+        ImageButton okButton = (ImageButton) dialog.findViewById(R.id.buttonOk);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.square);
+                image.setImageResource(R.drawable.blue_square);
+                String characterColor = "blue";
+                Preferences.setColor(activityContext, characterColor);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     public void selectYellow(View view)
     {
         Log.i("MY_MESSAGE", "Yellow");
+        //Create a dialog box.
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.color_dialog);
+
+        //Set cancel button to dismiss.
+        ImageButton cancelButton = (ImageButton) dialog.findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //Set image button to perform rename.
+        ImageButton okButton = (ImageButton) dialog.findViewById(R.id.buttonOk);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.square);
+                image.setImageResource(R.drawable.yellow_square);
+                String characterColor = "yellow";
+                Preferences.setColor(activityContext, characterColor);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     public void selectRed(View view)
     {
         Log.i("MY_MESSAGE", "Red");
+        //Create a dialog box.
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.color_dialog);
+
+        //Set cancel button to dismiss.
+        ImageButton cancelButton = (ImageButton) dialog.findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //Set image button to perform rename.
+        ImageButton okButton = (ImageButton) dialog.findViewById(R.id.buttonOk);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.square);
+                image.setImageResource(R.drawable.red_square);
+                String characterColor = "pure red";
+                Preferences.setColor(activityContext, characterColor);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     public void selectAqua(View view)
     {
         Log.i("MY_MESSAGE", "Aqua");
+        //Create a dialog box.
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.color_dialog);
+
+        //Set cancel button to dismiss.
+        ImageButton cancelButton = (ImageButton) dialog.findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //Set image button to perform rename.
+        ImageButton okButton = (ImageButton) dialog.findViewById(R.id.buttonOk);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.square);
+                image.setImageResource(R.drawable.aqua_square);
+                String characterColor = "aqua";
+                Preferences.setColor(activityContext, characterColor);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     public void selectGreen(View view)
     {
         Log.i("MY_MESSAGE", "Green");
+        //Create a dialog box.
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.color_dialog);
+
+        //Set cancel button to dismiss.
+        ImageButton cancelButton = (ImageButton) dialog.findViewById(R.id.buttonCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //Set image button to perform rename.
+        ImageButton okButton = (ImageButton) dialog.findViewById(R.id.buttonOk);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView image = (ImageView) findViewById(R.id.square);
+                image.setImageResource(R.drawable.green_square);
+                String characterColor = "green";
+                Preferences.setColor(activityContext, characterColor);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override

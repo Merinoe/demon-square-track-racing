@@ -19,6 +19,11 @@ public class ColourManager {
         colours.put("grey 4", new Vec4(0.4f, 0.4f, 0.4f, 1.0f));
         colours.put("grey 5", new Vec4(0.5f, 0.5f, 0.5f, 1.0f));
         colours.put("dirt", new Vec4(0.75f, 0.5f, 0.5f, 1.0f));
+        colours.put("white", new Vec4(1.0f,1.0f,1.0f,1.0f));
+        colours.put("green", new Vec4(0.0f,1.0f,0.0f,1.0f));
+        colours.put("yellow", new Vec4(1.0f,1.0f,0.0f,1.0f));
+        colours.put("blue", new Vec4(0.0f,0.0f,1.0f,1.0f));
+        colours.put("aqua", new Vec4(0.2f, 1.0f, 1.0f, 1.0f));
     }
 
     public static ColourManager getInstance() {

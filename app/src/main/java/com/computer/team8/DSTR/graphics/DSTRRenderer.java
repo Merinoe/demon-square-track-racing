@@ -1,15 +1,19 @@
 package com.computer.team8.DSTR.graphics;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
 import com.computer.team8.DSTR.graphics.element.Demon;
 import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.light.DirectionalLight;
+import com.computer.team8.DSTR.graphics.service.ColourManager;
 import com.computer.team8.DSTR.graphics.track.BuiltInTrack;
 import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.types.Vec3;
+import com.computer.team8.DSTR.projectui.Preferences;
 
 import java.nio.FloatBuffer;
 
@@ -32,8 +36,10 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
     private int glProgram;
     private DSTRBufferManager bufferManager;
 
-    public DSTRRenderer() {
+    public DSTRRenderer(Context context) {
         // init scene
+        String color = Preferences.getColor(context);
+        Log.i("COLOR RENDER:", color);
         dirLight = new DirectionalLight();
         track = new BuiltInTrack();
 
@@ -41,7 +47,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         cam = new Camera(new Vec3(0, 0, 0), // eye
                 new Vec3(0, 0, 0),  // focus
                 new Vec3(0, 1, 0)); // top
-        demon = new Demon();
+        demon = new Demon(color);
         demon.setTrack(track);
         cam.setSubject(demon);
 

@@ -19,7 +19,7 @@ public class DSTRSurfaceView extends GLSurfaceView {
         // Create an OpenGL ES 2.0 context
         setEGLContextClientVersion(2);
 
-        glRenderer = new DSTRRenderer();
+        glRenderer = new DSTRRenderer(context);
 
         // Set the Renderer for drawing on the GLSurfaceView
         setRenderer(glRenderer);
