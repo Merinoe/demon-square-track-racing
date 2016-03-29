@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -166,11 +165,9 @@ public final class DSTRBluetooh {
     // (required by the bluetooth dongle)
     public static void write(String message) {
         byte[] msgBuffer = message.getBytes();
-        String send = "\r\n";
 
         try {
             mmOutStream.write(msgBuffer, 0, msgBuffer.length) ;
-//            mmOutStream.write(send.getBytes());
             mmOutStream.flush();
         } catch (IOException e) {
             System.out.println("Could not write to Bluetooth");

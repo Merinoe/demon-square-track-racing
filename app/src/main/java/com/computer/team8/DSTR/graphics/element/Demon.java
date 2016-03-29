@@ -87,6 +87,7 @@ public class Demon extends Square {
             rollSpeed = 0;
             return false;
         }
+
         if (getRollAngle() > DEMON_ROLL_LIMIT ||
             getRollAngle() < -DEMON_ROLL_LIMIT) {
             rollSpeed = 0;
@@ -162,5 +163,10 @@ public class Demon extends Square {
         }
 
         return true;
+    }
+
+    public String getBluetoohData() {
+        return String.format("%.1f", getBottom().x) + ','
+             + String.format("%.1f", getBottom().y) + ',';
     }
 }

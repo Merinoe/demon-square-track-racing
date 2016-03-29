@@ -7,7 +7,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.computer.team8.DSTR.multiplayer.DSTRBluetooh;
-import com.computer.team8.DSTR.projectui.*;
+import com.computer.team8.DSTR.projectui.BackgroundMusic;
+import com.computer.team8.DSTR.projectui.MessageBox;
 
 public class MultiplayerMenu extends Activity {
 

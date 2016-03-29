@@ -97,6 +97,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         if (RACING && demon.rideTrack()) {
             RACING = false;
             cam.setSubject(null);
+            network.sendComplete();
         } else if (demon.hasFailed()) {
             // demon falls until limit
             if (demon.failFall()) {
@@ -107,15 +108,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         }
 
         // send/receive data from DE2
-        String parcel = String.format("%.1f", demon.getBottom().x);
-        parcel += ',';
-        parcel += String.format("%.1f", demon.getBottom().y);
-        parcel += ',';
-        parcel += String.format("%.1f", demon.getBottom().z);
-//        parcel += '\n';
-//                + "," + String.format("%2.1f", demon.getBottom().y)
-//                + "," + String.format("%2.1f", demon.getBottom().z)
-        network.sendMessage(parcel);
+        network.sendMessage( demon.getBluetoohData() );
 
         // draw all Elements
         render();
