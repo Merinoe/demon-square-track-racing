@@ -46,7 +46,7 @@ public class Preferences {
 
     public static String getColor(Context context){
 
-
+        Log.i("CHARCOLOR:", charColor);
         if(charColor == "white"){
             return getPreferences(context).getString(color, "white");
         }
@@ -65,10 +65,8 @@ public class Preferences {
         else if(charColor == "blue"){
             return getPreferences(context).getString(color, "blue");
         }
-
-        //default color is red
         else {
-            return getPreferences(context).getString(color, "red");
+            return getPreferences(context).getString(color, "red pure");
         }
     }
 }

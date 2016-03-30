@@ -22,6 +22,7 @@ public class CharacterCreation extends Activity {
     Context activityContext;
 
     TextView txtName;
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,35 @@ public class CharacterCreation extends Activity {
     {
         txtName = (TextView)findViewById(R.id.txtName);
         String n = Preferences.getName(activityContext);
-
         txtName.setText(n);
+
+
+        image = (ImageView) findViewById(R.id.square);
+        String str = Preferences.getColor(activityContext);
+        Log.i("CURRENT COLOR:", str);
+
+        if(str == "pure red"){
+            image.setImageResource(R.drawable.red_square);
+        }
+        else if(str == "white"){
+            image.setImageResource(R.drawable.white_square);
+        }
+        else if(str == "green"){
+            image.setImageResource(R.drawable.green_square);
+        }
+        else if(str == "yellow"){
+            image.setImageResource(R.drawable.yellow_square);
+        }
+        else if(str == "aqua"){
+            image.setImageResource(R.drawable.aqua_square);
+        }
+        else if(str == "blue"){
+            image.setImageResource(R.drawable.blue_square);
+        }
+        else{
+            image.setImageResource(R.drawable.red_square);
+        }
+
     }
 
     public void toMain(View view)
