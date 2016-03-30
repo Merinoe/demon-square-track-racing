@@ -17,7 +17,7 @@ public class Demon extends Square {
     private final int STRIDE = 3;
     private int DEMON_TURN_SPEED = 6;
     private float DEMON_TURN_BUFFER = 0.08f;
-    private float DEMON_UPPER_VELOCITY = 0.3f;
+    private float DEMON_UPPER_VELOCITY = 0.45f;
     private float DEMON_LOWER_VELOCITY = 0.03f;
     private float DEMON_ROLL_LIMIT = 50.0f;
 
@@ -25,7 +25,7 @@ public class Demon extends Square {
     private boolean DEMON_FAIL = false;
     private Vec3 DEMON_FAIL_POINT;
     private float DEMON_FALL_DIST = 0.0f;
-    private float DEMON_FALL_LIMIT = 20.0f;
+    private float DEMON_FALL_LIMIT = 25.0f;
     private float DEMON_FALL_SPEED = 0.2f;
 
     public Demon() {
@@ -133,7 +133,7 @@ public class Demon extends Square {
                 // move the demon along the track
                 Vec3 pos = this.getBottom();
                 Vec3 dir = next.subtract(pos);
-                if (dir.magnitude() > 0.15f) {
+                if (dir.magnitude() > 0.25f) {
                     dir = dir.normalize().multiply(velocity);
                     setBottom(
                             pos.x + dir.x,
@@ -156,10 +156,10 @@ public class Demon extends Square {
                 float dot = next.normalize().dot(ori);
                 if (dot <= -DEMON_TURN_BUFFER) {
                     rotateHorizontally(turnSpeed);
-                    roll(-velocity * 4f);
+                    roll(-velocity * 3f);
                 } else if (dot >= DEMON_TURN_BUFFER) {
                     rotateHorizontally(-turnSpeed);
-                    roll(velocity * 4f);
+                    roll(velocity * 3f);
                 }
 
                 return false;

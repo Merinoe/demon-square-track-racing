@@ -2,15 +2,9 @@ package com.computer.team8.DSTR;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.computer.team8.DSTR.CharacterCreation;
-import com.computer.team8.DSTR.MultiplayerMenu;
-import com.computer.team8.DSTR.OpenGLActivity;
-import com.computer.team8.DSTR.R;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
 
 public class MainActivity extends Activity {
@@ -42,7 +36,7 @@ public class MainActivity extends Activity {
 
     public void toPlay(View view)
     {
-        Intent intent = new Intent(this, SelectTrack.class);
+        Intent intent = new Intent(this, SelectTrackActivity.class);
         startActivity(intent);
     }
 
