@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 //Wrapper class for accessing shared preferences.
 //Referenced: http://stackoverflow.com/questions/23351904/getting-cannot-resolve-method-error-when-trying-to-implement-getsharedpreferen
 
@@ -12,15 +16,41 @@ public class Preferences {
     public static final String name = "nameKey";
     public static final String color = "colorKey";
     public static String charColor = "";
+    public static ArrayList< ArrayList<Float> > googleTracks;
     private SharedPreferences sharedpreferences;
 
-    public Preferences()
+    public Preferences() {}
+
+    private static SharedPreferences getPreferences(Context context)
     {
-        //Nothing here
+        return context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
     }
 
-    private static SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+    public static void addGoogleTrack(ArrayList<Float> track)
+    {
+        if (googleTracks == null) {
+            googleTracks = new ArrayList<>();
+        }
+
+        googleTracks.add(track);
+    }
+
+    public static ArrayList<Float> getGoogleTrack(int i)
+    {
+        if (googleTracks != null) {
+            return googleTracks.get(i);
+        } else {
+            return null;
+        }
+    }
+
+    public static Iterator<ArrayList<Float>> getGoogleIterator()
+    {
+        if (googleTracks != null) {
+            return googleTracks.iterator();
+        } else {
+            return null;
+        }
     }
 
     public static String getName(Context context)

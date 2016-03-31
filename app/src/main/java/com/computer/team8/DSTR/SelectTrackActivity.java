@@ -8,12 +8,17 @@ import android.widget.TextView;
 
 import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.track.TrackManager;
+import com.computer.team8.DSTR.multiplayer.DSTRBluetooh;
+import com.computer.team8.DSTR.multiplayer.DSTRNetworkManager;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
 
 import java.util.ArrayList;
 
-public class SelectTrack extends Activity {
+public class SelectTrackActivity extends Activity {
     BackgroundMusic bgm;
+
+    // bluetooth
+    DSTRNetworkManager network;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,6 @@ public class SelectTrack extends Activity {
 
         TrackManager.fetchTracks();
         updateTrackView();
-
     }
 
     private void updateTrackView()
@@ -41,8 +45,6 @@ public class SelectTrack extends Activity {
         TextView txtNum;
         txtNum = (TextView)findViewById(R.id.txtTrackNum);
         txtNum.setText("Track: " + TrackManager.getCurrentTrackNum() + "/" + TrackManager.numTracks());
-
-
     }
 
     public void prevTrack(View view)
@@ -65,6 +67,23 @@ public class SelectTrack extends Activity {
 
     public void playGame(View view)
     {
+        Track currentTrack = TrackManager.getCurrentTrack();
+
+        // send current track choice to DE2
+        if (DSTRBluetooh.isConnected()) {
+            ArrayList<Float> tPoints = currentTrack.getTrack();
+            String trackMessage = null;
+
+            for (float f : tPoints) {
+                trackMessage += f;
+            }
+            trackMessage += "$$$$";
+
+            network.sendMessage(trackMessage);
+        } else {
+            System.out.println("No Bluetooth connection in place");
+        }
+
         Intent intent = new Intent(this, OpenGLActivity.class);
         startActivity(intent);
     }
@@ -75,7 +94,6 @@ public class SelectTrack extends Activity {
         bgm.stop();
         super.onPause();
     }
-
 
     @Override
     public void onResume()

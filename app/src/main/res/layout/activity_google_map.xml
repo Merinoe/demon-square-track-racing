@@ -35,4 +35,12 @@
         android:layout_marginRight="10dp"
         android:onClick="showAddressMarker" />
 
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="Get Track!"
+        android:id="@+id/getTrackbutton"
+        android:layout_marginRight="10dp"
+        android:onClick="getTrack" />
+
 </RelativeLayout>
