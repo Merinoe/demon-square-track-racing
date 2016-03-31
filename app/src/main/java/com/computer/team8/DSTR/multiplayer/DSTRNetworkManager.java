@@ -14,13 +14,13 @@ public class DSTRNetworkManager {
     public void sendMessage(String mesg) {
         ++delayCounter;
 
-        if (delayCounter > writeDelay && DSTRBluetooh.isConnected()) {
+        if (delayCounter > writeDelay && DSTRBluetooth.isConnected()) {
             if (mesg.length() - dataCounter > BYTE_INCREMENT) {
-                DSTRBluetooh.write("" +
+                DSTRBluetooth.write("" +
                         mesg.charAt(dataCounter) +
                         mesg.charAt(dataCounter + 1));
             } else if (dataCounter + 1 < mesg.length()) {
-                DSTRBluetooh.write("" + mesg.charAt(dataCounter));
+                DSTRBluetooth.write("" + mesg.charAt(dataCounter));
             }
 
             delayCounter = 0;
@@ -33,11 +33,11 @@ public class DSTRNetworkManager {
     }
 
     public void sendComplete() {
-        DSTRBluetooh.write("$$$$");
+        DSTRBluetooth.write("$$$$");
     }
 
     public String getMessage() {
-        String message = DSTRBluetooh.read();
+        String message = DSTRBluetooth.read();
         if (message != null) {
             return message;
         } else {
