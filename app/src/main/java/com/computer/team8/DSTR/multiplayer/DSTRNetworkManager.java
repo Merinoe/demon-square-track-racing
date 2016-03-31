@@ -2,7 +2,7 @@ package com.computer.team8.DSTR.multiplayer;
 
 public class DSTRNetworkManager {
     private int dataCounter, delayCounter, writeDelay;
-    private final int WRITE_DELAY = 10;
+    private final int WRITE_DELAY = 14;
     private final int BYTE_INCREMENT = 2;
 
     public DSTRNetworkManager() {
@@ -12,19 +12,19 @@ public class DSTRNetworkManager {
     }
 
     public void sendMessage(String mesg) {
-        if (!DSTRBluetooh.isConnected()) {
+        if (!DSTRBluetooth.isConnected()) {
             return;
         }
 
         ++delayCounter;
 
-        if (delayCounter > writeDelay && DSTRBluetooh.isConnected()) {
+        if (delayCounter > writeDelay && DSTRBluetooth.isConnected()) {
             if (mesg.length() - dataCounter > BYTE_INCREMENT) {
-                DSTRBluetooh.write("" +
+                DSTRBluetooth.write("" +
                         mesg.charAt(dataCounter) +
                         mesg.charAt(dataCounter + 1));
             } else if (dataCounter + 1 < mesg.length()) {
-                DSTRBluetooh.write("" + mesg.charAt(dataCounter));
+                DSTRBluetooth.write("" + mesg.charAt(dataCounter));
             }
 
             delayCounter = 0;
@@ -37,15 +37,15 @@ public class DSTRNetworkManager {
     }
 
     public void sendComplete() {
-        if (!DSTRBluetooh.isConnected()) {
+        if (!DSTRBluetooth.isConnected()) {
             return;
         }
 
-        DSTRBluetooh.write("$$$$");
+        DSTRBluetooth.write("$$$$");
     }
 
     public String getMessage() {
-        String message = DSTRBluetooh.read();
+        String message = DSTRBluetooth.read();
         if (message != null) {
             return message;
         } else {

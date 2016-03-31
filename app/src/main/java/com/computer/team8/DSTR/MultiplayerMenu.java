@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.computer.team8.DSTR.multiplayer.DSTRBluetooh;
+import com.computer.team8.DSTR.multiplayer.DSTRBluetooth;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
 import com.computer.team8.DSTR.projectui.MessageBox;
 
@@ -32,27 +32,33 @@ public class MultiplayerMenu extends Activity {
 
     public void executeConnect(View view)
     {
-        DSTRBluetooh.attachContext(this);
+        DSTRBluetooth.attachContext(this);
 
-        if(DSTRBluetooh.bluetoothResult == DSTRBluetooh.Result.UNSUPPORTED) {
+        if(DSTRBluetooth.bluetoothResult == DSTRBluetooth.Result.UNSUPPORTED) {
             (new MessageBox(this, "Bluetooth not supported on this device.")).show();
             return;
         }
 
-        if(DSTRBluetooh.bluetoothResult == DSTRBluetooh.Result.BLUETOOTH_DISABLED) {
+        if(DSTRBluetooth.bluetoothResult == DSTRBluetooth.Result.BLUETOOTH_DISABLED) {
             (new MessageBox(this, "Bluetooth is not enabled on this device. Please enable it and try again.")).show();
             return;
         }
 
 
-        DSTRBluetooh.connect("DSTR");
+        DSTRBluetooth.connect("DSTR1");
+        if(!DSTRBluetooth.isConnected())
+        {
+            DSTRBluetooth.connect("DSTR2");
+        }
 
-        if(DSTRBluetooh.bluetoothResult == DSTRBluetooh.Result.NOT_PAIRED) {
-            (new MessageBox(this, "Device is not connected to DSTR. Please pair to the device and try again.")).show();
+
+        if(DSTRBluetooth.bluetoothResult == DSTRBluetooth.Result.FAIL)
+        {
+            (new MessageBox(this, "Failed to connect to device. Please try again.")).show();
             return;
         }
 
-        if(DSTRBluetooh.isConnected()) {
+        if(DSTRBluetooth.isConnected()) {
             (new MessageBox(this, "Connection Established")).show();
         }
 

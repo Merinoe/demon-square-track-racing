@@ -164,7 +164,7 @@ public class Demon extends Square {
 
                 return false;
             } else {
-                nextPoint = 1;
+                nextPoint = 0;
                 ++Track.lapCounter;
 
                 if (Track.lapCounter >= Track.laps) {
