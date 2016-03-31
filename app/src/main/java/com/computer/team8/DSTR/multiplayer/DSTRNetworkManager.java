@@ -2,7 +2,7 @@ package com.computer.team8.DSTR.multiplayer;
 
 public class DSTRNetworkManager {
     private int dataCounter, delayCounter, writeDelay;
-    private final int WRITE_DELAY = 10;
+    private final int WRITE_DELAY = 14;
     private final int BYTE_INCREMENT = 2;
 
     public DSTRNetworkManager() {
