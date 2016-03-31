@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.track.TrackManager;
-import com.computer.team8.DSTR.multiplayer.DSTRBluetooh;
+import com.computer.team8.DSTR.multiplayer.DSTRBluetooth;
 import com.computer.team8.DSTR.multiplayer.DSTRNetworkManager;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
 
@@ -70,7 +70,7 @@ public class SelectTrackActivity extends Activity {
         Track currentTrack = TrackManager.getCurrentTrack();
 
         // send current track choice to DE2
-        if (DSTRBluetooh.isConnected()) {
+        if (DSTRBluetooth.isConnected()) {
             ArrayList<Float> tPoints = currentTrack.getTrack();
             String trackMessage = null;
 

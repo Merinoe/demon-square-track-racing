@@ -12,7 +12,7 @@ public class DSTRNetworkManager {
     }
 
     public void sendMessage(String mesg) {
-        if (!DSTRBluetooh.isConnected()) {
+        if (!DSTRBluetooth.isConnected()) {
             return;
         }
 
@@ -37,12 +37,11 @@ public class DSTRNetworkManager {
     }
 
     public void sendComplete() {
-        DSTRBluetooth.write("$$$$");
         if (!DSTRBluetooth.isConnected()) {
             return;
         }
 
-        DSTRBluetooh.write("$$$$");
+        DSTRBluetooth.write("$$$$");
     }
 
     public String getMessage() {
