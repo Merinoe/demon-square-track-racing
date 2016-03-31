@@ -45,7 +45,7 @@ public class MultiplayerMenu extends Activity {
         }
 
 
-        DSTRBluetooh.connect("DTSR");
+        DSTRBluetooh.connect("DSTR");
 
         if(DSTRBluetooh.bluetoothResult == DSTRBluetooh.Result.NOT_PAIRED) {
             (new MessageBox(this, "Device is not connected to DSTR. Please pair to the device and try again.")).show();

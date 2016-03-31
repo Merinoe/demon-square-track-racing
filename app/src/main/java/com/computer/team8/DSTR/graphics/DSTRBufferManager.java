@@ -36,11 +36,11 @@ public class DSTRBufferManager {
 
     public void createLevel() {
         Square sq = new Square(ColourManager.getColour("dirt"));
-        sq.setScale(50, 1, 50);
+        sq.setScale(100, 1, 100);
         sq.setBottom(0, -2, 0);
         this.add(sq);
         sq = new Square(ColourManager.getColour("chill grass"));
-        sq.setScale(50, 1, 50);
+        sq.setScale(100, 1, 100);
         sq.setBottom(0, -1, 0);
         this.add(sq);
 
