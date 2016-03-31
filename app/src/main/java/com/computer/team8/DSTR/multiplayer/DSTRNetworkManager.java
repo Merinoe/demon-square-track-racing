@@ -12,6 +12,10 @@ public class DSTRNetworkManager {
     }
 
     public void sendMessage(String mesg) {
+        if (!DSTRBluetooh.isConnected()) {
+            return;
+        }
+
         ++delayCounter;
 
         if (delayCounter > writeDelay && DSTRBluetooh.isConnected()) {
@@ -33,6 +37,10 @@ public class DSTRNetworkManager {
     }
 
     public void sendComplete() {
+        if (!DSTRBluetooh.isConnected()) {
+            return;
+        }
+
         DSTRBluetooh.write("$$$$");
     }
 

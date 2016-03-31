@@ -12,7 +12,7 @@ import com.computer.team8.DSTR.projectui.BackgroundMusic;
 
 import java.util.ArrayList;
 
-public class SelectTrack extends Activity {
+public class SelectTrackActivity extends Activity {
     BackgroundMusic bgm;
 
     @Override
@@ -27,7 +27,6 @@ public class SelectTrack extends Activity {
 
         TrackManager.fetchTracks();
         updateTrackView();
-
     }
 
     private void updateTrackView()
@@ -41,8 +40,6 @@ public class SelectTrack extends Activity {
         TextView txtNum;
         txtNum = (TextView)findViewById(R.id.txtTrackNum);
         txtNum.setText("Track: " + TrackManager.getCurrentTrackNum() + "/" + TrackManager.numTracks());
-
-
     }
 
     public void prevTrack(View view)
@@ -75,7 +72,6 @@ public class SelectTrack extends Activity {
         bgm.stop();
         super.onPause();
     }
-
 
     @Override
     public void onResume()
