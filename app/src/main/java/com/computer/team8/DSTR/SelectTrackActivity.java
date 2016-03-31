@@ -24,6 +24,7 @@ public class SelectTrackActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_track);
+        network = new DSTRNetworkManager();
 
         bgm = new BackgroundMusic(this);
         bgm.addFile(R.raw.selection, "title");
@@ -67,22 +68,38 @@ public class SelectTrackActivity extends Activity {
 
     public void playGame(View view)
     {
-        Track currentTrack = TrackManager.getCurrentTrack();
-
-        // send current track choice to DE2
-        if (DSTRBluetooth.isConnected()) {
-            ArrayList<Float> tPoints = currentTrack.getTrack();
-            String trackMessage = null;
-
-            for (float f : tPoints) {
-                trackMessage += f;
-            }
-            trackMessage += "$$$$";
-
-            network.sendMessage(trackMessage);
-        } else {
-            System.out.println("No Bluetooth connection in place");
-        }
+//        Track currentTrack = TrackManager.getCurrentTrack();
+//        ArrayList<Float> tPoints = currentTrack.getTrack();
+//        String trackMessage = "";
+//
+//        // format current track to string for BT
+//        for (float f : tPoints) {
+//            trackMessage += Math.round(f);
+//            trackMessage += ",";
+//        }
+//
+//        // remove last comma
+//        trackMessage.substring(0, trackMessage.length() - 1);
+//        // termination string
+//        trackMessage += "$$$$";
+//
+//        // send the message
+//        int i = 0;
+//        while (i < tPoints.size()) {
+//            if (DSTRBluetooth.isConnected()) {
+//                boolean result = network.sendMessage(trackMessage);
+//                if (result) {
+//                    ++i;
+//                }
+//            }
+//        }
+//
+//        // send current track choice to DE2
+//        if (DSTRBluetooth.isConnected()) {
+//            network.sendMessage(trackMessage);
+//        } else {
+//            System.out.println("No Bluetooth connection in place");
+//        }
 
         Intent intent = new Intent(this, OpenGLActivity.class);
         startActivity(intent);
