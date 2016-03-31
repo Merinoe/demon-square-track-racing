@@ -11,9 +11,9 @@ public class DSTRNetworkManager {
         writeDelay = WRITE_DELAY;
     }
 
-    public void sendMessage(String mesg) {
+    public boolean sendMessage(String mesg) {
         if (!DSTRBluetooth.isConnected()) {
-            return;
+            return false;
         }
 
         ++delayCounter;
@@ -33,6 +33,9 @@ public class DSTRNetworkManager {
             if (dataCounter >= mesg.length()) {
                 dataCounter = 0;
             }
+            return true;
+        } else {
+            return false;
         }
     }
 
