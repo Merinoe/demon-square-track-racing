@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.view.View;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.track.TrackManager;
 import com.computer.team8.DSTR.multiplayer.DSTRBluetooth;
 import com.computer.team8.DSTR.multiplayer.DSTRNetworkManager;
+import com.computer.team8.DSTR.multiplayer.PassData;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
 import com.computer.team8.DSTR.projectui.Preferences;
 
@@ -69,18 +71,34 @@ public class SelectTrackActivity extends Activity {
         startActivity(intent);
     }
 
-    public void playGame(View view)
+    public void playGame (View view) throws InterruptedException
     {
+
+      //  new PassData().execute(this);
+        //Indicate that the game
+        String response = network.getMessage();
+        Log.i("data", response);
+
+        network.sendMsg("SSSS");
+//        network.sendMsg("****");
+
+//        response = network.getMessage();
+//        Log.i("data", response);
+//
         String name = Preferences.getName(this);
-        String colour = Preferences.getColor(this);
+        String colour = Preferences.getColor(this); //has been initialized in single player.
 
-        while (!network.sendMessage(name, "slow"));
-        while (!network.sendMessage("$$$$", "slow"));
-        while (!network.sendMessage(colour, "slow"));
-        while (!network.sendMessage("$$$$", "slow"));
+        network.sendMsg(name);
+        network.sendMsg("@@@@");
 
-        Intent intent = new Intent(this, OpenGLActivity.class);
-        startActivity(intent);
+
+//
+//
+//        while(!(network.getMessage().equals("gameReady"))); //Wait until data is saved and we are ready for gameplay.
+//
+//
+//        Intent intent = new Intent(this, OpenGLActivity.class);
+//        startActivity(intent);
     }
 
     @Override

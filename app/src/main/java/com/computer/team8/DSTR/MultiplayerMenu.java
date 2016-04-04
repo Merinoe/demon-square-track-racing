@@ -43,7 +43,7 @@ public class MultiplayerMenu extends Activity {
             return;
         }
 
-        DSTRBluetooth.connect("DSTR2");
+        DSTRBluetooth.connect("DSTR1");
 
         if(DSTRBluetooth.bluetoothResult == DSTRBluetooth.Result.FAIL)
         {

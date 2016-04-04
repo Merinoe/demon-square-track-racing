@@ -1,8 +1,10 @@
 package com.computer.team8.DSTR.multiplayer;
 
+import android.util.Log;
+
 public class DSTRNetworkManager {
     private int dataCounter, delayCounter, writeDelay;
-    private final int SLOW_DELAY = 50;
+    private final int SLOW_DELAY = 70;
     private final int FAST_DELAY = 14;
     private final int BYTE_INCREMENT = 2;
 
@@ -10,6 +12,51 @@ public class DSTRNetworkManager {
         dataCounter = 0;
         delayCounter = 0;
         writeDelay = FAST_DELAY;
+    }
+
+    public boolean sendMsg(String msg)
+    {
+        for(int i = 0; i < msg.length(); i++)
+        {
+            sendChar(msg.charAt(i));
+
+            for(int j = 0; j < 100; j++)
+            {
+                //rest
+            }
+        }
+
+        do{
+            DSTRBluetooth.connect("DSTR1");
+        }while(DSTRBluetooth.bluetoothResult != DSTRBluetooth.Result.SUCCESS);
+
+
+        return true;
+    }
+
+    public boolean sendChar(char c)
+    {
+        for(int i = 0; i < 1000; i++)
+        {
+//                Log.i("Data", "Send");
+
+                if(DSTRBluetooth.isConnected())
+                {
+                    DSTRBluetooth.write("" + c);
+                }
+
+        }
+
+        for(int i = 0; i < 1000; i++) {
+              //   Log.i("Data", "End");
+
+            if (DSTRBluetooth.isConnected()) {
+                DSTRBluetooth.write("$");
+
+            }
+        }
+
+        return true;
     }
 
     public boolean sendMessage(String mesg, String speed) {

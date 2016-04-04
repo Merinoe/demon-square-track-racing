@@ -113,6 +113,12 @@ public final class DSTRBluetooth {
         return Connected;
     }
 
+    public static void generateBluetoothSocket()
+    {
+            generateBluetoothSocket(mDevice);
+
+    }
+
     public static void generateBluetoothSocket(BluetoothDevice device)
     {
         mmSocket = null;
@@ -169,13 +175,31 @@ public final class DSTRBluetooth {
         }
     }
 
+    public static String readNoWait()
+    {
+        byte c;
+        String s = new String("");
+
+        try {
+            if (mmInStream.available() > 0) {
+                c = (byte) mmInStream.read();
+                s += (char) c;
+            }
+        }
+        catch (IOException e) {
+        }
+
+        return s;
+    }
+
+
     public static String read() {
         byte c;
         String s = new String("");
 
 
         try { // Read from the InputStream using polling and timeout
-            for (int i = 0; i < 200; i++) { // try to read for 2 seconds max
+            for (int i = 0; i < 500; i++) { // try to read for 2 seconds max
                 if (mmInStream.available() > 0) {
                     if ((c = (byte) mmInStream.read()) != '\r') // '\r' terminator
                         s += (char) c; // build up string 1 byte by byte
