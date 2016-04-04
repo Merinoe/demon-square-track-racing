@@ -53,4 +53,23 @@ public class Track extends Drawable {
     public void setTrack(ArrayList<Float> incomingTrack) {
         points = incomingTrack;
     }
+
+    public String getTrackForSend() {
+        String newTrack = "";
+
+        int i;
+        for (i = 0; i < points.size(); i += 2) {
+            newTrack += "(";
+            newTrack += points.get(i) + ",";
+
+            if (i + 1 < points.size()) {
+                newTrack += points.get(i + 1);
+            } else {
+                newTrack += "0";
+            }
+            newTrack += ")";
+        }
+
+        return newTrack;
+    }
 }
