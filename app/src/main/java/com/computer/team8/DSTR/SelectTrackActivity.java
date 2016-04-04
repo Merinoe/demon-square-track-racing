@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.view.View;
 import android.widget.TextView;
 
 import com.computer.team8.DSTR.graphics.track.Track;
 import com.computer.team8.DSTR.graphics.track.TrackManager;
-import com.computer.team8.DSTR.multiplayer.DSTRBluetooth;
 import com.computer.team8.DSTR.multiplayer.DSTRNetworkManager;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
 import com.computer.team8.DSTR.projectui.Preferences;
@@ -75,9 +73,9 @@ public class SelectTrackActivity extends Activity {
         String colour = Preferences.getColor(this);
 
         while (!network.sendMessage(name, "slow"));
-        while (!network.sendMessage("$$$$", "slow"));
+        while (!network.sendMessage(",", "slow"));
         while (!network.sendMessage(colour, "slow"));
-        while (!network.sendMessage("$$$$", "slow"));
+        while (!network.sendMessage("#", "slow"));
 
         Intent intent = new Intent(this, OpenGLActivity.class);
         startActivity(intent);
