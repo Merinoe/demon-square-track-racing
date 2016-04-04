@@ -1,5 +1,6 @@
 package com.computer.team8.DSTR.graphics;
 
+import com.computer.team8.DSTR.graphics.element.Demon;
 import com.computer.team8.DSTR.graphics.element.Element;
 import com.computer.team8.DSTR.graphics.element.Square;
 import com.computer.team8.DSTR.graphics.service.ColourManager;
@@ -7,12 +8,17 @@ import java.util.ArrayList;
 
 public class DSTRBufferManager {
     private static ArrayList<Element> elements;
+    private static Demon demon;
 
     public DSTRBufferManager() {
         elements = new ArrayList<>();
     }
 
     public void add(Element elem) {
+        if (elem.getClass() == Demon.class) {
+            demon = (Demon)elem;
+        }
+
         elements.add(elem);
     }
     public void remove(Element elem) { elements.remove(elem); }
@@ -28,6 +34,10 @@ public class DSTRBufferManager {
         }
 
         return null;
+    }
+
+    public static Demon getDemon() {
+        return demon;
     }
 
     public ArrayList<Element> getElements() {

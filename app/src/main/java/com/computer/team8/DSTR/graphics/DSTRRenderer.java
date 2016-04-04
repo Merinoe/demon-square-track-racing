@@ -42,7 +42,6 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
     public DSTRRenderer(Context context) {
         // init scene
         String color = Preferences.getColor(context);
-        Log.i("COLOR RENDER:", color);
         dirLight = new DirectionalLight();
         track = TrackManager.getCurrentTrack();
 
@@ -113,7 +112,7 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         }
 
         // send/receive data from DE2
-        network.sendMessage( demon.getBluetoohData() );
+        network.sendMessage(demon.getBluetoohData(), "fast");
 
         // draw all Elements
         render();

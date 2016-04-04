@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class DSTRBluetooth {
-
     private static int REQUEST_ENABLE_BT = 1;
     private static BluetoothSocket mmSocket = null;
     public static InputStream mmInStream = null;
@@ -26,11 +25,9 @@ public final class DSTRBluetooth {
     private static Context context;
     public static Result bluetoothResult = null;
 
-
     public enum Result{
         UNSUPPORTED, BLUETOOTH_DISABLED, FAIL, NOT_PAIRED, SUCCESS
     }
-
 
     public DSTRBluetooth(Context c)
     {

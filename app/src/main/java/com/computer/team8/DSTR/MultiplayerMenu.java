@@ -11,7 +11,6 @@ import com.computer.team8.DSTR.projectui.BackgroundMusic;
 import com.computer.team8.DSTR.projectui.MessageBox;
 
 public class MultiplayerMenu extends Activity {
-
     BackgroundMusic bgm;
 
     @Override
@@ -44,13 +43,7 @@ public class MultiplayerMenu extends Activity {
             return;
         }
 
-
-        DSTRBluetooth.connect("DSTR1");
-        if(!DSTRBluetooth.isConnected())
-        {
-            DSTRBluetooth.connect("DSTR2");
-        }
-
+        DSTRBluetooth.connect("DSTR2");
 
         if(DSTRBluetooth.bluetoothResult == DSTRBluetooth.Result.FAIL)
         {

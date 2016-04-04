@@ -1,8 +1,10 @@
 package com.computer.team8.DSTR;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,11 +13,11 @@ import com.computer.team8.DSTR.graphics.track.TrackManager;
 import com.computer.team8.DSTR.multiplayer.DSTRBluetooth;
 import com.computer.team8.DSTR.multiplayer.DSTRNetworkManager;
 import com.computer.team8.DSTR.projectui.BackgroundMusic;
-
-import java.util.ArrayList;
+import com.computer.team8.DSTR.projectui.Preferences;
 
 public class SelectTrackActivity extends Activity {
     BackgroundMusic bgm;
+    Context activityContext;
 
     // bluetooth
     DSTRNetworkManager network;
@@ -24,6 +26,7 @@ public class SelectTrackActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_track);
+        activityContext = this;
         network = new DSTRNetworkManager();
 
         bgm = new BackgroundMusic(this);
@@ -68,38 +71,13 @@ public class SelectTrackActivity extends Activity {
 
     public void playGame(View view)
     {
-//        Track currentTrack = TrackManager.getCurrentTrack();
-//        ArrayList<Float> tPoints = currentTrack.getTrack();
-//        String trackMessage = "";
-//
-//        // format current track to string for BT
-//        for (float f : tPoints) {
-//            trackMessage += Math.round(f);
-//            trackMessage += ",";
-//        }
-//
-//        // remove last comma
-//        trackMessage.substring(0, trackMessage.length() - 1);
-//        // termination string
-//        trackMessage += "$$$$";
-//
-//        // send the message
-//        int i = 0;
-//        while (i < tPoints.size()) {
-//            if (DSTRBluetooth.isConnected()) {
-//                boolean result = network.sendMessage(trackMessage);
-//                if (result) {
-//                    ++i;
-//                }
-//            }
-//        }
-//
-//        // send current track choice to DE2
-//        if (DSTRBluetooth.isConnected()) {
-//            network.sendMessage(trackMessage);
-//        } else {
-//            System.out.println("No Bluetooth connection in place");
-//        }
+        String name = Preferences.getName(this);
+        String colour = Preferences.getColor(this);
+
+        while (!network.sendMessage(name, "slow"));
+        while (!network.sendMessage("$$$$", "slow"));
+        while (!network.sendMessage(colour, "slow"));
+        while (!network.sendMessage("$$$$", "slow"));
 
         Intent intent = new Intent(this, OpenGLActivity.class);
         startActivity(intent);
