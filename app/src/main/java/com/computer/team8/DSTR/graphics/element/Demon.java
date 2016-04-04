@@ -180,7 +180,7 @@ public class Demon extends Square {
     }
 
     public String getBluetoohData() {
-        return String.format("%.1f", getBottom().x) + ','
-             + String.format("%.1f", getBottom().y) + ',';
+        return "(" + String.format("%2.0f", getBottom().x) + ','
+             + String.format("%2.0f", getBottom().y) + ")";
     }
 }

@@ -2,8 +2,8 @@ package com.computer.team8.DSTR.multiplayer;
 
 public class DSTRNetworkManager {
     private int dataCounter, delayCounter, writeDelay;
-    private final int SLOW_DELAY = 300000;
-    private final int FAST_DELAY = 20;
+    private final int SLOW_DELAY = 500000;
+    private final int FAST_DELAY = 10;
 
     public DSTRNetworkManager() {
         dataCounter = 0;
@@ -56,7 +56,7 @@ public class DSTRNetworkManager {
             return;
         }
 
-        DSTRBluetooth.write("$$$$");
+        DSTRBluetooth.write("$$");
     }
 
     public String getMessage() {
