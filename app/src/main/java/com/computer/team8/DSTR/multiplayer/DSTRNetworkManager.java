@@ -2,9 +2,8 @@ package com.computer.team8.DSTR.multiplayer;
 
 public class DSTRNetworkManager {
     private int dataCounter, delayCounter, writeDelay;
-    private final int SLOW_DELAY = 50;
-    private final int FAST_DELAY = 14;
-    private final int BYTE_INCREMENT = 2;
+    private final int SLOW_DELAY = 300000;
+    private final int FAST_DELAY = 20;
 
     public DSTRNetworkManager() {
         dataCounter = 0;
@@ -35,18 +34,14 @@ public class DSTRNetworkManager {
         ++delayCounter;
 
         if (delayCounter > writeDelay && DSTRBluetooth.isConnected()) {
-            if (mesg.length() - dataCounter > BYTE_INCREMENT) {
-                DSTRBluetooth.write("" +
-                        mesg.charAt(dataCounter) +
-                        mesg.charAt(dataCounter + 1));
-            } else if (dataCounter + 1 < mesg.length()) {
+            if (dataCounter < mesg.length()) {
                 DSTRBluetooth.write("" + mesg.charAt(dataCounter));
             }
 
             delayCounter = 0;
-            dataCounter += BYTE_INCREMENT;
+            dataCounter++;
 
-            if (dataCounter >= mesg.length()) {
+            if (dataCounter > mesg.length()) {
                 delayCounter = 0;
                 dataCounter = 0;
                 return true;

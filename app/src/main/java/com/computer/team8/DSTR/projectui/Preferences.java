@@ -96,7 +96,7 @@ public class Preferences {
             return getPreferences(context).getString(color, "blue");
         }
         else {
-            return getPreferences(context).getString(color, "red pure");
+            return getPreferences(context).getString(color, "pure red");
         }
     }
 }

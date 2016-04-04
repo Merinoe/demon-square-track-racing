@@ -3,7 +3,6 @@ package com.computer.team8.DSTR.graphics;
 import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 
 import com.computer.team8.DSTR.graphics.camera.Camera;
 import com.computer.team8.DSTR.graphics.element.Demon;
