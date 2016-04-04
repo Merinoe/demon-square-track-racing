@@ -43,7 +43,16 @@ public class MultiplayerMenu extends Activity {
             return;
         }
 
-        DSTRBluetooth.connect("DSTR2");
+        if (view.getId() == R.id.buttonConnect1) {
+            System.out.println("CONNECTED TO 1\n");
+            DSTRBluetooth.connect("DSTR1");
+        } else if (view.getId() == R.id.buttonConnect2) {
+            System.out.println("CONNECTED TO 2\n");
+            DSTRBluetooth.connect("DSTR2");
+        } else {
+            (new MessageBox(this, "Failed to connect to a device. Please try again.")).show();
+            return;
+        }
 
         if(DSTRBluetooth.bluetoothResult == DSTRBluetooth.Result.FAIL)
         {
