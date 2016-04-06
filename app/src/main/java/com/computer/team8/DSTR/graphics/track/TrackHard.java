@@ -1,8 +1,5 @@
 package com.computer.team8.DSTR.graphics.track;
 
-/**
- * Created by Catherine on 3/25/2016.
- */
 public class TrackHard extends Track {
 
     public TrackHard()

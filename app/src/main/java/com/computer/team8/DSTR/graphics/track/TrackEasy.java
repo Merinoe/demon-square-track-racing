@@ -7,17 +7,34 @@ public class TrackEasy extends Track {
         super();
         difficulty = TrackDifficulty.EASY;
 
-        this.points.add(-20.0f);
-        this.points.add(0.0f);
-        this.points.add(-20.0f);
+        this.points.add(20f);
+        this.points.add(2f);
+        this.points.add(20f);
 
-        this.points.add(-21.0f);
-        this.points.add(2.0f);
-        this.points.add(-19.0f);
+        this.points.add(20f);
+        this.points.add(10f);
+        this.points.add(0f);
 
-        this.points.add(-22.0f);
-        this.points.add(5.0f);
-        this.points.add(-18.0f);
+        this.points.add(20f);
+        this.points.add(2f);
+        this.points.add(-20f);
+
+        this.points.add(0f);
+        this.points.add(10f);
+        this.points.add(-20f);
+
+        this.points.add(-20f);
+        this.points.add(2f);
+        this.points.add(-20f);
+
+        this.points.add(-20f);
+        this.points.add(10f);
+        this.points.add(0f);
+
+        this.points.add(20f);
+        this.points.add(2f);
+        this.points.add(20f);
+
         this.updateBuffer(this.points);
     }
 
