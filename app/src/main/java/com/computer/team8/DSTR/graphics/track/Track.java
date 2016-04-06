@@ -56,14 +56,30 @@ public class Track extends Drawable {
 
     public String getTrackForSend() {
         String newTrack = "";
+        ArrayList<Float> result = new ArrayList<>();
 
+        // remove Y direction
         int i;
         for (i = 0; i < points.size(); ++i) {
-            newTrack += String.format("%2.0f", points.get(i));
-            newTrack += ",";
+            if ((i - 1) % 3 != 0) {
+                result.add(points.get(i));
+            }
         }
-        
-        newTrack = newTrack.substring(0, newTrack.length() - 1);
+
+        // form new string of track
+        for (i = 0; i < result.size(); ++i) {
+            if (i % 2 == 0) {
+                newTrack += "(";
+            }
+
+            newTrack += String.format("%2.0f", result.get(i));
+
+            if (i % 2 != 0) {
+                newTrack += ")";
+            } else {
+                newTrack += ",";
+            }
+        }
 
         return newTrack;
     }
