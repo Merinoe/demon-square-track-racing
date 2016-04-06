@@ -242,10 +242,14 @@ public class Element extends Drawable {
     }
 
     public void feelSlope(float nextElevation) {
-        if (nextElevation > getPosition().y) {
-            velocity -= 0.001f;
-        } else if (nextElevation < getPosition().y) {
-            velocity += 0.002f;
+        float diff = Math.abs(nextElevation - getPosition().y);
+
+        if (diff > 0.5f) {
+            if (nextElevation > getPosition().y) {
+                velocity -= 0.001f;
+            } else if (nextElevation < getPosition().y) {
+                velocity += 0.002f;
+            }
         }
     }
 }
