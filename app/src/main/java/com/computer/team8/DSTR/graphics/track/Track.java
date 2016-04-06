@@ -58,17 +58,12 @@ public class Track extends Drawable {
         String newTrack = "";
 
         int i;
-        for (i = 0; i < points.size(); i += 2) {
-            newTrack += "(";
-            newTrack += points.get(i) + ",";
-
-            if (i + 1 < points.size()) {
-                newTrack += points.get(i + 1);
-            } else {
-                newTrack += "0";
-            }
-            newTrack += ")";
+        for (i = 0; i < points.size(); ++i) {
+            newTrack += String.format("%2.0f", points.get(i));
+            newTrack += ",";
         }
+
+        newTrack = newTrack.substring(0, newTrack.length() - 1);
 
         return newTrack;
     }
