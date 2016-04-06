@@ -62,7 +62,7 @@ public class Track extends Drawable {
             newTrack += String.format("%2.0f", points.get(i));
             newTrack += ",";
         }
-
+        
         newTrack = newTrack.substring(0, newTrack.length() - 1);
 
         return newTrack;

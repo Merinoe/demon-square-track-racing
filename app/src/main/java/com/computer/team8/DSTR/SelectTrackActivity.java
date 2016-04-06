@@ -71,12 +71,11 @@ public class SelectTrackActivity extends Activity {
     {
         String name = Preferences.getName(this);
         String colour = Preferences.getColor(this);
+        String track = TrackManager.getCurrentTrack().getTrackForSend();
 
 //        while (!network.sendMessage("S", "slow"));
 //        while (!network.sendMessage("$", "slow"));
-        while (!network.sendMessage(
-                TrackManager.getCurrentTrack().getTrackForSend(),
-                "slow"));
+        while (!network.sendMessage(track, "slow"));
 //        while (!network.sendMessage("$", "slow"));
 //        while (!network.sendMessage(name, "slow"));
 //        while (!network.sendMessage(",", "slow"));
