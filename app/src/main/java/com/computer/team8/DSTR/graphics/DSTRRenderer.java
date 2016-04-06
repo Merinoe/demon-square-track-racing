@@ -111,7 +111,9 @@ public class DSTRRenderer implements GLSurfaceView.Renderer{
         }
 
         // send/receive data from DE2
-        network.sendMessage(demon.getBluetoohData(), "fast");
+        if (!demon.hasFailed()) {
+            network.sendMessage(demon.getBluetoohData(), "fast");
+        }
 
         // draw all Elements
         render();

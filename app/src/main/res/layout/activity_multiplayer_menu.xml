@@ -4,12 +4,12 @@
     android:background="#000000">
 
     <Button
-        android:id="@+id/buttonConnect"
+        android:id="@+id/buttonConnect1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="@drawable/purplebutton"
-        android:text="Connect"
+        android:text="Connect DSTR1"
         android:textColor="#ffffff"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -21,22 +21,22 @@
         android:onClick="executeConnect" />
 
     <Button
-        android:id="@+id/buttonRankings"
+        android:id="@+id/buttonConnect2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="@drawable/purplebutton"
-        android:text="Rankings"
+        android:text="Connect DSTR2"
         android:textColor="#ffffff"
         android:textSize="25dp"
         android:textStyle="bold"
         android:typeface="monospace"
         android:layout_gravity="center"
-        android:layout_below="@+id/buttonConnect"
-        android:layout_alignLeft="@+id/buttonConnect"
-        android:layout_alignStart="@+id/buttonConnect"
+        android:layout_below="@+id/buttonConnect1"
+        android:layout_alignLeft="@+id/buttonConnect1"
+        android:layout_alignStart="@+id/buttonConnect1"
         android:layout_marginTop="44dp"
-        android:onClick="toRankings" />
+        android:onClick="executeConnect" />
 
     <Button
         android:id="@+id/buttonMenu"
@@ -51,9 +51,9 @@
         android:typeface="monospace"
         android:layout_gravity="center"
         android:layout_marginTop="44dp"
-        android:layout_below="@+id/buttonRankings"
-        android:layout_alignLeft="@+id/buttonRankings"
-        android:layout_alignStart="@+id/buttonRankings"
+        android:layout_below="@+id/buttonConnect2"
+        android:layout_alignLeft="@+id/buttonConnect2"
+        android:layout_alignStart="@+id/buttonConnect2"
         android:onClick="toMain" />
 
     <ImageView
@@ -61,7 +61,7 @@
         android:layout_height="match_parent"
         android:id="@+id/logo"
         android:src="@drawable/racelogo"
-        android:layout_alignBottom="@+id/buttonConnect"
+        android:layout_alignBottom="@+id/buttonConnect1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="73dp" />
