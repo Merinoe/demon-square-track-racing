@@ -3,8 +3,11 @@ package com.computer.team8.DSTR;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.computer.team8.DSTR.graphics.track.Track;
@@ -47,6 +50,20 @@ public class SelectTrackActivity extends Activity {
         TextView txtNum;
         txtNum = (TextView)findViewById(R.id.txtTrackNum);
         txtNum.setText("Track: " + TrackManager.getCurrentTrackNum() + "/" + TrackManager.numTracks());
+
+        ImageView image;
+        image = (ImageView)findViewById(R.id.trackImage);
+        if(currentTrack.difficulty == Track.TrackDifficulty.HARD){
+            image.setImageResource(R.drawable.track_hard);
+        }
+
+        else if (currentTrack.difficulty == Track.TrackDifficulty.MEDIUM){
+            image.setImageResource(R.drawable.track_medium);
+        }
+
+        else {
+            image.setImageResource(R.drawable.track_easy);
+        }
     }
 
     public void prevTrack(View view)
