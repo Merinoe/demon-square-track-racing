@@ -73,15 +73,18 @@ public class SelectTrackActivity extends Activity {
         String colour = Preferences.getColor(this);
         String track = TrackManager.getCurrentTrack().getTrackForSend();
 
-//        while (!network.sendMessage("S", "slow"));
-//        while (!network.sendMessage("$", "slow"));
-        while (!network.sendMessage(track, "slow"));
-//        while (!network.sendMessage("$", "slow"));
-//        while (!network.sendMessage(name, "slow"));
-//        while (!network.sendMessage(",", "slow"));
-//        while (!network.sendMessage(colour, "slow"));
-//        while (!network.sendMessage("$", "slow"));
 
+        while (!network.sendMessage("S", "slow"));
+        while (!network.sendMessage("$", "slow"));
+
+        while (!network.sendMessage(name, "slow"));
+        while (!network.sendMessage(",", "slow"));
+        while (!network.sendMessage(colour, "slow"));
+        while (!network.sendMessage("$", "slow"));
+
+        while (!network.sendMessage(track, "slow"));
+        while (!network.sendMessage("$", "slow"));
+        while (!network.sendMessage("####", "slow"));
         Intent intent = new Intent(this, OpenGLActivity.class);
         startActivity(intent);
     }

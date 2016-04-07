@@ -130,6 +130,7 @@ public class GoogleMapsActivity extends FragmentActivity {
                     //Remove all the markers from the map
                     googleMap.clear();
                     markers.clear();
+                    xyz.clear();
                 }
             });
 

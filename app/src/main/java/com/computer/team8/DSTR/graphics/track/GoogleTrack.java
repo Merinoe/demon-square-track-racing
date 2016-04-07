@@ -7,7 +7,14 @@ public class GoogleTrack extends Track {
     public GoogleTrack(ArrayList<Float> track)
     {
         super();
-        difficulty = TrackDifficulty.HARD;
+
+        if(track.size() <= 9) {
+            difficulty = TrackDifficulty.EASY;
+        }
+        else if((track.size() > 9) && (track.size() <= 18)){
+            difficulty = TrackDifficulty.MEDIUM;
+        }
+        else difficulty = TrackDifficulty.HARD;
 
         for (Iterator i = track.iterator(); i.hasNext();) {
             this.points.add((Float) i.next());

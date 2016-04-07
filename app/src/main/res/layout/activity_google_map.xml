@@ -6,7 +6,7 @@
 
     <fragment
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="510dp"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.MapFragment" />
 
@@ -22,7 +22,7 @@
         android:layout_marginTop="23dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:hint="turnUp Address" />
+        android:hint="Marker Address" />
 
     <Button
         android:layout_width="110dp"
@@ -38,6 +38,7 @@
     <Button
         android:layout_width="110dp"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:text="Get Track!"
         android:id="@+id/getTrackbutton"
         android:layout_marginRight="10dp"
